@@ -17,3 +17,12 @@ Arvore Genealógica para trabalho de Linguagens de Programação.
 * Contagem de descendentes diretos e indiretos 
 * Mostrar gerações por nivel 
 * Gravar e carregar de um arquivo de texto
+
+Para compilar corretamente, todos os arquivos cpp devem ser incluidos
+
+##### Linux/Macos
+g++ *.cpp -o output.out && ./output.out
+clang++ *.cpp -o output.out && ./output.out
+
+##### Windows
+...
