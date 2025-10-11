@@ -1,6 +1,6 @@
 /**
  * Aqui rodará o programa principal
- * 
+ *
  * Contém o loop principal da CLI para gerenciar pessoas
  * e relações da árvore, imprimir e salvar os dados em arquivos
  */
@@ -13,41 +13,53 @@
 
 using namespace std;
 
-void print(string str){
+void print(string str)
+{
     cout << str << "\n";
 }
 
-struct Menu{
-    vector<string> opcoes = {
-        "1 - Adicionar pessoa",
-        "2 - Buscar pessoa",
-        "3 - Exibir parentesco",
-        "4 - Mostrar gerações",
-        "5 - Exibir Ascendentes e Descendentes",
-        "6 - Listar Arovre a partir de uma pessoa",
-        "7 - Contar Descendentes de uma Pessoa",
-        "8 - Editar Pessoa",
-        "9 - Sair",
-    };
-
-    void imprimir(){
-        for (string opc : opcoes) print(opc);
-    }
-};
-
-void processar_resposta(int resposta){
-    switch (resposta) {
-        case 1:
-            break;
-    }
+void clear(){
+    cout << "\033c";
 }
 
-
-
-int main()
+void processar_resposta(int resposta)
 {
-    Menu menu = Menu{};
-    menu.imprimir();
+    switch (resposta){
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        break;
+    case 7:
+        break;
+    case 8:
+        break;
+    case 9:
+        break;
 
+    }
+
+}
+
+int main() {
+    Arvore arvore = Arvore();
+    int resposta;
+    bool valida = true;
+
+    while (true) {
+        clear();
+        arvore.imprimir_opcoes();
+        if (!valida) cout << "Resposta Inválida" << "\n";
+        cout << "Digite um número " << "\n";
+        cin >> resposta;
+        valida = arvore.processar_resposta(resposta);
+    }
     return 0;
 }

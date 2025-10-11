@@ -3,9 +3,20 @@
  */
 
 #include "Pessoa.h"
+#include "Opcao.h"
+#include <vector>
 
 struct Arvore
 {
+    vector<Opcao> opcoes;
+
+    /// @brief Constructor da struct
+    Arvore();
+
+    void imprimir_opcoes();
+
+    bool processar_resposta(int resposta);
+
     /**
      * Funcionalidade obrigatória 1,2
      * 
@@ -22,7 +33,7 @@ struct Arvore
      * @param nome O nome da pessoa que deseja encontrar
      * @returns A pessoa encontrada
      */
-    Pessoa *encontrar_pessoa(string nome); 
+    Pessoa *encontrar_pessoa(); 
     
     
     /**
