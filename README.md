@@ -22,6 +22,7 @@ Para compilar corretamente, todos os arquivos cpp devem ser incluidos
 
 ##### Linux/Macos
 g++ *.cpp -o output.out && ./output.out
+
 clang++ *.cpp -o output.out && ./output.out
 
 ##### Windows
