@@ -59,6 +59,17 @@ void Arvore::adicionar_pessoa(){
 }
 
 Pessoa * Arvore::encontrar_pessoa(){
+    string nome;
+    cout << "Digite o nome da pessoa: ";
+    cin.ignore();
+    getline(cin, nome);
+
+    for (Pessoa* p : familia) {
+        if (p->nome == nome) {
+            p->mostrar();
+            return p;
+        }
+    }
     return new Pessoa{};
 }
 
