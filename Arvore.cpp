@@ -9,6 +9,10 @@
 using namespace std;
 
 Arvore::Arvore(){
+    // As opcoes do menu sao criadas aqui usando a struct Opcao
+    // Esse metodo foi escolhido para nao precisar usar switch/if para cada caso
+    // tornando o código mais modular e fácil de manter.
+
     opcoes.push_back(Opcao{
         "Adicionar pessoa",
         [this] () {adicionar_pessoa();}
