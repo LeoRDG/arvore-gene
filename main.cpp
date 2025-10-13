@@ -1,22 +1,38 @@
 /**
  * Aqui rodará o programa principal
- * 
- * Contém o loop principal da CLI para gerenciar pessoas
- * e relações da árvore, imprimir e salvar os dados em arquivos
+ *
+ * Contém o loop principal
  */
 
 #include <iostream>
+#include <vector>
+#include <functional>
 #include "Arvore.h"
 #include "Pessoa.h"
 
 using namespace std;
 
-int main()
+void print(string str)
 {
-    Arvore *arvore = new Arvore{};
-    Pessoa *pessoa = new Pessoa{"Pessoa teste", "01/01/2312", 'm'};
+    cout << str << "\n";
+}
 
-    pessoa->mostrar();
+void clear(){
+    cout << "\033c";
+}
 
+int main() {
+    Arvore arvore = Arvore();
+    int resposta;
+    bool resposta_valida = true;
+
+    while (true) {
+        //clear();
+        arvore.imprimir_opcoes();
+        if (!resposta_valida) cout << "Resposta {" << resposta << "} Inválida" << "\n";
+        cout << "Digite um número " << "\n";
+        cin >> resposta;
+        resposta_valida = arvore.processar_resposta(resposta);
+    }
     return 0;
 }

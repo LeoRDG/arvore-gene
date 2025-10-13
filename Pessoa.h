@@ -4,6 +4,7 @@
 
 #pragma once // Garante que esse header seja incluso uma só vez
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,8 +16,9 @@ struct Pessoa
 
     int geracao;
 
-    Pessoa *pai;
-    Pessoa *mae;
+    Pessoa *pai = nullptr;
+    Pessoa *mae = nullptr;
+    vector<Pessoa*> filhos;
     
     /**
      * Funcionalidade obrigatória 3

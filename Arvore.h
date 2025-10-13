@@ -3,26 +3,38 @@
  */
 
 #include "Pessoa.h"
+#include "Opcao.h"
+#include <vector>
 
 struct Arvore
 {
+    vector<Opcao> opcoes;
+    vector<Pessoa*> familia;
+
+    /// @brief Constructor
+    Arvore();
+    
+    /// @brief Imprime no console as opcoes para manipular a arvore
+    void imprimir_opcoes();
+
+    /// @brief Processa o input do usuario e chama a funcao correta
+    /// @param resposta A opcao que o usuario escolheu
+    /// @return verdadeiro se a funcao for valida, senao falso
+    bool processar_resposta(int resposta);
+
+
     /**
      * Funcionalidade obrigatória 1,2
      * 
      * Adiciona uma pessoa nessa árvore e define seus pais
      */
     void adicionar_pessoa();
-    
-    
-    /**
-     * Funcionalidade obrigatória 5
-     * 
-     * Busca uma pessoa pelo nome dela
-     * 
-     * @param nome O nome da pessoa que deseja encontrar
-     * @returns A pessoa encontrada
-     */
-    Pessoa *encontrar_pessoa(string nome); 
+
+
+    /// @brief Funcionalidade obrigatória 5 
+    /// Busca uma pessoa pelo nome dela
+    /// @return A pessoa encontrada
+    Pessoa *encontrar_pessoa(); 
     
     
     /**
