@@ -103,8 +103,14 @@ Pessoa * Arvore::encontrar_pessoa(){
 }
 
 bool Arvore::processar_resposta(int resposta){
-    if (resposta >= opcoes.size() || resposta <= 0) return false;
+    // Como o menu mostrado ao usuario tem um offset de 1 comparado ao vetor de opcoes
+    // Deve ser subtraido 1 da resposta
+    resposta -= 1;
+
+    if (resposta >= opcoes.size() || resposta < 0) return false;
     if (opcoes[resposta].func == nullptr) return false; 
+
+    // Chama a funcao da Opcao
     opcoes[resposta].func();
     return true;
 }
