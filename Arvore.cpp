@@ -62,7 +62,29 @@ void Arvore::imprimir_opcoes(){
 }
 
 void Arvore::adicionar_pessoa(){
-    cout << "Adicionando pessoa...";
+    string nome;
+    string nascimento;
+    char sexo;
+    char resposta;
+
+    cout << "Digite o nome da pessoa que voce quer adicionar" << endl;
+    cin.ignore();
+    getline(cin, nome);
+    cout << "Digite o sexo (f,m): ";
+    cin >> sexo;
+    cout << "Digite a data de nascimento (dd/mm/yyyy): " << endl;
+    cin >> nascimento;
+
+    Pessoa *pessoa = new Pessoa{nome, nascimento, sexo};
+    familia.push_back(pessoa);
+
+    // cout << "Gostaria de definir os pais dessa pessoa? (S)im/(N)ao";
+    // cin >> resposta;
+
+    // if (resposta == 's' || resposta == 'S') {
+        
+    // }
+
 }
 
 Pessoa * Arvore::encontrar_pessoa(){
