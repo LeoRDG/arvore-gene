@@ -47,9 +47,16 @@ Arvore::Arvore(){
 }
 
 void Arvore::imprimir_opcoes(){
-    for (int i=1; i<=opcoes.size(); i++) {
+    // Para cada Opcao
+    // é imprimido o nome da opcao associada a um numero (i + 1)
+    for (int i=0; i<opcoes.size(); i++) {
         Opcao opt = opcoes[i];
-        (opt.func == nullptr) ? cout << "   " : cout << i << ". ";
+        
+        // Se a funcao for nula, (ainda nao foi implementada)
+        // nao imprimir a opcao
+        if (opt.func == nullptr) continue;
+        
+        cout << i+1 << ". ";
         cout << opcoes[i].descricao << "\n";
     }
 }
