@@ -33,7 +33,7 @@ Arvore::Arvore(string nm){
 }
 
 void Arvore::imprimir_menu(){
-    cout << "########## MENU ##########" << "\n";
+    print("----------------------- MENU -----------------------\n");
     // Para cada Opcao
     // é imprimido o nome da opcao associada a um numero (i + 1)
     for (int i=0; i<opcoes.size(); i++) {
@@ -44,8 +44,9 @@ void Arvore::imprimir_menu(){
         if (opt.func == nullptr) continue;
         
         cout << i+1 << ". ";
-        cout << opcoes[i].descricao << "\n";
+        print(opcoes[i].descricao);
     }
+    print();
 }
 
 void Arvore::adicionar_pessoa(){
@@ -67,16 +68,25 @@ void Arvore::adicionar_pessoa(){
 }
 
 void Arvore::buscar_pessoas(){
-    string nome = ler_string("Digite o nome da pessoa: ");
+    string nome = ler_string("Digite o nome da pessoa que deseja achar, deixe em branco para mostrar todas as pessoas: ");
+    clear();
+    print("Pesquisando por '" + nome + "'");
+    print("________________________________________________");
 
+    int count = 0;
     for (auto p : familia) {
         Pessoa *pessoa = p.second;
 
         // Mostrar a pessoa se o nome pesquisado esta contido no nome da pessoa vice-versa
         if ( contem( nome, pessoa->nome )) {
             pessoa->mostrar();
+            count ++;
         }
     }
+
+    print("________________________________________________");
+    print(to_string(count) + "/" + to_string(familia.size()) + " Pessoas encontradas\n");
+
 }
 
 bool Arvore::processar_resposta(int resposta){
@@ -88,6 +98,7 @@ bool Arvore::processar_resposta(int resposta){
     if (opcoes[resposta].func == nullptr) return false; 
 
     // Chama a funcao da Opcao
+    clear();
     opcoes[resposta].func();
     return true;
 }
@@ -113,4 +124,10 @@ void Arvore::carregar(){
     }
 
     arquivo.close();
+}
+
+void Arvore::info_simples(){
+    print("Nome da Arvore : " + nome);
+    print("Quantidade de pessoas : " + to_string(familia.size()));
+    print("-------------------------------------------------------------");
 }

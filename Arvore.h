@@ -11,7 +11,7 @@ struct Arvore
 {   
     string nome;
     vector<Opcao> opcoes;
-    unordered_map<string, Pessoa*> familia;
+    unordered_map<string, Pessoa*> familia; // Foi escolhido usar um map aqui para evitar adicionar duplicatas
 
     /**
      * @brief Inicializa a arvore
@@ -82,4 +82,10 @@ struct Arvore
      * @param geracao Um numero inteiro (x >= 0) represando a geracao que quer achar 
      */
     void exibir_geracao(int geracao);
+
+
+    /**
+     * @brief Exibe informacoes simples dessa arvore
+     */
+    void info_simples();
 };

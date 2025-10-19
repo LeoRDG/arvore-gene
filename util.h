@@ -100,3 +100,8 @@ char pedir_genero();
 
 /// @brief Limpa o console
 void clear();
+
+/**
+ * @brief Funcao para facilitar na hora de imprimir coisas no console
+ */
+void print(string str="", char end='\n');

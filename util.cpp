@@ -47,7 +47,10 @@ char ler_char(string msg) {
 string Data::str(){
     string resposta;
     stringstream str;
-    str << setfill('0') << setw(2) << dia << "/" << mes << "/" << setw(4) << ano;
+    str << setfill('0');
+    str << setw(2) << dia << "/";
+    str << setw(2) << mes << "/";
+    str << setw(4) << ano;
     str >> resposta;
     return resposta;
 }
@@ -120,4 +123,8 @@ bool contem(string str1, string str2, bool ignore_case){
 
 void clear(){
     cout << "\033c";
+}
+
+void print(string str, char end){
+    cout << str << end;
 }
