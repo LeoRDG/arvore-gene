@@ -5,14 +5,19 @@
 #include "Pessoa.h"
 #include "util.h"
 #include <vector>
+#include <unordered_map>
 
 struct Arvore
-{
+{   
+    string nome;
     vector<Opcao> opcoes;
-    vector<Pessoa*> familia;
+    unordered_map<string, Pessoa*> familia;
 
-    /// @brief Constructor
-    Arvore();
+    /**
+     * @brief Inicializa a arvore
+     * @param nm O nome dessa árvore
+     */
+    Arvore(string nm);
     
     /**
      * @brief Imprime no console as opcoes para manipular a arvore

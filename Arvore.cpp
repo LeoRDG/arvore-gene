@@ -8,10 +8,11 @@
 
 using namespace std;
 
-Arvore::Arvore(){
+Arvore::Arvore(string nm){
     // As opcoes do menu sao criadas aqui usando a struct Opcao
     // Esse metodo foi escolhido para nao precisar usar switch/if para cada caso
     // tornando o código mais modular e fácil de manter.
+    nome = nm;
 
     opcoes = {
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
@@ -97,4 +98,27 @@ bool Arvore::processar_resposta(int resposta){
     // Chama a funcao da Opcao
     opcoes[resposta].func();
     return true;
+}
+
+void Arvore::salvar(){
+    ofstream arquivo(nome + ".csv");
+
+    for (auto p : familia) {
+        Pessoa *pessoa = p.second;
+        arquivo << pessoa->serialize() << "\n";
+    }
+
+    arquivo.close();
+}
+
+void Arvore::carregar(){
+    ifstream arquivo(nome + ".csv");
+    string linha;
+
+    while ( getline(arquivo, linha) ) {
+        Pessoa *pessoa = Pessoa::deserialize(linha);
+        familia.insert({pessoa->chave(), pessoa});
+    }
+
+    arquivo.close();
 }

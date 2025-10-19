@@ -13,9 +13,7 @@
 using namespace std;
 
 int main() {
-    Arvore arvore = Arvore();
-    int resposta;
-    bool resposta_valida = true;
+    Arvore arvore = Arvore("arvore");
 
     while (true) {
         clear();

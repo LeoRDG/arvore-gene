@@ -5,14 +5,15 @@
 #pragma once // Garante que esse header seja incluso uma só vez
 #include <string>
 #include <vector>
+#include "util.h"
 
 using namespace std;
 
 struct Pessoa
 {
     string nome;
-    string nascimento;
-    char sexo;
+    Data nascimento;
+    char genero;
 
     int geracao;
 
@@ -46,6 +47,28 @@ struct Pessoa
     int contar_descendentes();
     
 
-    /// @brief Mostra o nome, nascimento e sexo dessa pessoa
+    /// @brief Mostra o nome, nascimento e genero dessa pessoa
     void mostrar();
+
+    /**
+    * @brief Gera uma chave para essa pessoa (nome + nascimento),
+    * para evitar duplicatas
+    * @returns Uma string que representa essa pessoa.
+    */
+   string chave();
+
+   /**
+    * @brief Essa funçao é usada para salvar os dados da pessoa
+    * Ela cria uma string com os dados separados por virgula
+    * @returns Uma string com os dados dessa pessoa
+    */
+   string serialize();
+
+   /**
+    * @brief Cria uma pessoa a partir de dados salvos
+    * @param str Os dados carregados em formato de string
+    * @returns O ponteiro de uma struct dessa pessoa
+    */
+   static Pessoa * deserialize(string dados);
+
 };
