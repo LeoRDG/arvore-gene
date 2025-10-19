@@ -5,6 +5,8 @@
 #include "Arvore.h"
 #include "util.h"
 #include <iostream>
+#include <fstream>
+#include "Pessoa.h"
 
 using namespace std;
 
@@ -16,7 +18,7 @@ Arvore::Arvore(string nm){
 
     opcoes = {
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
-        { "Buscar pessoa",                        [this]() {encontrar_pessoa();} },
+        { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
         { "Exibir parentesco",                    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
         { "Mostrar gerações"                       },
         { "Exibir Ascendentes e Descendentes",     },
@@ -47,21 +49,13 @@ void Arvore::imprimir_menu(){
 }
 
 void Arvore::adicionar_pessoa(){
-    string nome;
-    string nascimento;
-    char sexo;
-    char resposta;
+    string nome = ler_string("Digite o nome da pessoa que voce quer adicionar:\n");
+    char genero =  pedir_genero();
+    Data nascimento = pedir_data();
 
-    cout << "Digite o nome da pessoa que voce quer adicionar" << endl;
-    cin.ignore();
-    getline(cin, nome);
-    cout << "Digite o sexo (f,m): ";
-    cin >> sexo;
-    cout << "Digite a data de nascimento (dd/mm/yyyy): " << endl;
-    cin >> nascimento;
+    Pessoa *pessoa = new Pessoa{nome, nascimento, genero};
 
-    Pessoa *pessoa = new Pessoa{nome, nascimento, sexo};
-    familia.push_back(pessoa);
+    familia.insert({pessoa->chave(), pessoa});
 
     // cout << "Gostaria de definir os pais dessa pessoa? (S)im/(N)ao";
     // cin >> resposta;
@@ -72,19 +66,17 @@ void Arvore::adicionar_pessoa(){
 
 }
 
-Pessoa * Arvore::encontrar_pessoa(){
-    string nome;
-    cout << "Digite o nome da pessoa: ";
-    cin.ignore();
-    getline(cin, nome);
+void Arvore::buscar_pessoas(){
+    string nome = ler_string("Digite o nome da pessoa: ");
 
-    for (Pessoa* p : familia) {
-        if (p->nome == nome) {
-            p->mostrar();
-            return p;
+    for (auto p : familia) {
+        Pessoa *pessoa = p.second;
+
+        // Mostrar a pessoa se o nome pesquisado esta contido no nome da pessoa vice-versa
+        if ( contem( nome, pessoa->nome )) {
+            pessoa->mostrar();
         }
     }
-    return new Pessoa{};
 }
 
 bool Arvore::processar_resposta(int resposta){

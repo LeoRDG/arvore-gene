@@ -5,11 +5,16 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <iomanip>
 #include "Pessoa.h"
 
 using namespace std;
 
 void Pessoa::mostrar(){
+    cout << left << setw(30) << nome;
+    cout << setw(14) << nascimento.str();
+    cout << setw(3) << genero << "\n";
+}
 
 string Pessoa::chave(){
     // Junta o nome e o nascimento, removendo espaços e barras

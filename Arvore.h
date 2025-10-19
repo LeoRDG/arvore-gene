@@ -41,10 +41,9 @@ struct Arvore
 
     /**
     * @brief Funcionalidade obrigatória 5 
-    * Busca uma pessoa pelo nome dela
-    * @return A pessoa encontrada
+    * Busca pessoas por nome e exibe no console
     */
-    Pessoa *encontrar_pessoa(); 
+    void buscar_pessoas(); 
     
     
     /**
