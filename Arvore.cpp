@@ -3,7 +3,7 @@
  */
 
 #include "Arvore.h"
-#include "Opcao.h"
+#include "util.h"
 #include <iostream>
 
 using namespace std;
@@ -13,44 +13,24 @@ Arvore::Arvore(){
     // Esse metodo foi escolhido para nao precisar usar switch/if para cada caso
     // tornando o código mais modular e fácil de manter.
 
-    opcoes.push_back(Opcao{
-        "Adicionar pessoa",
-        [this] () {adicionar_pessoa();}
-    });
-    opcoes.push_back(Opcao{
-        "Buscar pessoa",
-        [this]() {encontrar_pessoa();}
-    });
-    opcoes.push_back(Opcao{
-        "Exibir parentesco",
-    });
-    opcoes.push_back(Opcao{
-        "Mostrar gerações",
-        
-    });
-    opcoes.push_back(Opcao{
-        "Exibir Ascendentes e Descendentes",
+    opcoes = {
+        { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
+        { "Buscar pessoa",                        [this]() {encontrar_pessoa();} },
+        { "Exibir parentesco",                    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
+        { "Mostrar gerações"                       },
+        { "Exibir Ascendentes e Descendentes",     },
+        { "Listar Arovre a partir de uma pessoa",  },
+        { "Contar Descendentes de uma Pessoa",     },
+        { "Editar Pessoa",                         },
+        { "Sair",                                 [this]() {exit(0);} },
+        { "Salvar" ,                              [this]() {salvar();} },
+        { "Carregar" ,                            [this]() {carregar();} },
 
-    });
-    opcoes.push_back(Opcao{
-        "Listar Arovre a partir de uma pessoa",
-
-    });
-    opcoes.push_back(Opcao{
-        "Contar Descendentes de uma Pessoa",
-
-    });
-    opcoes.push_back(Opcao{
-        "Editar Pessoa",
-
-    });
-    opcoes.push_back(Opcao{
-        "Sair",
-        [this]() {exit(0);}
-    });
+    };
 }
 
-void Arvore::imprimir_opcoes(){
+void Arvore::imprimir_menu(){
+    cout << "########## MENU ##########" << "\n";
     // Para cada Opcao
     // é imprimido o nome da opcao associada a um numero (i + 1)
     for (int i=0; i<opcoes.size(); i++) {

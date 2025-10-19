@@ -3,7 +3,7 @@
  */
 
 #include "Pessoa.h"
-#include "Opcao.h"
+#include "util.h"
 #include <vector>
 
 struct Arvore
@@ -14,12 +14,16 @@ struct Arvore
     /// @brief Constructor
     Arvore();
     
-    /// @brief Imprime no console as opcoes para manipular a arvore
-    void imprimir_opcoes();
+    /**
+     * @brief Imprime no console as opcoes para manipular a arvore
+     */  
+    void imprimir_menu();
 
-    /// @brief Processa o input do usuario e chama a funcao correta
-    /// @param resposta A opcao que o usuario escolheu
-    /// @return verdadeiro se a funcao for valida, senao falso
+    /**
+    * @brief Processa o input do usuario e chama a funcao correta
+    * @param resposta A opcao que o usuario escolheu
+    * @return verdadeiro se a funcao for valida, senao falso
+    */
     bool processar_resposta(int resposta);
 
 
@@ -30,19 +34,20 @@ struct Arvore
      */
     void adicionar_pessoa();
 
-
-    /// @brief Funcionalidade obrigatória 5 
-    /// Busca uma pessoa pelo nome dela
-    /// @return A pessoa encontrada
+    /**
+    * @brief Funcionalidade obrigatória 5 
+    * Busca uma pessoa pelo nome dela
+    * @return A pessoa encontrada
+    */
     Pessoa *encontrar_pessoa(); 
     
     
     /**
-     * Funcionalidade opcional
+     * @brief Funcionalidade opcional
      * 
      * Salva essa arvore em um arquivo
      */
-    void gravar_arvore();
+    void salvar();
     
     
     /**
@@ -50,7 +55,7 @@ struct Arvore
      * 
      * Carrega a arvore de um arquivo
      */
-    void carregar_arvore();
+    void carregar();
     
     
     /**
