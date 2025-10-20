@@ -55,19 +55,6 @@ string Data::str(){
     return resposta;
 }
 
-Data::Data(string data){
-    istringstream str = istringstream(data);
-    
-    str >> dia;
-    str.ignore();
-    str >> mes;
-    str.ignore();
-    str >> ano;
-}
-
-bool Data::valido(){
-    return ( 0 <= ano && ano <= 2025 ) && ( 1 <= mes && mes <= 12 ) && ( 1 <= dia && dia <= 31 );
-}
 
 Data pedir_data(){
     Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );

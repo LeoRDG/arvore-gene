@@ -13,26 +13,6 @@ struct Opcao{
 
 
 /**
- * @brief aqui esta uma estrutura de data
- */
-struct Data{
-    int dia=0, mes=0, ano=0;
-
-    Data(string data);
-
-    /**
-     * @brief Verifica se os valores de dia, mes, ano sao validos
-     * @returns true ou false, sependendo se os valores sao validos ou nao
-     */
-    bool valido();
-
-    /// @brief Formata a data para o formato brasileiro.
-    /// @return A data formatada.
-    string str();
-};
-
-
-/**
  * @brief Essa funcao le um numero inteiro do usuario
  * @param msg A mensagem que voce quer mostrar ao usuario
  * @returns Um numero inteiro (input do usuario) 
