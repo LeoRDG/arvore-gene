@@ -11,9 +11,15 @@
 using namespace std;
 
 void Pessoa::mostrar(){
-    cout << left << setw(30) << nome;
-    cout << setw(14) << nascimento.str();
-    cout << setw(3) << genero << "\n";
+    cout << left << setw(L_NOME) << nome;
+    cout << setw(L_NASC) << nascimento.str();
+    cout << setw(L_GEN) << genero << "\n";
+}
+
+void Pessoa::imprimir_cabecario(){
+    cout << left << setw(L_NOME) << "Nome";
+    cout << setw(L_NASC) << "Nascimento";
+    cout << setw(L_GEN) << "Genero" << "\n";
 }
 
 string Pessoa::chave(){

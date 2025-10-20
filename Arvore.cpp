@@ -26,8 +26,8 @@ Arvore::Arvore(string nm){
         { "Contar Descendentes de uma Pessoa",     },
         { "Editar Pessoa",                         },
         { "Sair",                                 [this]() {exit(0);} },
-        { "Salvar" ,                              [this]() {salvar();} },
-        { "Carregar" ,                            [this]() {carregar();} },
+        //{ "Salvar" ,                              [this]() {salvar();} },
+        //{ "Carregar" ,                            [this]() {carregar();} },
 
     };
 }
@@ -58,12 +58,7 @@ void Arvore::adicionar_pessoa(){
 
     familia.insert({pessoa->chave(), pessoa});
 
-    // cout << "Gostaria de definir os pais dessa pessoa? (S)im/(N)ao";
-    // cin >> resposta;
-
-    // if (resposta == 's' || resposta == 'S') {
-        
-    // }
+    if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
 
 }
 
@@ -73,20 +68,25 @@ void Arvore::buscar_pessoas(){
     print("Pesquisando por '" + nome + "'");
     print("________________________________________________");
 
-    int count = 0;
+    // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
+    vector<Pessoa*> encontradas;
     for (auto p : familia) {
         Pessoa *pessoa = p.second;
-
-        // Mostrar a pessoa se o nome pesquisado esta contido no nome da pessoa vice-versa
-        if ( contem( nome, pessoa->nome )) {
-            pessoa->mostrar();
-            count ++;
-        }
+        if ( contem( nome, pessoa->nome ) ) encontradas.push_back(pessoa);
     }
 
-    print("________________________________________________");
-    print(to_string(count) + "/" + to_string(familia.size()) + " Pessoas encontradas\n");
-
+    // Se pessoas foram encontradas, mostrar elas
+    if ( encontradas.size() <=0 ) print("Nenhuma pessoa encontrada");
+    else {
+        printf("%zu/%zu Pessoas encontradas\n", encontradas.size(), familia.size());
+        print("________________________________________________");
+        cout << "ID. ";
+        Pessoa::imprimir_cabecario();
+        for (int i=0; i<encontradas.size(); i++) {
+            printf("% 3d ", i);
+            encontradas[i]->mostrar();
+        }
+    }
 }
 
 bool Arvore::processar_resposta(int resposta){
@@ -126,8 +126,10 @@ void Arvore::carregar(){
     arquivo.close();
 }
 
+//vector<Pessoa*> Arvore::query(){}
+
 void Arvore::info_simples(){
+    print(Data::hoje().str());
     print("Nome da Arvore : " + nome);
     print("Quantidade de pessoas : " + to_string(familia.size()));
-    print("-------------------------------------------------------------");
 }

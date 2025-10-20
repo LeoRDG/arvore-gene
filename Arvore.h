@@ -88,4 +88,10 @@ struct Arvore
      * @brief Exibe informacoes simples dessa arvore
      */
     void info_simples();
+    
+    /**
+     * @brief Pesquisa por pessoas usando alguns parametros
+     * @param 
+     */
+    vector<Pessoa*> query(string nome="", int dt_valor = 123123123);
 };

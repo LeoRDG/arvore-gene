@@ -20,6 +20,10 @@ struct Pessoa
     Pessoa *pai = nullptr;
     Pessoa *mae = nullptr;
     vector<Pessoa*> filhos;
+
+    static const int L_NOME = 30;
+    static const int L_NASC = 15;
+    static const int L_GEN  =  2;
     
     /**
      * Funcionalidade obrigatória 3
@@ -50,12 +54,14 @@ struct Pessoa
     /// @brief Mostra o nome, nascimento e genero dessa pessoa
     void mostrar();
 
+
     /**
     * @brief Gera uma chave para essa pessoa (nome + nascimento),
     * para evitar duplicatas
     * @returns Uma string que representa essa pessoa.
     */
    string chave();
+
 
    /**
     * @brief Essa funçao é usada para salvar os dados da pessoa
@@ -64,6 +70,7 @@ struct Pessoa
     */
    string serialize();
 
+
    /**
     * @brief Cria uma pessoa a partir de dados salvos
     * @param str Os dados carregados em formato de string
@@ -71,4 +78,5 @@ struct Pessoa
     */
    static Pessoa * deserialize(string dados);
 
+   static void imprimir_cabecario();
 };

@@ -75,7 +75,7 @@ char pedir_genero(){
 }
 
 void pausar() {
-    cout << "Pressione Enter para continuar";
+    cout << "\nPressione Enter para continuar";
     cin.get();
 }
 
@@ -114,4 +114,14 @@ void clear(){
 
 void print(string str, char end){
     cout << str << end;
+}
+
+bool confirmar(string msg) {
+    print(msg, ' ');
+    print("(sim, nao)");
+    string resposta;
+    getline(cin, resposta);
+    resposta = to_lower_str(resposta);
+    if (resposta ==  "sim" || resposta == "s") return true;
+    return false;
 }

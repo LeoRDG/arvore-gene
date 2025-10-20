@@ -1,5 +1,6 @@
 #include <string>
 #include <functional>
+#include "Data.h"
 
 #pragma once
 
@@ -66,10 +67,12 @@ bool contem(string str1, string str2, bool ignore_case=true);
  */
 Data pedir_data();
 
+
 /**
  * @brief pausa a execucao até que o usuario aperte enter
  */
 void pausar();
+
 
 /**
  * @brief Pede um genero ao usuario (f,m), a funcao só termina se o genero for valido.
@@ -81,7 +84,18 @@ char pedir_genero();
 /// @brief Limpa o console
 void clear();
 
+
 /**
  * @brief Funcao para facilitar na hora de imprimir coisas no console
+ * @param str A mensage para imprimir na tela, por padrao é uma string vazia
+ * @param end O que escrever na tela por ultimo, por padrao cria uma nova linha
  */
 void print(string str="", char end='\n');
+
+
+/**
+ * @brief Pede para o usuario confirmar se ele quer realizar uma acao
+ * @param msg Mensagem para mostrar ao usuario
+ * @returns Verdadeiro se o usario digitar sim ou s se nao falso
+ */
+bool confirmar(string msg);
