@@ -4,13 +4,7 @@
  * Contém o loop principal
  */
 
-#include <iostream>
-#include <vector>
-#include <functional>
 #include "Arvore.h"
-#include "Pessoa.h"
-
-using namespace std;
 
 int main() {
     Arvore arvore = Arvore("arvore");
@@ -20,7 +14,8 @@ int main() {
         clear();
         arvore.info_simples();
         arvore.imprimir_menu();
-        arvore.processar_resposta( ler_int("Digite um número: ") );
+        int resposta = ler_int("Digite um número: ", arvore.opcoes.size());
+        arvore.processar_resposta( resposta );
         arvore.salvar();
         pausar();
     }

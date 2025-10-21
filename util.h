@@ -1,7 +1,6 @@
 #include <string>
 #include <functional>
 #include "Data.h"
-
 #pragma once
 
 using namespace std;
@@ -18,7 +17,7 @@ struct Opcao{
  * @param msg A mensagem que voce quer mostrar ao usuario
  * @returns Um numero inteiro (input do usuario) 
  */
-int ler_int(string msg);
+int ler_int(string msg, int max=INT_MAX, int min=0);
 
 
 /**

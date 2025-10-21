@@ -12,18 +12,17 @@ void ignore_tudo() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-int ler_int(string msg) {
+int ler_int(string msg, int max, int min) {
     int resposta;
-    cout << msg;
+    bool valido;
 
-    while( !(cin >> resposta) ) {
-        cout << "INPUT INVALIDO\n";
+    while (true) {
         cout << msg;
+        valido = (cin >> resposta) && (min <= resposta && resposta <= max);
         ignore_tudo();
+        if (valido) return resposta;
+        print("INPUT INVALIDO");
     }
-
-    ignore_tudo();
-    return resposta;
 }
 
 string ler_string(string msg) {
@@ -45,33 +44,29 @@ char ler_char(string msg) {
 }
 
 Data pedir_data(){
-    Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
-    while (!data.valido()) {
-        cout << "DATA INVALIDA\n";
-        data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
-    }
-    return data;
+    while(true) {
+        Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
+        if (data.valido()) return data;
+        print("DATA INVALIDA");
+    };
 }
 
 char pedir_genero(){
-    char gen = toupper( ler_char("Digite o genero (m,f): ") );
     while (true) {
+        char gen = toupper( ler_char("Digite o genero (m,f): ") );
         if (gen == 'M' || gen == 'F') return gen;
         cout << "GENERO INVALIDO\n";
-        gen = toupper( ler_char("Digite o genero (m,f): ") );
     }
 }
 
 void pausar() {
-    cout << "\nPressione Enter para continuar";
+    print("Pressione <Enter> para continuar...");
     cin.get();
 }
 
 string to_lower_str(string str){
     string result;
-    for (char c: str){
-        result += tolower(c);
-    }
+    for (char c: str) result += tolower(c);
     return result;
 }
 
@@ -105,9 +100,8 @@ void print(string str, char end){
 }
 
 bool confirmar(string msg) {
-    print(msg, ' ');
-    print("(sim, nao)");
     string resposta;
+    print(msg);
     getline(cin, resposta);
     resposta = to_lower_str(resposta);
     if (resposta ==  "sim" || resposta == "s") return true;
