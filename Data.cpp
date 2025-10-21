@@ -1,9 +1,10 @@
 #include "Data.h"
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
-int Data::qtd_dias[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+int Data::dias_no_mes[13] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 
 bool Data::bisexto(int ano){
     bool div4   = ano %   4 == 0;
@@ -24,11 +25,10 @@ Data::Data(string data){
 }
 
 int Data::valor() {
-    //return (ano * 10000) + (mes * 100) + (dia);
     int qtd_bisextos = ano/4 - ano/100 + ano/400;
     int dias = 365*ano + qtd_bisextos + dia;
     for (int i=1; i<mes; i++) {
-        dias+=qtd_dias[i];
+        dias+=dias_no_mes[i];
     }
     return dias;
 }
@@ -47,10 +47,21 @@ Data Data::hoje(){
 
 bool Data::valido(){
     bool vale = true;
-    vale = vale && ( hoje().valor() > valor() ); // Se essa data maior que a data de hoje, ela é invalida
-    vale = vale && ( 1 <= mes && mes <= 12 );    // Validacao de mes
-    vale = vale && ( ano >= ANO_MIN ); // Só será considerado validos, anos a partir do ano minimo, para evitar erros como 12/12/25 quando o usuario quer o ano 2025 e recebe 0025
+    vale = vale && ( hoje().valor() > valor() );                // Se essa data maior que a data de hoje, ela é invalida
+    vale = vale && ( 1 <= mes && mes <= 12 );                   // Validacao de mes
+    vale = vale && ( ano >= ANO_MIN );                          // Limite minimo de ano
     int soma = bisexto(ano) && mes == 2;
-    vale = vale && ( 1 <= dia && dia <= qtd_dias[mes]+soma);
+    vale = vale && ( 1 <= dia && dia <= dias_no_mes[mes]+soma); // Verifica anos bisextos
     return vale;
+}
+
+string Data::str(){
+    string resposta;
+    stringstream str;
+    str << setfill('0');
+    str << setw(2) << dia << "/";
+    str << setw(2) << mes << "/";
+    str << setw(4) << ano;
+    str >> resposta;
+    return resposta;
 }

@@ -10,7 +10,7 @@ struct Data{
     static const int ANO_MIN = 1000;
 
     /// @brief Quantidade de dias que cada mes tem no calendario
-    static int qtd_dias[13];
+    static int dias_no_mes[13];
 
     Data(string data);
 

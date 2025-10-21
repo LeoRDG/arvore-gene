@@ -44,18 +44,6 @@ char ler_char(string msg) {
     }
 }
 
-string Data::str(){
-    string resposta;
-    stringstream str;
-    str << setfill('0');
-    str << setw(2) << dia << "/";
-    str << setw(2) << mes << "/";
-    str << setw(4) << ano;
-    str >> resposta;
-    return resposta;
-}
-
-
 Data pedir_data(){
     Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
     while (!data.valido()) {
