@@ -60,6 +60,15 @@ void Arvore::adicionar_pessoa(){
 
     if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
 
+    vector<Pessoa*> possiveis_pais = query("", pessoa->nascimento.valor(), 'M');
+    mostrar_pessoas(possiveis_pais);
+    ler_int("Escolha uma dessas pessoas para ser o pai: ");
+
+    clear();
+    
+    vector<Pessoa*> possiveis_maes = query("", pessoa->nascimento.valor(), 'F');
+    mostrar_pessoas(possiveis_maes);
+    ler_int("Escolha uma dessas pessoas para ser a mae: ");
 }
 
 void Arvore::buscar_pessoas(){
@@ -69,24 +78,15 @@ void Arvore::buscar_pessoas(){
     print("________________________________________________");
 
     // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
-    vector<Pessoa*> encontradas;
-    for (auto p : familia) {
-        Pessoa *pessoa = p.second;
-        if ( contem( nome, pessoa->nome ) ) encontradas.push_back(pessoa);
-    }
+    vector<Pessoa*> encontradas = query(nome);
 
     // Se pessoas foram encontradas, mostrar elas
-    if ( encontradas.size() <=0 ) print("Nenhuma pessoa encontrada");
-    else {
-        printf("%zu/%zu Pessoas encontradas\n", encontradas.size(), familia.size());
-        print("________________________________________________");
-        cout << "ID. ";
-        Pessoa::imprimir_cabecario();
-        for (int i=0; i<encontradas.size(); i++) {
-            printf("% 3d ", i);
-            encontradas[i]->mostrar();
-        }
+    if ( encontradas.empty() ) {
+        print("Nenhuma pessoa encontrada");
+        return;
     }
+    
+    mostrar_pessoas(encontradas);
 }
 
 bool Arvore::processar_resposta(int resposta){
@@ -101,6 +101,18 @@ bool Arvore::processar_resposta(int resposta){
     clear();
     opcoes[resposta].func();
     return true;
+}
+
+void Arvore::mostrar_pessoas(vector<Pessoa*> pessoas){
+    printf("%zu/%zu Pessoas encontradas\n", pessoas.size(), familia.size());
+    print("________________________________________________");
+    cout << "ID. ";
+    Pessoa::imprimir_cabecario();
+
+    for (int i=0; i<pessoas.size(); i++) {
+        printf("% 3d ", i);
+        pessoas[i]->mostrar();
+    }
 }
 
 void Arvore::salvar(){
@@ -126,7 +138,17 @@ void Arvore::carregar(){
     arquivo.close();
 }
 
-//vector<Pessoa*> Arvore::query(){}
+vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero){
+    vector<Pessoa*> encontradas;
+    for (auto p : familia) {
+        Pessoa * pessoa = p.second;
+        if ( !contem(pessoa->nome, nome) ) continue;
+        if ( pessoa->nascimento.valor() >= dt_valor ) continue;
+        if ( genero != '\0' && pessoa->genero != genero ) continue;
+        encontradas.push_back(pessoa);
+    }
+    return encontradas;
+}
 
 void Arvore::info_simples(){
     print(Data::hoje().str());

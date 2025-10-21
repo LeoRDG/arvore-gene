@@ -19,10 +19,12 @@ struct Arvore
      */
     Arvore(string nm);
     
+
     /**
      * @brief Imprime no console as opcoes para manipular a arvore
      */  
     void imprimir_menu();
+
 
     /**
     * @brief Processa o input do usuario e chama a funcao correta
@@ -38,6 +40,7 @@ struct Arvore
      * Adiciona uma pessoa nessa árvore e define seus pais
      */
     void adicionar_pessoa();
+
 
     /**
     * @brief Funcionalidade obrigatória 5 
@@ -88,10 +91,18 @@ struct Arvore
      * @brief Exibe informacoes simples dessa arvore
      */
     void info_simples();
+
+    
+    /**
+     * @brief Dada um vetor de pessoas, exibe cada uma delas
+     * @param pessoas O vetor de pessoas
+     */
+    void mostrar_pessoas(vector<Pessoa*> pessoas);
+
     
     /**
      * @brief Pesquisa por pessoas usando alguns parametros
      * @param 
      */
-    vector<Pessoa*> query(string nome="", int dt_valor = 123123123);
+    vector<Pessoa*> query(string nome="", int dt_valor = INT_MAX, char genero='\0');
 };
