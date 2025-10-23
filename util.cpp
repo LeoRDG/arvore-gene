@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include <ctime>
+#include <limits>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int ler_int(string msg, int max, int min) {
     int resposta;
     bool valido;
 
+    // loop infinito que só acaba com um return quando o inteiro informado pelo usuario for valido
     while (true) {
         cout << msg;
         valido = (cin >> resposta) && (min <= resposta && resposta <= max);

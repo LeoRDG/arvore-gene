@@ -15,6 +15,8 @@ struct Opcao{
 /**
  * @brief Essa funcao le um numero inteiro do usuario
  * @param msg A mensagem que voce quer mostrar ao usuario
+ * @param max O valor maximo que o inteiro deve ter
+ * @param min O valor minimo que o inteiro eve ter
  * @returns Um numero inteiro (input do usuario) 
  */
 int ler_int(string msg, int max=INT_MAX, int min=0);
