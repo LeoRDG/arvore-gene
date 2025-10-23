@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include "Pessoa.h"
+#include <unordered_map>
 
 using namespace std;
 
@@ -59,16 +60,7 @@ void Arvore::adicionar_pessoa(){
     familia.insert({pessoa->chave(), pessoa});
 
     if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
-
-    vector<Pessoa*> possiveis_pais = query("", pessoa->nascimento.valor(), 'M');
-    mostrar_pessoas(possiveis_pais);
-    ler_int("Escolha uma dessas pessoas para ser o pai: ");
-
-    clear();
-    
-    vector<Pessoa*> possiveis_maes = query("", pessoa->nascimento.valor(), 'F');
-    mostrar_pessoas(possiveis_maes);
-    ler_int("Escolha uma dessas pessoas para ser a mae: ");
+    definir_pais(pessoa);
 }
 
 void Arvore::buscar_pessoas(){
@@ -87,6 +79,22 @@ void Arvore::buscar_pessoas(){
     }
     
     mostrar_pessoas(encontradas);
+}
+
+void Arvore::definir_pais(Pessoa*pessoa){
+    clear();
+    print("Definindo os pais de '" + pessoa->nome + "'");
+    vector<Pessoa*> possiveis_pais = query("", pessoa->nascimento.valor(), 'M');
+    mostrar_pessoas(possiveis_pais);
+    int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) -1;
+    pessoa->set_pai(possiveis_pais[resposta]);
+
+    clear();
+    print("Definindo os pais de '" + pessoa->nome + "'");
+    vector<Pessoa*> possiveis_maes = query("", pessoa->nascimento.valor(), 'F');
+    mostrar_pessoas(possiveis_maes);
+    resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) -1;
+    pessoa->set_mae(possiveis_maes[resposta]);
 }
 
 bool Arvore::processar_resposta(int resposta){
@@ -110,7 +118,7 @@ void Arvore::mostrar_pessoas(vector<Pessoa*> pessoas){
     Pessoa::imprimir_cabecario();
 
     for (int i=0; i<pessoas.size(); i++) {
-        printf("% 3d ", i);
+        printf("% 3d ", i+1);
         pessoas[i]->mostrar();
     }
 }
@@ -129,10 +137,20 @@ void Arvore::salvar(){
 void Arvore::carregar(){
     ifstream arquivo(nome + ".csv");
     string linha;
+    unordered_map<string, Pessoa*> pessoas; // map temporario para guardar a pessoa usando sua chave
 
+    // Primeiro loop para criar todas as pessoas
     while ( getline(arquivo, linha) ) {
         Pessoa *pessoa = Pessoa::deserialize(linha);
         familia.insert({pessoa->chave(), pessoa});
+        pessoas.insert({pessoa->chave(), pessoa});
+    }
+
+    // Segundo loop para definir os pais das pessoass
+    for (auto p : pessoas){
+        Pessoa *pessoa = p.second;
+        if (pessoa->chave_pai != "null") pessoa->set_pai(pessoas[pessoa->chave_pai]);
+        if (pessoa->chave_mae != "null") pessoa->set_mae(pessoas[pessoa->chave_mae]);
     }
 
     arquivo.close();

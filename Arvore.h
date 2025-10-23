@@ -43,6 +43,13 @@ struct Arvore
 
 
     /**
+     * @brief funcao para definir os pais de uma pessoa
+     * @param pessoa A pessoa para quais os pais serao definidos
+     */
+    void definir_pais(Pessoa*pessoa);
+
+
+    /**
     * @brief Funcionalidade obrigatória 5 
     * Busca pessoas por nome e exibe no console
     */

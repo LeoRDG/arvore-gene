@@ -15,7 +15,9 @@ struct Pessoa
     Data nascimento;
     char genero;
 
-    int geracao;
+    int geracao = 0;
+
+    string chave_pai, chave_mae; // Variaveis temporarias para carregar os pais da pessoa
 
     Pessoa *pai = nullptr;
     Pessoa *mae = nullptr;
@@ -23,8 +25,26 @@ struct Pessoa
 
     static const int L_NOME = 30;
     static const int L_NASC = 15;
-    static const int L_GEN  =  2;
+    static const int L_PAIS = 15;
+    static const int L_GEN  =  7;
     
+    /**
+     * @returns Retorna o primeiro dessa pessoa
+     */
+    string primeiro_nome();
+
+    /**
+     * @brief Define o pai dessa pessoa
+     * @param ppai A pessoa que 'e pai dessa pessoa
+     */
+    void set_pai(Pessoa*ppai);
+
+    /**
+     * @brief Define o pai dessa pessoa
+     * @param mmae A pessoa que é mae dessa pessoa
+     */
+    void set_mae(Pessoa*mmae);
+
     /**
      * Funcionalidade obrigatória 3
      * 
@@ -49,7 +69,7 @@ struct Pessoa
      * @return Quantidade de descendentes
      */
     int contar_descendentes();
-    
+
 
     /// @brief Mostra o nome, nascimento e genero dessa pessoa
     void mostrar();
