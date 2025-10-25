@@ -1,6 +1,7 @@
 #include <string>
 #include <functional>
 #include "Data.h"
+#include <climits>
 #pragma once
 
 using namespace std;

@@ -6,6 +6,8 @@
 #include "util.h"
 #include <vector>
 #include <unordered_map>
+#include <climits>
+
 
 struct Arvore
 {   
