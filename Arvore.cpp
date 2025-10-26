@@ -173,3 +173,7 @@ void Arvore::info_simples(){
     print("Nome da Arvore : " + nome);
     print("Quantidade de pessoas : " + to_string(familia.size()));
 }
+
+void Arvore::exibir_geracao(int geracao) {
+
+}

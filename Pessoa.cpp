@@ -97,3 +97,7 @@ Pessoa * Pessoa::deserialize(string dados){
 
     return pessoa;
 }
+
+void Pessoa::exibir_asc_desc() {
+
+}
