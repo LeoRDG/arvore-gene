@@ -21,7 +21,7 @@ Arvore::Arvore(string nm){
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
         { "Exibir parentesco",                    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
-        { "Mostrar gerações"                       },
+/*        { "Mostrar gerações",                     [this](){exibir_geracao();}},  VAMO GREMIO*/
         { "Exibir Ascendentes e Descendentes",     },
         { "Listar Arovre a partir de uma pessoa",  },
         { "Contar Descendentes de uma Pessoa",     },
@@ -174,6 +174,33 @@ void Arvore::info_simples(){
     print("Quantidade de pessoas : " + to_string(familia.size()));
 }
 
-void Arvore::exibir_geracao(int geracao) {
 
+
+void Arvore::exibir_geracao(int geracao) {
+    if (familia.empty()) {
+        cout << "Nenhuma pessoa cadastrada." << "\n";
+        return;
+    }
+    for (auto& par: familia) {
+        par.second->geracao = -1;
+    }
+
+    for (auto& par: familia) {
+        Pessoa *pessoa = par.second;
+        if (pessoa->pai==nullptr && pessoa->mae==nullptr) {
+            pessoa->definir_geracao(0);
+        }
+    }
+
+    cout << " GERACAO " << geracao << "\n";
+
+    bool achou = false;
+
+    for (auto& par: familia) {
+        Pessoa *pessoa = par.second;
+        if (pessoa->geracao == geracao) {
+            cout << "- " << pessoa->nome << "\n";
+            achou = true;
+        }
+    }
 }

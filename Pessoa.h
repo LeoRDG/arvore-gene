@@ -15,7 +15,7 @@ struct Pessoa
     Data nascimento;
     char genero;
 
-    int geracao = 0;
+    int geracao = -1;
 
     string chave_pai, chave_mae; // Variaveis temporarias para carregar os pais da pessoa
 
@@ -74,6 +74,16 @@ struct Pessoa
     /// @brief Mostra o nome, nascimento e genero dessa pessoa
     void mostrar();
 
+    /**
+     * Funcionalidade opcional
+     *
+     * Define um valor para a geração para posteriormente apresentar a geração por nível
+     *
+     *
+     */
+
+    void definir_geracao(int nivel);
+
 
     /**
     * @brief Gera uma chave para essa pessoa (nome + nascimento),
@@ -99,4 +109,5 @@ struct Pessoa
    static Pessoa * deserialize(string dados);
 
    static void imprimir_cabecario();
+
 };
