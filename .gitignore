@@ -3,6 +3,7 @@ clea.DS_Store
 .vscode/
 output/
 build/
+*.csv
 
 # CLion
 .idea/
