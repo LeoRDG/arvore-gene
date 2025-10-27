@@ -16,7 +16,7 @@ Implementar um sistema/software em C++para representar e manipular uma árvore g
 ### FUNCIONALIDADES OPCIONAIS 
 - [ ] Exibir nivel de parentesco entre 2 pessoas
 - [ ] Contagem de descendentes diretos e indiretos 
-- [ ] Mostrar gerações por nivel 
+- [x] Mostrar gerações por nivel 
 - [x] Gravar e carregar de um arquivo de texto
 
 Para compilar corretamente, todos os arquivos cpp devem ser incluidos
