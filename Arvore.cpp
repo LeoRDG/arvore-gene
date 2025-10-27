@@ -21,7 +21,7 @@ Arvore::Arvore(string nm){
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
         { "Exibir parentesco",                    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
-/*        { "Mostrar gerações",                     [this](){exibir_geracao();}},  VAMO GREMIO*/
+        { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
         { "Exibir Ascendentes e Descendentes",     },
         { "Listar Arovre a partir de uma pessoa",  },
         { "Contar Descendentes de uma Pessoa",     },
@@ -156,13 +156,14 @@ void Arvore::carregar(){
     arquivo.close();
 }
 
-vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero){
+vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero, int geracao){
     vector<Pessoa*> encontradas;
     for (auto p : familia) {
         Pessoa * pessoa = p.second;
         if ( !contem(pessoa->nome, nome) ) continue;
         if ( pessoa->nascimento.valor() >= dt_valor ) continue;
         if ( genero != '\0' && pessoa->genero != genero ) continue;
+        if ( geracao != -1 && pessoa->geracao != geracao ) continue;
         encontradas.push_back(pessoa);
     }
     return encontradas;
@@ -176,31 +177,14 @@ void Arvore::info_simples(){
 
 
 
-void Arvore::exibir_geracao(int geracao) {
+void Arvore::exibir_geracao() {
     if (familia.empty()) {
-        cout << "Nenhuma pessoa cadastrada." << "\n";
+        print("Nenhuma pessoa cadastrada.");
         return;
     }
-    for (auto& par: familia) {
-        par.second->geracao = -1;
-    }
 
-    for (auto& par: familia) {
-        Pessoa *pessoa = par.second;
-        if (pessoa->pai==nullptr && pessoa->mae==nullptr) {
-            pessoa->definir_geracao(0);
-        }
-    }
+    int geracao = ler_int("Digite a geracao que está procurando: ");
+    vector<Pessoa*> encontradas = query("", INT_MAX, '\0', geracao);
 
-    cout << " GERACAO " << geracao << "\n";
-
-    bool achou = false;
-
-    for (auto& par: familia) {
-        Pessoa *pessoa = par.second;
-        if (pessoa->geracao == geracao) {
-            cout << "- " << pessoa->nome << "\n";
-            achou = true;
-        }
-    }
+    mostrar_pessoas(encontradas);
 }

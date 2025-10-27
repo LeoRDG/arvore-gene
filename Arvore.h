@@ -93,7 +93,7 @@ struct Arvore
      * 
      * @param geracao Um numero inteiro (x >= 0) represando a geracao que quer achar 
      */
-    void exibir_geracao(int geracao);
+    void exibir_geracao();
 
 
     /**
@@ -113,5 +113,5 @@ struct Arvore
      * @brief Pesquisa por pessoas usando alguns parametros
      * @param 
      */
-    vector<Pessoa*> query(string nome="", int dt_valor = INT_MAX, char genero='\0');
+    vector<Pessoa*> query(string nome="", int dt_valor = INT_MAX, char genero='\0', int geracao=-1);
 };
