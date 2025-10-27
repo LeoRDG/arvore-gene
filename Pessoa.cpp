@@ -11,8 +11,8 @@
 using namespace std;
 
 void Pessoa::mostrar(){
-    cout << left << setw(L_NOME) << nome;
-    cout << setw(L_GEN) << nascimento.str();
+    cout << left << setw(L_NOME + 2) << nome;
+    cout << setw(L_NASC) << nascimento.str();
     cout << setw(L_GEN) << genero;
 
     cout << setw(L_PAIS);
@@ -21,7 +21,7 @@ void Pessoa::mostrar(){
     cout << setw(L_PAIS);
     (mae==nullptr) ? cout << "" : cout << mae->nome;
 
-    cout << setw(8);
+    cout << setw(L_GER);
     (geracao == -1) ? cout << "???" : cout << geracao;
     
     cout << "\n";
@@ -51,7 +51,7 @@ void Pessoa::imprimir_cabecario(){
     cout << setw(L_GEN) << "Genero";
     cout << setw(L_PAIS) << "Pai";
     cout << setw(L_PAIS) << "Mae";
-    cout << setw(10) << "Geracao";
+    cout << setw(L_GEN) << "Geracao";
     cout << "\n";
 }
 

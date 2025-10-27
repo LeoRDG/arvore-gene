@@ -26,7 +26,8 @@ struct Pessoa
     static const int L_NOME = 30;
     static const int L_NASC = 15;
     static const int L_PAIS = 15;
-    static const int L_GEN  =  7;
+    static const int L_GEN  = 10;
+    static const int L_GER = 10;
     
     /**
      * @returns Retorna o primeiro dessa pessoa
