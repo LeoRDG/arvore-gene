@@ -143,3 +143,16 @@ void Pessoa::exibir_descendentes() {
         filho->exibir_descendentes();
     }
 }
+
+void Pessoa::info(){
+    clear();
+    cout << "Nome: " << nome << "\n";
+    cout << "Nascimento: " << nascimento.str() << "\n";
+    cout << "Genero: " << genero << "\n";
+    cout << "____________________________________________\n";
+}
+
+
+void Pessoa::criar_opcoes(){
+
+}
