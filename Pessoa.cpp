@@ -41,7 +41,7 @@ void Pessoa::set_pai(Pessoa*ppai){
 
 void Pessoa::set_mae(Pessoa*mmae){
     mae = mmae;
-    geracao = max(geracao, pai->geracao+1);
+    geracao = max(geracao, mae->geracao+1);
     mae->filhos.push_back(this);
 }
 

@@ -25,12 +25,14 @@ Data::Data(string data){
 }
 
 int Data::valor() {
-    int qtd_bisextos = ano/4 - ano/100 + ano/400;
-    int dias = 365*ano + qtd_bisextos + dia;
-    for (int i=1; i<mes; i++) {
-        dias+=dias_no_mes[i];
-    }
-    return dias;
+    // int qtd_bisextos = ano/4 - ano/100 + ano/400;
+    // int dias = 365*ano + qtd_bisextos + dia;
+    // for (int i=1; i<mes; i++) {
+    //     dias+=dias_no_mes[i];
+    // }
+    // return dias;
+
+    return ano*10000 + mes*100 + dia;
 }
 
 Data::Data(int ddia, int dmes, int dano){
