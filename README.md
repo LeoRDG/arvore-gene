@@ -28,10 +28,11 @@ Para compilar corretamente, todos os arquivos cpp devem ser incluidos
 
 ###### Usa o alias abaixo, só muda o caminho
 ```
-alias arv='rm -f ~/Desktop/ADS/arvore-gene/output.out &&
-g++ $(find ~/Desktop/ADS/arvore-gene -name "*.cpp" ! -name "test.cpp") 
--o ~/Desktop/ADS/arvore-gene/output.out &&
-~/Desktop/ADS/arvore-gene/output.out'
+alias arv='rm -f ~/Desktop/ADS/arvore-gene/out.out && \
+clang++ ~/Desktop/ADS/arvore-gene/src/*.cpp \
+-I ~/Desktop/ADS/arvore-gene/include \
+-o ~/Desktop/ADS/arvore-gene/out.out && \
+~/Desktop/ADS/arvore-gene/out.out'
 ```
 
 ##### Windows

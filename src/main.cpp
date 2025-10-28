@@ -4,7 +4,7 @@
  * Contém o loop principal
  */
 
-#include "Arvore.h"
+#include "../include/Arvore.h"
 
 int main() {
     Arvore arvore = Arvore("arvore");

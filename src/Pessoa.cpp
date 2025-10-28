@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
-#include "Pessoa.h"
+#include "../include/Pessoa.h"
 
 using namespace std;
 

@@ -2,11 +2,11 @@
  * Aqui serão implementadas as funcionalidades da Pessoa
  */
 
-#include "Arvore.h"
-#include "util.h"
+#include "../include/Arvore.h"
+#include "../include/util.h"
 #include <iostream>
 #include <fstream>
-#include "Pessoa.h"
+#include "../include/Pessoa.h"
 #include <unordered_map>
 
 using namespace std;

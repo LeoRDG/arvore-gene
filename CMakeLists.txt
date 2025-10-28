@@ -14,24 +14,29 @@ endif()
 
 # Fontes principais (sem o main)
 set(CORE_SOURCES
-        Arvore.cpp
-        Data.cpp
-        Pessoa.cpp
-        util.cpp
+    src/Arvore.cpp
+    src/Data.cpp
+    src/Pessoa.cpp
+    src/util.cpp
+    src/Regex.cpp
 )
 
 # Biblioteca com o núcleo da aplicação
 add_library(arvorelib ${CORE_SOURCES})
-target_include_directories(arvorelib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Inclui headers
+target_include_directories(arvorelib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Warnings que evitam lágrimas
 if(MSVC)
     target_compile_options(arvorelib PRIVATE /W4 /permissive-)
 else()
-    target_compile_options(arvorelib PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow -fno-omit-frame-pointer)
+    target_compile_options(arvorelib PRIVATE
+        -Wall -Wextra -Wpedantic -Wconversion -Wshadow -fno-omit-frame-pointer
+    )
 endif()
 
-# Sanitizers (Debug por padrão). Desligue com -DENABLE_SANITIZERS=OFF
+# Sanitizers (Debug por padrão)
 option(ENABLE_SANITIZERS "Enable Address/UB sanitizers (Clang/GCC)" ON)
 if(ENABLE_SANITIZERS AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU" AND NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_options(arvorelib PRIVATE -fsanitize=address,undefined)
@@ -39,23 +44,23 @@ if(ENABLE_SANITIZERS AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU" AND NOT CMAKE
 endif()
 
 # Executável principal
-add_executable(arvore_gene main.cpp)
+add_executable(arvore_gene src/main.cpp)
 target_link_libraries(arvore_gene PRIVATE arvorelib)
 
-# Executável de testes (opcional, se existir test.cpp)
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
-    add_executable(arvore_tests test.cpp)
+# Executável de testes (opcional)
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/test.cpp)
+    add_executable(arvore_tests src/test.cpp)
     target_link_libraries(arvore_tests PRIVATE arvorelib)
     enable_testing()
     add_test(NAME run_arvore_tests COMMAND arvore_tests)
 endif()
 
-# LTO para Release quando der
+# LTO para Release
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     include(CheckIPOSupported)
     check_ipo_supported(RESULT ipo_ok OUTPUT ipo_msg)
     if(ipo_ok)
-        set_property(TARGET arvorelib arvore_gene PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+        set_property(TARGET arvorelib PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
         if(TARGET arvore_tests)
             set_property(TARGET arvore_tests PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
         endif()
