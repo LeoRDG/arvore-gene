@@ -124,7 +124,13 @@ struct Pessoa
     /**
     * @brief Exibe informacoes dessa pessoa
     */
-    void info();
+    void mostrar_info();
+
+
+    /**
+     * @brief Mostra o menu com as opcoes para o usuario selecionar
+     */
+    void mostrar_menu();
 
 
     /**

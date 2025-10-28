@@ -59,7 +59,11 @@ void Arvore::buscar_pessoas(){
     
     mostrar_pessoas(encontradas);
     int num = ler_int("Qual pessoa voce estava procurando? ", encontradas.size(), 1);
-    encontradas[num-1]->info();
+    
+    Pessoa*p = encontradas[num-1];
+    p->mostrar_info();
+    p->mostrar_menu();
+    p->menu.esperar_resposta();
 }
 
 void Arvore::definir_pais(Pessoa*pessoa){

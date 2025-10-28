@@ -35,3 +35,9 @@ bool Menu::processar_resposta(int resposta){
     opcoes[resposta].func();
     return true;
 }
+
+
+void Menu::esperar_resposta(){
+    int num = ler_int("Digite o numero da opcao desejada: ", opcoes.size());
+    processar_resposta(num);
+}

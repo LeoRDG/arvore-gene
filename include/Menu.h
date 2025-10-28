@@ -18,4 +18,7 @@ struct Menu{
 
 
     bool processar_resposta(int);
+
+
+    void esperar_resposta();
 };

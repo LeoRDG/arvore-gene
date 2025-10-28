@@ -144,7 +144,7 @@ void Pessoa::exibir_descendentes() {
     }
 }
 
-void Pessoa::info(){
+void Pessoa::mostrar_info(){
     clear();
     cout << "Nome: " << nome << "\n";
     cout << "Nascimento: " << nascimento.str() << "\n";
@@ -153,6 +153,17 @@ void Pessoa::info(){
 }
 
 
-void Pessoa::criar_opcoes(){
+void Pessoa::mostrar_menu(){
+    if (menu.opcoes.empty()) criar_opcoes();
+    menu.imprimir();
+}
 
+
+void Pessoa::criar_opcoes(){
+    menu = {{
+        {"Mostrar",             [this]() {mostrar();}},
+        {"Exibir Ascendentes",  [this]() {exibir_ascendentes();}},
+        {"Exibir Descendentes", [this]() {exibir_descendentes();}},
+        {"Remover da Árvore",   [this]() {print("Removendo " + nome);}},
+    }};
 }
