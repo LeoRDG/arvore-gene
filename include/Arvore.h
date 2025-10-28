@@ -110,6 +110,12 @@ struct Arvore
      */
     void mostrar_pessoas(vector<Pessoa*> pessoas);
 
+
+    /**
+     * @brief Cria o menu dessa arvore
+     */
+    void criar_menu();
+
     
     /**
      * @brief Pesquisa por pessoas usando alguns parametros

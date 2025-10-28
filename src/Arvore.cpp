@@ -12,21 +12,7 @@
 using namespace std;
 
 Arvore::Arvore(string nm){
-    // As opcoes do menu sao criadas aqui usando a struct Opcao
-    // Esse metodo foi escolhido para nao precisar usar switch/if para cada caso
-    // tornando o código mais modular e fácil de manter.
     nome = nm;
-
-    menu = { {
-        { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
-        { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
-        { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
-        { "Exibir parentesco entre 2 pessoas",    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
-        { "Sair",                                 [this]() {exit(0);} },
-        //{ "Salvar" ,                              [this]() {salvar();} },
-        //{ "Carregar" ,                            [this]() {carregar();} },
-    }
-    };
 }
 
 void Arvore::adicionar_pessoa(){
@@ -156,4 +142,25 @@ void Arvore::exibir_geracao() {
     vector<Pessoa*> encontradas = query("", INT_MAX, '\0', geracao);
 
     mostrar_pessoas(encontradas);
+}
+
+void Arvore::criar_menu() {
+    // As opcoes do menu sao criadas aqui usando a struct Opcao
+    // Esse metodo foi escolhido para nao precisar usar switch/if para cada caso
+    // tornando o código mais modular e fácil de manter.
+    
+    menu = { {
+        { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
+        { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
+        { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
+        { "Exibir parentesco entre 2 pessoas",    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
+        { "Sair",                                 [this]() {exit(0);} },
+        //{ "Salvar" ,                              [this]() {salvar();} },
+        //{ "Carregar" ,                            [this]() {carregar();} },
+    } };
+}
+
+void Arvore::imprimir_menu() {
+    if (menu.opcoes.empty()) criar_menu();
+    menu.imprimir();
 }
