@@ -1,5 +1,7 @@
 #pragma once // Garante que esse header seja incluso uma só vez
 #include <functional>
+#include <string>
+#include <vector>
 
 using namespace std;
 

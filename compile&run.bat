@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "SRC_DIR=%USERPROFILE%\Desktop\git\arvore-gene"
+set "SRC_DIR=%USERPROFILE%\Desktop\arvore-gene"
 set "OUT_FILE=%SRC_DIR%\output.exe"
 
 echo Apagando executável antigo...
