@@ -11,15 +11,15 @@
 using namespace std;
 
 void Pessoa::mostrar(){
-    cout << left << setw(L_NOME + 2) << nome;
+    cout << left << setw(L_NOME) << nome;
     cout << setw(L_NASC) << nascimento.str();
     cout << setw(L_GEN) << genero;
 
     cout << setw(L_PAIS);
-    (pai==nullptr) ? cout << "" : cout << pai->nome;
+    (pai==nullptr) ? cout << "" : cout << pai->primeiro_nome();
 
     cout << setw(L_PAIS);
-    (mae==nullptr) ? cout << "" : cout << mae->nome;
+    (mae==nullptr) ? cout << "" : cout << mae->primeiro_nome();
 
     cout << setw(L_GER);
     (geracao == -1) ? cout << "???" : cout << geracao;
