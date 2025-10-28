@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include "util.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ struct Pessoa
     Pessoa *pai = nullptr;
     Pessoa *mae = nullptr;
     vector<Pessoa*> filhos;
+    Menu menu;
 
     static const int L_NOME = 30;
     static const int L_NASC = 15;
@@ -91,24 +93,34 @@ struct Pessoa
     * para evitar duplicatas
     * @returns Uma string que representa essa pessoa.
     */
-   string chave();
+    string chave();
 
 
-   /**
+    /**
     * @brief Essa funçao é usada para salvar os dados da pessoa
     * Ela cria uma string com os dados separados por virgula
     * @returns Uma string com os dados dessa pessoa
     */
-   string serialize();
+    string serialize();
 
 
-   /**
+    /**
     * @brief Cria uma pessoa a partir de dados salvos
     * @param str Os dados carregados em formato de string
     * @returns O ponteiro de uma struct dessa pessoa
     */
-   static Pessoa * deserialize(string dados);
+    static Pessoa * deserialize(string dados);
 
-   static void imprimir_cabecario();
+    static void imprimir_cabecario();
 
+    /**
+    * @brief Exibe informacoes dessa pessoa
+    */
+    void info();
+
+
+    /**
+     * @brief Cria as opcoes do menu
+     */
+    void criar_opcoes();
 };

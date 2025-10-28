@@ -17,37 +17,16 @@ Arvore::Arvore(string nm){
     // tornando o código mais modular e fácil de manter.
     nome = nm;
 
-    opcoes = {
+    menu = { {
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
-        { "Exibir parentesco",                    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
         { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
-        { "Exibir Ascendentes e Descendentes",     },
-        { "Listar Arovre a partir de uma pessoa",  },
-        { "Contar Descendentes de uma Pessoa",     },
-        { "Editar Pessoa",                         },
+        { "Exibir parentesco entre 2 pessoas",    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
         { "Sair",                                 [this]() {exit(0);} },
         //{ "Salvar" ,                              [this]() {salvar();} },
         //{ "Carregar" ,                            [this]() {carregar();} },
-
-    };
-}
-
-void Arvore::imprimir_menu(){
-    print("----------------------- MENU -----------------------\n");
-    // Para cada Opcao
-    // é imprimido o nome da opcao associada a um numero (i + 1)
-    for (int i=0; i<opcoes.size(); i++) {
-        Opcao opt = opcoes[i];
-        
-        // Se a funcao for nula, (ainda nao foi implementada)
-        // nao imprimir a opcao
-        if (opt.func == nullptr) continue;
-        
-        cout << i+1 << ". ";
-        print(opcoes[i].descricao);
     }
-    print();
+    };
 }
 
 void Arvore::adicionar_pessoa(){
@@ -79,6 +58,8 @@ void Arvore::buscar_pessoas(){
     }
     
     mostrar_pessoas(encontradas);
+    int num = ler_int("Qual pessoa voce estava procurando? ", encontradas.size(), 1);
+    encontradas[num-1]->info();
 }
 
 void Arvore::definir_pais(Pessoa*pessoa){
@@ -95,20 +76,6 @@ void Arvore::definir_pais(Pessoa*pessoa){
     mostrar_pessoas(possiveis_maes);
     resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) -1;
     pessoa->set_mae(possiveis_maes[resposta]);
-}
-
-bool Arvore::processar_resposta(int resposta){
-    // Como o menu mostrado ao usuario tem um offset de 1 comparado ao vetor de opcoes
-    // Deve ser subtraido 1 da resposta
-    resposta -= 1;
-
-    if (resposta >= opcoes.size() || resposta < 0) return false;
-    if (opcoes[resposta].func == nullptr) return false; 
-
-    // Chama a funcao da Opcao
-    clear();
-    opcoes[resposta].func();
-    return true;
 }
 
 void Arvore::mostrar_pessoas(vector<Pessoa*> pessoas){
@@ -174,8 +141,6 @@ void Arvore::info_simples(){
     print("Nome da Arvore : " + nome);
     print("Quantidade de pessoas : " + to_string(familia.size()));
 }
-
-
 
 void Arvore::exibir_geracao() {
     if (familia.empty()) {

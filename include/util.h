@@ -6,12 +6,6 @@
 
 using namespace std;
 
-struct Opcao{
-    string descricao;
-    //void(*func)();
-    function <void()> func = nullptr;
-};
-
 
 /**
  * @brief Essa funcao le um numero inteiro do usuario

@@ -112,3 +112,17 @@ void Pessoa::definir_geracao(int nivel) {
             if (f) f->definir_geracao(nivel +1);
         }
 }
+
+
+void Pessoa::info(){
+    clear();
+    cout << "Nome: " << nome << "\n";
+    cout << "Nascimento: " << nascimento.str() << "\n";
+    cout << "Genero: " << genero << "\n";
+    cout << "____________________________________________\n";
+}
+
+
+void Pessoa::criar_opcoes(){
+
+}

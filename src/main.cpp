@@ -13,9 +13,9 @@ int main() {
     while (true) {
         clear();
         arvore.info_simples();
-        arvore.imprimir_menu();
-        int resposta = ler_int("Digite um número: ", arvore.opcoes.size());
-        arvore.processar_resposta( resposta );
+        arvore.menu.imprimir();
+        int resposta = ler_int("Digite um número: ", arvore.menu.opcoes.size());
+        arvore.menu.processar_resposta( resposta );
         arvore.salvar();
         pausar();
     }
