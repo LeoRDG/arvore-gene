@@ -62,6 +62,14 @@ struct Pessoa
      * Exibe no console todos os descendentes dessa pessoa
      */
     void exibir_descendentes();
+
+
+    /**
+    * Funcionalidade obrigatória 4
+    *
+    * Exibe no console todos os ascendentes dessa pessoa
+    */
+    void exibir_ascendentes();
     
 
     /**

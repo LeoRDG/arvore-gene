@@ -113,16 +113,33 @@ void Pessoa::definir_geracao(int nivel) {
         }
 }
 
+void Pessoa::exibir_ascendentes() {
+    if (pai == nullptr && mae == nullptr) {
+        cout << "Não há ascendentes cadastrados" << "\n";
+    }
 
-void Pessoa::info(){
-    clear();
-    cout << "Nome: " << nome << "\n";
-    cout << "Nascimento: " << nascimento.str() << "\n";
-    cout << "Genero: " << genero << "\n";
-    cout << "____________________________________________\n";
+    else if (pai != nullptr) {
+        cout << "Pai :" << pai->nome << "\n";
+
+        pai->exibir_ascendentes();
+    }
+
+    else if (mae != nullptr) {
+        cout << "Mae :" << mae->nome << "\n";
+
+        mae->exibir_ascendentes();
+    }
+
 }
 
+void Pessoa::exibir_descendentes() {
+    if (filhos.empty()) {
+        cout << "Não há descendentes cadastrados" << "\n";
+        return;
+    }
 
-void Pessoa::criar_opcoes(){
-
+    for (Pessoa* filho: filhos) {
+        cout << "Filho :" << filho->nome << "\n";
+        filho->exibir_descendentes();
+    }
 }

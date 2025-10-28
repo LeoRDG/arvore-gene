@@ -1,4 +1,3 @@
-# CMakeLists.txt (topo do projeto)
 cmake_minimum_required(VERSION 3.16)
 project(arvore_gene LANGUAGES CXX)
 
@@ -14,17 +13,15 @@ endif()
 
 # Fontes principais (sem o main)
 set(CORE_SOURCES
-    src/Arvore.cpp
-    src/Data.cpp
-    src/Pessoa.cpp
-    src/util.cpp
-    src/Regex.cpp
+        src/Arvore.cpp
+        src/Data.cpp
+        src/Pessoa.cpp
+        src/util.cpp
+        src/Regex.cpp
 )
 
 # Biblioteca com o núcleo da aplicação
 add_library(arvorelib ${CORE_SOURCES})
-
-# Inclui headers
 target_include_directories(arvorelib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Warnings que evitam lágrimas
@@ -32,15 +29,17 @@ if(MSVC)
     target_compile_options(arvorelib PRIVATE /W4 /permissive-)
 else()
     target_compile_options(arvorelib PRIVATE
-        -Wall -Wextra -Wpedantic -Wconversion -Wshadow -fno-omit-frame-pointer
+            -Wall -Wextra -Wpedantic -Wconversion -Wshadow -fno-omit-frame-pointer
     )
 endif()
 
 # Sanitizers (Debug por padrão)
 option(ENABLE_SANITIZERS "Enable Address/UB sanitizers (Clang/GCC)" ON)
+
 if(ENABLE_SANITIZERS AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU" AND NOT CMAKE_BUILD_TYPE STREQUAL "Release")
-    target_compile_options(arvorelib PRIVATE -fsanitize=address,undefined)
-    target_link_options(arvorelib PRIVATE -fsanitize=address,undefined)
+    set(SAN_FLAGS "-fsanitize=address,undefined")
+    add_compile_options(${SAN_FLAGS})
+    add_link_options(${SAN_FLAGS})
 endif()
 
 # Executável principal
