@@ -1,6 +1,8 @@
 # Árvore Genealógica
 Arvore Genealógica para trabalho de Linguagens de Programação.
 
+[Planilha com alguns recuros](https://docs.google.com/spreadsheets/d/1k6NhMuUn_whsIjCkfNWN000m3dIhQlh5PUalqmEERps/edit?gid=0#gid=0)
+
 
 ## Objetivo Geral
 Implementar um sistema/software em C++para representar e manipular uma árvore genealógica, aplicando estruturas de dados hierárquicas, como árvores, ou filas e listas. 
