@@ -9,7 +9,7 @@ Implementar um sistema/software em C++para representar e manipular uma árvore g
 - [x] Adicionar pessoa 
 - [x] Definir relação (Pai, mae, filho)
 - [ ] Exibir ascendentes e descendentes de uma pessoa -- DEIXA CO PAI(JÃO)
-- [ ] Listar toda a arvore a partir de um ancestral 
+- [x] Listar toda a arvore a partir de um ancestral 
 - [x] Buscar pessoa por nome 
 
 

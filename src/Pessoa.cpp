@@ -165,5 +165,12 @@ void Pessoa::criar_opcoes(){
         {"Exibir Ascendentes",  [this]() {exibir_ascendentes();}},
         {"Exibir Descendentes", [this]() {exibir_descendentes();}},
         {"Remover da Árvore",   [this]() {print("Removendo " + nome);}},
+        {"Exibir Árvore",       [this]() {exibir_arvore(0);}},
     }};
+}
+
+void Pessoa::exibir_arvore(int s){
+    for (int i = 0; i < s*2; i++) cout << "-";
+    cout << nome << endl;
+    for (Pessoa* filho : filhos) filho->exibir_arvore(s+1);
 }
