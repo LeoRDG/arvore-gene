@@ -129,7 +129,9 @@ vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero, int geraca
 void Arvore::info_simples(){
     print(Data::hoje().str());
     print("Nome da Arvore : " + nome);
-    print("Quantidade de pessoas : " + to_string(familia.size()));
+    print("Quantidade de pessoas:", ' ');
+    print_com_cor(to_string(familia.size()), "verde");
+    print();
 }
 
 void Arvore::exibir_geracao() {

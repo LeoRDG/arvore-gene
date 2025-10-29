@@ -2,9 +2,19 @@
 #include <functional>
 #include "Data.h"
 #include <climits>
+#include <unordered_map>
 #pragma once
 
 using namespace std;
+
+const unordered_map<string, string> cores = {
+    {"vermelho", "\e[38;5;9m"},
+    {"verde",    "\e[38;5;47m"},
+    {"azul",     "\e[38;5;12m"},
+    {"amarelo",  "\e[38;5;3m"},
+    {"cinza",    "\e[38;5;8m"},
+    {"padrao",   "\e[38;5;250m"},
+};
 
 
 /**
@@ -87,6 +97,9 @@ void clear();
  * @param end O que escrever na tela por ultimo, por padrao cria uma nova linha
  */
 void print(string str="", char end='\n');
+
+
+void print_com_cor(string str, string cor="padrao");
 
 
 /**

@@ -5,7 +5,7 @@
 using namespace std;
 
 void Menu::imprimir(){
-    print("----------------------- MENU -----------------------\n");
+    print_com_cor("----------------------- MENU -----------------------\n", "amarelo");
     // Para cada Opcao
     // é imprimido o nome da opcao associada a um numero (i + 1)
     for (int i=0; i<opcoes.size(); i++) {

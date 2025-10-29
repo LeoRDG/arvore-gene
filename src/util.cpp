@@ -94,11 +94,17 @@ bool contem(string str1, string str2, bool ignore_case){
 }
 
 void clear(){
-    cout << "\033c";
+    cout << "\ec";
 }
 
 void print(string str, char end){
     cout << str << end;
+}
+
+void print_com_cor(string str, string cor) {
+    // Verifica se a cor existe, .count() retorna 0 se nao existe
+    cor = (bool) cores.count(cor) ? cores.at(cor) : cores.at("padrao");
+    cout << cor << str << "\e[0m";
 }
 
 bool confirmar(string msg) {
