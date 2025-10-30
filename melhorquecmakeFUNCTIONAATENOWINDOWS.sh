@@ -5,12 +5,9 @@ arquivo='output.out'
 echo 'Removendo arquivo antigo..'
 rm -f ./$arquivo
 
-echo 'Compilando código..'
-
-# Cria uma lista de arquivos .cpp
 arquivos=(./src/*.cpp)
 
-# Compila um por um, mostrando o nome do arquivo
+# Compila 1 por 1
 for f in "${arquivos[@]}"; do
     echo "Compilando $f ..."
     g++ -c "$f" -I ./include -o "${f%.cpp}.o"
