@@ -155,7 +155,7 @@ void Arvore::criar_menu() {
     menu = { {
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
-        { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
+        { "Mostrar gerações",                     [this]() {exibir_geracao();}},  
         { "Exibir parentesco entre 2 pessoas",    [this]() {parentesco();}},
         { "Sair",                                 [this]() {exit(0);} },
         //{ "Salvar" ,                              [this]() {salvar();} },
