@@ -175,8 +175,9 @@ void Pessoa::exibir_arvore(int s){
     for (Pessoa* filho : filhos) filho->exibir_arvore(s+1);
 }
 
-int Pessoa::find(Pessoa * p) { 
-    /// FAZER DEPOIS
-    if (this == p) return 0;
-    return 1;
-}  
+vector<Pessoa*> Pessoa::conexoes(){
+    vector <Pessoa*> resultado = filhos;
+    if (pai != nullptr) resultado.push_back(pai);
+    if (mae != nullptr) resultado.push_back(mae);
+    return resultado;
+}

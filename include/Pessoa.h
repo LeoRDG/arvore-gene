@@ -24,6 +24,7 @@ struct Pessoa
     Pessoa *mae = nullptr;
     vector<Pessoa*> filhos;
     Menu menu;
+    bool visitado = false; // Variavel para marcar a pessoa no algoritmo de busca recurssiva
 
     static const int L_NOME = 30;
     static const int L_NASC = 15;
@@ -151,4 +152,11 @@ struct Pessoa
      * @returns Um numero que representa o grau de parentesco entre essas duas pessoas
      */
     int find(Pessoa *p);
+
+    
+    /**
+     * @brief Funcao para pegar as pessoas diretamente conectadas a essa pessoa
+     * @returns Um vetor com os pais e os filhos dessa pessoa
+     */
+    vector<Pessoa*> conexoes();
 };

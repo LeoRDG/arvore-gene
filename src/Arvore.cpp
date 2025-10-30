@@ -8,6 +8,7 @@
 #include <fstream>
 #include "../include/Pessoa.h"
 #include <unordered_map>
+#include <queue>
 
 using namespace std;
 
@@ -170,9 +171,56 @@ void Arvore::imprimir_menu() {
 void Arvore::parentesco() {
     vector<Pessoa*> pessoas = query();
     mostrar_pessoas(pessoas);
-    Pessoa*primeira = pessoas[ler_int("Qual a primeira pessoa? ")-1];
-    Pessoa*segunda  = pessoas[ler_int("Qual a segunda pessoa? ")-1];
+    Pessoa*pessoaA = pessoas[ler_int("Qual a primeira pessoa? ")-1];
+    Pessoa*pessoaB  = pessoas[ler_int("Qual a segunda pessoa? ")-1];
 
-    int parentesco = primeira->find(segunda);
+    /*
+        Algoritmo BFS
+        https://www.youtube.com/watch?v=xlVX7dXLS64
+
+        
+        Cria uma fila com a pessoaA dentro
+        Enquanto a fila nao estiver vazia
+
+        Verifica se a primeira pessoa da fila é a pessoaB
+        Se for, sai do loop pois o parentesco foi encontrado
+
+        Se nao for..
+        Repete o processo para cada Pessoa diretamente ligada à que saiu da fila
+
+        Se o loop encerrar porque a fila esvaziou as duas pessoas não tem parentesco definido
+
+    */
     
+    queue<Pessoa*> fila;
+    fila.push(pessoaA);
+
+    int contagem = 0;
+    while(!fila.empty()) {
+        Pessoa*atual = fila.back();
+        
+        if (atual == pessoaB) break;
+
+        fila.pop();
+
+        if (atual->visitado) continue;
+        atual->visitado = true;
+
+        for (Pessoa *p : atual->conexoes()) {
+            if (!p->visitado) fila.push(p);
+        }
+        contagem++;
+    }
+
+    // Reseta o estado de visitado das pessoas
+    for (Pessoa *p : pessoas) p->visitado=false;
+
+    if (fila.empty()) {
+        print_com_cor(pessoaA->nome + " e " + pessoaB->nome + " nao possuem nenhum grau de parentesco\n", "vermelho");
+        return;
+    }
+
+    cout << "O grau de parentesco entre essas duas pessoas e: ";
+    print_com_cor(to_string(contagem), "verde");
+    print();
 }
