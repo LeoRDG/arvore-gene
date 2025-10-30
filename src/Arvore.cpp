@@ -197,7 +197,7 @@ void Arvore::parentesco() {
 
     int contagem = 0;
     while(!fila.empty()) {
-        Pessoa*atual = fila.back();
+        Pessoa*atual = fila.front();
         
         if (atual == pessoaB) break;
 
