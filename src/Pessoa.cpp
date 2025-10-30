@@ -178,5 +178,5 @@ void Pessoa::exibir_arvore(int s){
 int Pessoa::find(Pessoa * p) { 
     /// FAZER DEPOIS
     if (this == p) return 0;
-    return 1 + 
-}   
+    return 1;
+}  
