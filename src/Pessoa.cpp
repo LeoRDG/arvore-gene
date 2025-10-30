@@ -174,3 +174,9 @@ void Pessoa::exibir_arvore(int s){
     cout << nome << endl;
     for (Pessoa* filho : filhos) filho->exibir_arvore(s+1);
 }
+
+int Pessoa::find(Pessoa * p) { 
+    /// FAZER DEPOIS
+    if (this == p) return 0;
+    return 1 + 
+}   

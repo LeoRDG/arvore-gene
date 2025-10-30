@@ -85,7 +85,7 @@ struct Arvore
      * @param b Pessoa B
      * @returns Um numero inteiro representando o grau
      */
-    int parentesco(Pessoa *a, Pessoa *b);
+    void parentesco();
     
     
     /**

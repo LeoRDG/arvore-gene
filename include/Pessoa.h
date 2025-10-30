@@ -144,4 +144,11 @@ struct Pessoa
      * @param s A "geraçao" atual, começa do 0, filhos -> 1, netos -> 2, etc..
      */
     void exibir_arvore(int s=0);
+
+    /**
+     * @brief Encontra outra pessoa relacionada
+     * @param p A pessoa à encontrar
+     * @returns Um numero que representa o grau de parentesco entre essas duas pessoas
+     */
+    int find(Pessoa *p);
 };

@@ -155,7 +155,7 @@ void Arvore::criar_menu() {
         { "Adicionar pessoa",                     [this]() {adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {buscar_pessoas();} },
         { "Mostrar gerações",                     [this]() {exibir_geracao();}},  //VAMO GREMIO
-        { "Exibir parentesco entre 2 pessoas",    [this]() {cout << "funcao para exibir parentesco pessoa... " << endl;} },
+        { "Exibir parentesco entre 2 pessoas",    [this]() {parentesco();}},
         { "Sair",                                 [this]() {exit(0);} },
         //{ "Salvar" ,                              [this]() {salvar();} },
         //{ "Carregar" ,                            [this]() {carregar();} },
@@ -165,4 +165,14 @@ void Arvore::criar_menu() {
 void Arvore::imprimir_menu() {
     if (menu.opcoes.empty()) criar_menu();
     menu.imprimir();
+}
+
+void Arvore::parentesco() {
+    vector<Pessoa*> pessoas = query();
+    mostrar_pessoas(pessoas);
+    Pessoa*primeira = pessoas[ler_int("Qual a primeira pessoa? ")-1];
+    Pessoa*segunda  = pessoas[ler_int("Qual a segunda pessoa? ")-1];
+
+    int parentesco = primeira->find(segunda);
+    
 }
