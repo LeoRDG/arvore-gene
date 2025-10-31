@@ -16,6 +16,7 @@ done
 # Linka todos os objetos em um único executável
 echo 'Gerando executável...'
 g++ ./src/*.o -I ./include -o ./$arquivo
+rm -f ./src/*.o
 
 echo "Pronto"
 ./$arquivo
