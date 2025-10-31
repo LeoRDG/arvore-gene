@@ -5,7 +5,6 @@
 #include "Pessoa.h"
 #include "util.h"
 #include <vector>
-#include <unordered_map>
 #include <climits>
 #include "Menu.h"
 
@@ -15,7 +14,7 @@ struct Arvore
     string nome;
     //vector<Opcao> opcoes;
     Menu menu;
-    unordered_map<string, Pessoa*> familia; // Foi escolhido usar um map aqui para evitar adicionar duplicatas
+    vector<Pessoa*> familia; 
 
     /**
      * @brief Inicializa a arvore

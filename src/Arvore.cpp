@@ -23,7 +23,7 @@ void Arvore::adicionar_pessoa(){
 
     Pessoa *pessoa = new Pessoa{nome, nascimento, genero};
 
-    familia.insert({pessoa->chave(), pessoa});
+    familia.push_back(pessoa);
 
     if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
     definir_pais(pessoa);
@@ -84,8 +84,7 @@ void Arvore::mostrar_pessoas(vector<Pessoa*> pessoas){
 void Arvore::salvar(){
     ofstream arquivo(nome + ".csv");
 
-    for (auto p : familia) {
-        Pessoa *pessoa = p.second;
+    for (auto pessoa : familia) {
         arquivo << pessoa->serialize() << "\n";
     }
 
@@ -100,7 +99,7 @@ void Arvore::carregar(){
     // Primeiro loop para criar todas as pessoas
     while ( getline(arquivo, linha) ) {
         Pessoa *pessoa = Pessoa::deserialize(linha);
-        familia.insert({pessoa->chave(), pessoa});
+        familia.push_back(pessoa);
         pessoas.insert({pessoa->chave(), pessoa});
     }
 
@@ -116,8 +115,7 @@ void Arvore::carregar(){
 
 vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero, int geracao){
     vector<Pessoa*> encontradas;
-    for (auto p : familia) {
-        Pessoa * pessoa = p.second;
+    for (auto pessoa : familia) {
         if ( !contem(pessoa->nome, nome) ) continue;
         if ( pessoa->nascimento.valor() >= dt_valor ) continue;
         if ( genero != '\0' && pessoa->genero != genero ) continue;
