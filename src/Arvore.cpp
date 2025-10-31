@@ -104,10 +104,10 @@ void Arvore::carregar(){
     }
 
     // Segundo loop para definir os pais das pessoass
-    for (auto p : pessoas){
-        Pessoa *pessoa = p.second;
-        if (pessoa->chave_pai != "null") pessoa->set_pai(pessoas[pessoa->chave_pai]);
-        if (pessoa->chave_mae != "null") pessoa->set_mae(pessoas[pessoa->chave_mae]);
+    for (auto pessoa : pessoas){
+        Pessoa *p = pessoa.second;
+        if (p->chave_pai.size() >= 1) p->set_pai(pessoas[p->chave_pai]);
+        if (p->chave_mae.size() >= 1) p->set_mae(pessoas[p->chave_mae]);
     }
 
     arquivo.close();

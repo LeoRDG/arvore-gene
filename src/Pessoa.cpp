@@ -56,26 +56,31 @@ void Pessoa::imprimir_cabecario(){
 }
 
 string Pessoa::chave(){
-    // Junta o nome e o valor do nascimento, removendo espaços e barras
-    // e deixando tudo minusculo
-    string result;
-    for ( char c: to_lower_str(nome)) {
-        if (c != ' ') result += c; 
-    }
-    result += to_string(nascimento.valor());
-    return result;
+    // Junta o nome e o valor do nascimento e deixando tudo minusculo
+    return to_string(nascimento.valor()) + to_lower_str(nome);
 }
 
 string Pessoa::serialize(){
+    stringstream stream;
     string result;
 
-    result += nome + ",";
-    result += genero ;
-    result += ',';
-    result += nascimento.str() + ",";
-    result += (pai == nullptr) ? "null," : pai->chave() + ",";
-    result += (mae == nullptr) ? "null" : mae->chave();
+    stream << setfill('0') << setw(4) << nascimento.ano << ","
+    << setw(2) << nascimento.mes << ","
+    << setw(2) << nascimento.dia << ","
+    << nome << ","
+    << genero << ',';
 
+    for (Pessoa*p : {pai, mae}) {
+        if (p == nullptr) stream << ",";
+        else {
+            stream << setw(4) << p->nascimento.ano 
+            << setw(2) << p->nascimento.mes 
+            << setw(2) << p->nascimento.dia
+            << to_lower_str(p->nome) << ",";
+        }
+    }
+
+    stream >> result;
     return result;
 }
 
@@ -83,6 +88,7 @@ Pessoa * Pessoa::deserialize(string dados){
     // Funcao Estatica
     // Usa uma stream de string para separar os dados por virgula
     // e coloca-los em um vetor de strings
+    // [ano,mes,dia,nome,genero,pai,mae]
     vector<string> vetor_dados;
     istringstream str(dados);
     string dado;
@@ -91,13 +97,18 @@ Pessoa * Pessoa::deserialize(string dados){
         vetor_dados.push_back(dado);
     }
 
-    string nome = vetor_dados[0];
-    char genero = vetor_dados[1][0];
-    Data nascimeneto = Data(vetor_dados[2]);
+    string nome = vetor_dados[3];
+    char genero = vetor_dados[4][0];
 
-    Pessoa*pessoa = new Pessoa{nome, nascimeneto, genero};
-    pessoa->chave_pai=vetor_dados[3];
-    pessoa->chave_mae=vetor_dados[4];
+    int dia = stoi(vetor_dados[2]);
+    int mes = stoi(vetor_dados[1]);
+    int ano = stoi(vetor_dados[0]);
+    Data nascimento = Data(dia, mes, ano);
+
+    Pessoa*pessoa = new Pessoa{nome, nascimento, genero};
+
+    pessoa->chave_pai = vetor_dados[5];
+    pessoa->chave_mae = vetor_dados[6];
 
     return pessoa;
 }
