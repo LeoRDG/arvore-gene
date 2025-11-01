@@ -36,13 +36,13 @@ string Pessoa::primeiro_nome(){
 void Pessoa::set_pai(Pessoa*ppai){
     pai = ppai;
     pai->filhos.push_back(this);
-    if (geracao < 0) definir_geracao();
+    definir_geracao();
 }
 
 void Pessoa::set_mae(Pessoa*mmae){
     mae = mmae;
     mae->filhos.push_back(this);
-    if (geracao < 0) definir_geracao();
+    definir_geracao();
 }
 
 void Pessoa::imprimir_cabecario(){
@@ -120,6 +120,8 @@ void Pessoa::definir_geracao() {
     int g_mae = (mae == nullptr) ? -1 : mae->geracao;
     int nivel = max(g_pai, g_mae);
 
+    if (geracao >= nivel+1) return; // Só define a geracao se o nivel do pai ou da mae for maior que a geracao atual
+
     geracao = nivel+1; // Define a geracao dessa pessoa
 
     // Define a geracao dos filhos
@@ -167,6 +169,7 @@ void Pessoa::mostrar_info(){
     cout << "Nome: " << nome << "\n";
     cout << "Nascimento: " << nascimento.str() << "\n";
     cout << "Genero: " << genero << "\n";
+    cout << "Descendentes: " << contar_descendentes() << "\n"; 
     cout << "____________________________________________\n";
 }
 
@@ -192,6 +195,16 @@ void Pessoa::exibir_arvore(int s){
     cout << nome << endl;
     for (Pessoa* filho : filhos) filho->exibir_arvore(s+1);
 }
+
+int Pessoa::contar_descendentes(){
+    if (filhos.empty()) return 0;
+    int c = filhos.size();
+    for (Pessoa* f : filhos) {
+        c += f->contar_descendentes();
+    }
+    return c;
+}
+
 
 vector<Pessoa*> Pessoa::conexoes(){
     vector <Pessoa*> resultado = filhos;
