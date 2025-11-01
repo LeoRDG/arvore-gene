@@ -24,7 +24,6 @@ struct Pessoa
     Pessoa *mae = nullptr;
     vector<Pessoa*> filhos;
     Menu menu;
-    bool visitado = false; // Variavel para marcar a pessoa no algoritmo de busca recurssiva
 
     static const int L_NOME = 30;
     static const int L_NASC = 15;

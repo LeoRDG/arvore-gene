@@ -80,7 +80,8 @@ string Pessoa::serialize(){
         }
     }
 
-    stream >> result;
+    getline(stream, result);
+
     return result;
 }
 

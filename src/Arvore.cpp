@@ -8,6 +8,7 @@
 #include <fstream>
 #include "../include/Pessoa.h"
 #include <unordered_map>
+#include <unordered_set>
 #include <queue>
 
 using namespace std;
@@ -117,7 +118,7 @@ vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero, int geraca
     vector<Pessoa*> encontradas;
     for (auto pessoa : familia) {
         if ( !contem(pessoa->nome, nome) ) continue;
-        if ( pessoa->nascimento.valor() >= dt_valor ) continue;
+        if ( pessoa->nascimento.valor() > dt_valor ) continue;
         if ( genero != '\0' && pessoa->genero != genero ) continue;
         if ( geracao != -1 && pessoa->geracao != geracao ) continue;
         encontradas.push_back(pessoa);
@@ -167,16 +168,36 @@ void Arvore::imprimir_menu() {
 }
 
 void Arvore::parentesco() {
-    vector<Pessoa*> pessoas = query();
-    mostrar_pessoas(pessoas);
-    Pessoa*pessoaA = pessoas[ler_int("Qual a primeira pessoa? ")-1];
-    Pessoa*pessoaB  = pessoas[ler_int("Qual a segunda pessoa? ")-1];
+    mostrar_pessoas(familia);
+    Pessoa*pessoaA = familia[ler_int("Qual a primeira pessoa? ")-1];
+    Pessoa*pessoaB = familia[ler_int("Qual a segunda pessoa? ")-1];
 
+    pair<int, stack<Pessoa*>> dist = calcular_distancia(pessoaA, pessoaB);
+    
+    if (dist.first < 0) print_com_cor("As duas pessoas nao tem nenhum grau de parentesco\n", "vermelho");
+    else if (dist.first == 0) print_com_cor("As duas pessoas sao as mesmas, parentesco: 0\n", "amarelo");
+    else {
+        while (true) {
+            if (dist.second.empty()) break;
+            Pessoa* atual = dist.second.top();
+            dist.second.pop();
+
+            if (atual == pessoaA || atual == pessoaB) print_com_cor(atual->nome, "amarelo");
+            else print_com_cor(atual->nome, "cinza");
+            
+            if (atual != pessoaB) print_com_cor(" -> ", "verde");
+            else print();
+        }
+        print("O grau de parentesco entre essas duas pessoas e: ", '\0');
+        print_com_cor(to_string(dist.first)+"\n", "verde");
+    }
+}
+
+pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
     /*
         Algoritmo BFS
         https://www.youtube.com/watch?v=xlVX7dXLS64
 
-        
         Cria uma fila com a pessoaA dentro
         Enquanto a fila nao estiver vazia
 
@@ -189,36 +210,39 @@ void Arvore::parentesco() {
         Se o loop encerrar porque a fila esvaziou as duas pessoas não tem parentesco definido
 
     */
-    
-    queue<Pessoa*> fila;
-    fila.push(pessoaA);
 
-    int contagem = 0;
+    queue<Pessoa*> fila;
+    fila.push(a);
+    unordered_set<Pessoa*> visitadas;
+    unordered_map<Pessoa*, int> distancia = {{a, 0}};
+    unordered_map<Pessoa*, Pessoa*> anterior;
+
     while(!fila.empty()) {
         Pessoa*atual = fila.front();
-        
-        if (atual == pessoaB) break;
-
         fila.pop();
-
-        if (atual->visitado) continue;
-        atual->visitado = true;
-
+        
+        if (atual == b) break;
+        if (visitadas.count(atual) == 1) continue;
+        
         for (Pessoa *p : atual->conexoes()) {
-            if (!p->visitado) fila.push(p);
+            if (visitadas.count(p) == 1) continue;
+            visitadas.insert(atual);
+            fila.push(p);
+            distancia[p] = distancia[atual]+1;
+            anterior[p] = atual;
         }
-        contagem++;
     }
 
-    // Reseta o estado de visitado das pessoas
-    for (Pessoa *p : pessoas) p->visitado=false;
+    if (anterior.count(b) == 0) return {-1, {}};    // Se a pessoa b nao estiver no map, ela nao foi encontrada (nao tem relacao com a)
+    //if (distancia[b] == 0) return {0, {b}};       // Se a distancia entre a e b for 0, sao a mesma pessoa
 
-    if (fila.empty()) {
-        print_com_cor(pessoaA->nome + " e " + pessoaB->nome + " nao possuem nenhum grau de parentesco\n", "vermelho");
-        return;
+    stack<Pessoa*> caminho;
+    Pessoa *atual = b;
+    while (atual != a) {
+        caminho.push(atual);
+        atual = anterior[atual];
     }
+    if (distancia[b] > 0) caminho.push(a);
 
-    cout << "O grau de parentesco entre essas duas pessoas e: ";
-    print_com_cor(to_string(contagem), "verde");
-    print();
+    return {distancia[b], caminho};
 }

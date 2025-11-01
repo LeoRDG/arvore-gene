@@ -5,6 +5,7 @@
 #include "Pessoa.h"
 #include "util.h"
 #include <vector>
+#include <stack>
 #include <climits>
 #include "Menu.h"
 
@@ -121,4 +122,14 @@ struct Arvore
      * @param 
      */
     vector<Pessoa*> query(string nome="", int dt_valor = INT_MAX, char genero='\0', int geracao=-1);
+
+
+    /**
+     * @brief Calcula a distancia entre duas pessoas
+     * @param a, b As duas pessoas para achar a distancia entre elas
+     * @returns Um par com um inteiro representando a distancia entre as duas pessoas
+     * E um vetor de pessoas que representa o caminho para chegar de uma a outra
+     */
+    static pair<int, stack<Pessoa*>> calcular_distancia(Pessoa*a, Pessoa*b);
+
 };
