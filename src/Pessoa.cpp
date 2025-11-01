@@ -35,14 +35,14 @@ string Pessoa::primeiro_nome(){
 
 void Pessoa::set_pai(Pessoa*ppai){
     pai = ppai;
-    geracao = max(geracao, pai->geracao+1);
     pai->filhos.push_back(this);
+    if (geracao < 0) definir_geracao();
 }
 
 void Pessoa::set_mae(Pessoa*mmae){
     mae = mmae;
-    geracao = max(geracao, mae->geracao+1);
     mae->filhos.push_back(this);
+    if (geracao < 0) definir_geracao();
 }
 
 void Pessoa::imprimir_cabecario(){
@@ -114,15 +114,18 @@ Pessoa * Pessoa::deserialize(string dados){
     return pessoa;
 }
 
-void Pessoa::definir_geracao(int nivel) {
-    if (geracao != -1 && geracao <= nivel) {
-        return;
-    }
-        geracao = nivel;
+void Pessoa::definir_geracao() {
+    // Pega o valor maior entre a geracao do pai e da mae
+    int g_pai = (pai == nullptr) ? -1 : pai->geracao;
+    int g_mae = (mae == nullptr) ? -1 : mae->geracao;
+    int nivel = max(g_pai, g_mae);
 
-        for (auto* f : filhos) {
-            if (f) f->definir_geracao(nivel +1);
-        }
+    geracao = nivel+1; // Define a geracao dessa pessoa
+
+    // Define a geracao dos filhos
+    for (auto* f : filhos) {
+        f->definir_geracao();
+    }
 }
 
 void Pessoa::exibir_ascendentes() {

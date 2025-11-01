@@ -93,7 +93,7 @@ struct Pessoa
      *
      */
 
-    void definir_geracao(int nivel);
+    void definir_geracao();
 
 
     /**
