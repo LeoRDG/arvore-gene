@@ -32,7 +32,7 @@ void Pessoa::exibir(){
     }
 
     cout << setw(L_GER);
-    (geracao == -1) ? cout << "???" : cout << geracao;
+    (geracao == GERACAO_INICIAL) ? cout << "???" : cout << geracao;
     
     cout << "\n";
 }
@@ -113,8 +113,8 @@ tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
 
 void Pessoa::definir_geracao() {
     // Pega o valor maior entre a geracao do pai e da mae
-    int g_pai = (pai == nullptr) ? -1 : pai->geracao;
-    int g_mae = (mae == nullptr) ? -1 : mae->geracao;
+    int g_pai = (pai == nullptr) ? GERACAO_INICIAL : pai->geracao;
+    int g_mae = (mae == nullptr) ? GERACAO_INICIAL : mae->geracao;
     int nivel = max(g_pai, g_mae);
 
     if (geracao >= nivel+1) return; // Só define a geracao se o nivel do pai ou da mae for maior que a geracao atual

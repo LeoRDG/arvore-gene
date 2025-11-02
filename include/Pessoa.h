@@ -17,7 +17,8 @@ struct Pessoa
     Data nascimento;
     char genero;
 
-    int geracao = -1;
+    static const int GERACAO_INICIAL = -1;
+    int geracao = GERACAO_INICIAL;
 
     Pessoa *pai = nullptr;
     Pessoa *mae = nullptr;
@@ -31,6 +32,7 @@ struct Pessoa
     static const int L_PAIS = 15;
     static const int L_GEN  = 10;
     static const int L_GER = 10;
+
 
     /**
      * @brief Mostra o nome, nascimento e genero dessa pessoa

@@ -14,7 +14,9 @@ struct Arvore
 {   
     string nome;
     Menu menu;
-    vector<Pessoa*> familia; 
+    vector<Pessoa*> familia;
+    
+    const string EXTENSAO = ".csv";
 
     /**
      * @brief Inicializa a arvore

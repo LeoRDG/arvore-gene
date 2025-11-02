@@ -8,13 +8,13 @@
 using namespace std;
 
 const unordered_map<string, string> cores = {
-    {"vermelho", "\e[38;5;9m"},
-    {"verde",    "\e[38;5;47m"},
-    {"azul",     "\e[38;5;12m"},
-    {"amarelo",  "\e[38;5;3m"},
-    {"cinza",    "\e[38;5;8m"},
-    {"padrao",   "\e[0m"},
-    {"rosa",     "\e[38;5;206m"},
+    {"vermelho", "\033[38;5;9m"},
+    {"verde",    "\033[38;5;47m"},
+    {"azul",     "\033[38;5;12m"},
+    {"amarelo",  "\033[38;5;3m"},
+    {"cinza",    "\033[38;5;8m"},
+    {"padrao",   "\033[0m"},
+    {"rosa",     "\033[38;5;206m"},
 };
 
 

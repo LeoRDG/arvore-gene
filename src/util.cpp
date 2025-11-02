@@ -98,7 +98,7 @@ bool contem(string str1, string str2){
 }
 
 void limpar_tela(){
-    cout << "\ec";
+    cout << "\033c";
 }
 
 void print(string str, char end){

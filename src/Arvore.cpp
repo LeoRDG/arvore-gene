@@ -150,7 +150,7 @@ void Arvore::criar_menu() {
 }
 
 void Arvore::salvar(){
-    ofstream arquivo(nome + ".csv");
+    ofstream arquivo(nome + EXTENSAO);
 
     for (auto pessoa : familia) {
         arquivo << pessoa->serializar() << "\n";
@@ -160,7 +160,7 @@ void Arvore::salvar(){
 }
 
 void Arvore::carregar(){
-    ifstream arquivo(nome + ".csv");
+    ifstream arquivo(nome + EXTENSAO);
     string linha;
     unordered_map<string, Pessoa*> pessoas;              // map para guardar a pessoa usando sua chave
     vector<tuple<Pessoa*, string, string>> pessoas_pais; // vetor de tuplas para guardar a pessoa e as chaves dos pais
