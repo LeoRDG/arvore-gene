@@ -84,8 +84,10 @@ void Arvore::ui_exibir_por_geracao() {
 
 void Arvore::ui_exibir_parentesco() {
     exibir_pessoas(familia);
-    Pessoa* pessoaA = familia[ler_int("Qual a primeira pessoa? ")-1];
-    Pessoa* pessoaB = familia[ler_int("Qual a segunda pessoa? ")-1];
+    int indiceA = ler_int("Qual a primeira pessoa? ", familia.size(), 1) - 1;
+    int indiceB = ler_int("Qual a segunda pessoa? ", familia.size(), 1) - 1;
+    Pessoa* pessoaA = familia[indiceA];
+    Pessoa* pessoaB = familia[indiceB];
 
     pair<int, stack<Pessoa*>> dist = calcular_distancia(pessoaA, pessoaB);
     
@@ -161,6 +163,8 @@ void Arvore::salvar(){
 
 void Arvore::carregar(){
     ifstream arquivo(nome + EXTENSAO);
+    if (!arquivo.is_open()) return;
+
     string linha;
     unordered_map<string, Pessoa*> pessoas;              // map para guardar a pessoa usando sua chave
     vector<tuple<Pessoa*, string, string>> pessoas_pais; // vetor de tuplas para guardar a pessoa e as chaves dos pais
@@ -169,6 +173,7 @@ void Arvore::carregar(){
     while ( getline(arquivo, linha) ) {
         auto pessoa_tuple = Pessoa::deserializar(linha);
         Pessoa *p = get<0>(pessoa_tuple);
+        if (p == nullptr) continue;
         familia.push_back(p);
         pessoas.insert({p->chave(), p});
         pessoas_pais.push_back(pessoa_tuple);
@@ -177,8 +182,8 @@ void Arvore::carregar(){
     // Segundo loop para definir os pais das pessoas 
     for (auto pessoa : pessoas_pais){
         auto [p, pai, mae] = pessoa;
-        if (pai.size() >= 1) p->definir_pai(pessoas[pai]);
-        if (mae.size() >= 1) p->definir_mae(pessoas[mae]);
+        if (!pai.empty() && pessoas.count(pai)) p->definir_pai(pessoas[pai]);
+        if (!mae.empty() && pessoas.count(mae)) p->definir_mae(pessoas[mae]);
     }
 
     arquivo.close();
@@ -193,12 +198,15 @@ Pessoa* Arvore::criar_pessoa(string nome, char genero, Data nascimento){
 vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char genero, int geracao){
     vector<Pessoa*> encontradas;
     for (auto pessoa : familia) {
-        // Se qualquer um desses testes for true, nao adicionar a pessoa ao vetor
-        if ( !contem(pessoa->nome, nome) ) continue;
-        if ( pessoa->nascimento.valor() >= valor_data ) continue;
-        if ( genero != '\0' && pessoa->genero != genero ) continue;
-        if ( geracao != -1 && pessoa->geracao != geracao ) continue;
-        encontradas.push_back(pessoa);
+        // Se todos os filtros retornarem true, adicionar a pessoa atual ao vetor
+        bool filtro_nome = contem(pessoa->nome, nome);
+        bool filtro_data = pessoa->nascimento.valor() < valor_data;
+        bool filtro_genero = genero == '\0' || pessoa->genero == genero;
+        bool filtro_geracao = geracao == -1 || pessoa->geracao == geracao;
+
+        if (filtro_nome && filtro_data && filtro_genero && filtro_geracao) {
+            encontradas.push_back(pessoa);
+        }
     }
     return encontradas;
 }
@@ -233,17 +241,18 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
         
         if (atual == b) break;
         if (visitadas.count(atual) == 1) continue;
+        visitadas.insert(atual);
         
         for (Pessoa *p : atual->conexoes()) {
             if (visitadas.count(p) == 1) continue;
-            visitadas.insert(atual);
             fila.push(p);
             distancia_map[p] = distancia_map[atual]+1;
             anterior[p] = atual;
         }
     }
 
-    if (anterior.count(b) == 0) return {-1, {}};    // Se a pessoa b nao estiver no map, ela nao foi encontrada (nao tem relacao com a)
+    // Se a pessoa b nao estiver no map, nao tem relacao com a pessoa a
+    if (anterior.count(b) == 0) return {-1, {}};
     //if (distancia_map[b] == 0) return {0, {b}};       // Se a distancia entre a e b for 0, sao a mesma pessoa
 
     stack<Pessoa*> caminho;

@@ -70,15 +70,8 @@ string Pessoa::serializar(){
     << nome << ","
     << genero << ',';
 
-    for (Pessoa* p : {pai, mae}) {
-        if (p == nullptr) stream << ",";
-        else {
-            stream << setw(4) << p->nascimento.ano 
-            << setw(2) << p->nascimento.mes 
-            << setw(2) << p->nascimento.dia
-            << minusculas(p->nome) << ",";
-        }
-    }
+    (pai == nullptr) ? stream << "," : stream << pai->chave() << ",";
+    (mae == nullptr) ? stream << ""  : stream << mae->chave();
 
     getline(stream, resultado);
 
@@ -89,6 +82,7 @@ tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
     // Funcao Estatica
     // Usa uma stream de string para separar os dados por virgula
     // e coloca-los em um vetor de strings
+
     // [ano,mes,dia,nome,genero,pai,mae]
     vector<string> vetor_dados;
     istringstream str(dados);
@@ -98,12 +92,22 @@ tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
         vetor_dados.push_back(dado);
     }
 
+    // Se o vetor nao tiver o matanho certo, retornar nullptr
+    if (vetor_dados.size() != 7) return {nullptr, "", ""};
+
+    // Se ocorrer um erro ao converter a string para int, retornar nullptr
+    int dia, mes, ano;
+    try {
+        dia = stoi(vetor_dados[2]);
+        mes = stoi(vetor_dados[1]);
+        ano = stoi(vetor_dados[0]);
+    } catch (invalid_argument) {
+         return {nullptr, "", ""};
+    }
+
     string nome = vetor_dados[3];
     char genero = vetor_dados[4][0];
 
-    int dia = stoi(vetor_dados[2]);
-    int mes = stoi(vetor_dados[1]);
-    int ano = stoi(vetor_dados[0]);
     Data nascimento = Data(dia, mes, ano);
 
     Pessoa* pessoa = new Pessoa{nome, nascimento, genero};

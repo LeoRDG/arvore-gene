@@ -16,7 +16,7 @@ void Menu::imprimir(){
         if (opt.func == nullptr) continue;
         
         cout << i+1 << ". ";
-        print(opcoes[i].descricao);
+        print(opt.descricao);
     }
     print();
 }

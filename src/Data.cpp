@@ -48,13 +48,16 @@ Data Data::hoje(){
 }
 
 bool Data::valido(){
-    bool vale = true;
-    vale = vale && ( hoje().valor() > valor() );                // Se essa data maior que a data de hoje, ela é invalida
-    vale = vale && ( 1 <= mes && mes <= 12 );                   // Validacao de mes
-    vale = vale && ( ano >= ANO_MIN );                          // Limite minimo de ano
-    int soma = bisexto(ano) && mes == 2;
-    vale = vale && ( 1 <= dia && dia <= dias_no_mes[mes]+soma); // Verifica anos bisextos
-    return vale;
+    // Calcula quantos dias o mês tem (considera ano bissexto para fevereiro)
+    int dias = dias_no_mes[mes];
+    if (mes == 2 && bisexto(ano)) dias = 29;
+
+    if (dia < 1 || dia > dias)    return false;  // Dia deve estar dentro do range válido para o mês
+    if (ano < ANO_MIN)            return false;  // Ano deve ser maior ou igual ao mínimo permitido
+    if (mes < 1 || mes > 12)      return false;  // Mês deve estar entre 1 e 12
+    if (valor() > hoje().valor()) return false;  // Data não pode ser no futuro
+
+    return true;
 }
 
 string Data::str(){
