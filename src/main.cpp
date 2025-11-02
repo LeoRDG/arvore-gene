@@ -11,7 +11,7 @@ int main() {
     arvore.carregar();
 
     while (true) {
-        clear();
+        limpar_tela();
         arvore.exibir_info();
         arvore.exibir_menu();
         arvore.menu.esperar_resposta();

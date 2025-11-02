@@ -20,7 +20,7 @@ struct Arvore
      * @brief Inicializa a arvore
      * @param nm O nome dessa árvore
      */
-    Arvore(string nm);
+    Arvore(string nome);
 
 
     /**
@@ -107,7 +107,7 @@ struct Arvore
      * @brief Pesquisa por pessoas usando alguns parametros
      * @param 
      */
-    vector<Pessoa*> query(string nome="", int dt_valor = INT_MAX, char genero='\0', int geracao=-1);
+    vector<Pessoa*> pesquisar_pessoas(string nome="", int valor_data = INT_MAX, char genero='\0', int geracao=-1);
 
     /**
      * @brief Calcula a distancia entre duas pessoas

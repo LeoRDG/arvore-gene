@@ -43,13 +43,13 @@ string Pessoa::primeiro_nome(){
     return nome.substr(0, espaco);
 }
 
-void Pessoa::set_pai(Pessoa*ppai){
+void Pessoa::definir_pai(Pessoa*ppai){
     pai = ppai;
     pai->filhos.push_back(this);
     definir_geracao();
 }
 
-void Pessoa::set_mae(Pessoa*mmae){
+void Pessoa::definir_mae(Pessoa*mmae){
     mae = mmae;
     mae->filhos.push_back(this);
     definir_geracao();
@@ -57,12 +57,12 @@ void Pessoa::set_mae(Pessoa*mmae){
 
 string Pessoa::chave(){
     // Junta o nome e o valor do nascimento e deixando tudo minusculo
-    return to_string(nascimento.valor()) + to_lower_str(nome);
+    return to_string(nascimento.valor()) + minusculas(nome);
 }
 
-string Pessoa::serialize(){
+string Pessoa::serializar(){
     stringstream stream;
-    string result;
+    string resultado;
 
     stream << setfill('0') << setw(4) << nascimento.ano << ","
     << setw(2) << nascimento.mes << ","
@@ -76,16 +76,16 @@ string Pessoa::serialize(){
             stream << setw(4) << p->nascimento.ano 
             << setw(2) << p->nascimento.mes 
             << setw(2) << p->nascimento.dia
-            << to_lower_str(p->nome) << ",";
+            << minusculas(p->nome) << ",";
         }
     }
 
-    getline(stream, result);
+    getline(stream, resultado);
 
-    return result;
+    return resultado;
 }
 
-tuple<Pessoa*, string, string> Pessoa::deserialize(string dados){
+tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
     // Funcao Estatica
     // Usa uma stream de string para separar os dados por virgula
     // e coloca-los em um vetor de strings

@@ -31,7 +31,7 @@ bool Menu::processar_resposta(int resposta){
     if (opcoes[resposta].func == nullptr) return false; 
 
     // Chama a funcao da Opcao
-    clear();
+    limpar_tela();
     opcoes[resposta].func();
     return true;
 }

@@ -55,17 +55,16 @@ void ignore_tudo();
  * @param str A string que deseja converter.
  * @returns A tring convertida em letras minusculas.
  */
-string to_lower_str(string str);
+string minusculas(string str);
 
 
 /**
  * @brief Checa se uma string contem a outra substring menor
  * @param str1 
  * @param str2
- * @param ignore_case Se true (padrao), vai ignorar maiuscula e minuscula
  * @returns True se qualquer uma das duas strings contem a outra
  */
-bool contem(string str1, string str2, bool ignore_case=true);
+bool contem(string str1, string str2);
 
 
 /**
@@ -89,7 +88,7 @@ char pedir_genero();
 
 
 /// @brief Limpa o console
-void clear();
+void limpar_tela();
 
 
 /**

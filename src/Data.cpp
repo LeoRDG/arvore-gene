@@ -35,10 +35,10 @@ int Data::valor() {
     return ano*10000 + mes*100 + dia;
 }
 
-Data::Data(int ddia, int dmes, int dano){
-    dia = ddia;
-    mes = dmes;
-    ano = dano;
+Data::Data(int dia, int mes, int ano){
+    this->dia = dia;
+    this->mes = mes;
+    this->ano = ano;
 }
 
 Data Data::hoje(){

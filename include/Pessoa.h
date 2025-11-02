@@ -46,13 +46,13 @@ struct Pessoa
      * @brief Define o pai dessa pessoa
      * @param ppai A pessoa que 'e pai dessa pessoa
      */
-    void set_pai(Pessoa*ppai);
+    void definir_pai(Pessoa*ppai);
 
     /**
      * @brief Define o pai dessa pessoa
      * @param mmae A pessoa que é mae dessa pessoa
      */
-    void set_mae(Pessoa*mmae);
+    void definir_mae(Pessoa*mmae);
 
     /**
      * Funcionalidade obrigatória 3
@@ -109,7 +109,7 @@ struct Pessoa
     * Ela cria uma string com os dados separados por virgula
     * @returns Uma string com os dados dessa pessoa
     */
-    string serialize();
+    string serializar();
 
 
     /**
@@ -117,7 +117,7 @@ struct Pessoa
     * @param str Os dados carregados em formato de string
     * @returns O ponteiro de uma struct dessa pessoa
     */
-    static tuple<Pessoa*, string, string> deserialize(string dados);
+    static tuple<Pessoa*, string, string> deserializar(string dados);
 
     static void exibir_cabecario();
 

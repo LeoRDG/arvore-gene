@@ -15,8 +15,8 @@
 
 using namespace std;
 
-Arvore::Arvore(string nm){
-    nome = nm;
+Arvore::Arvore(string nome){
+    this->nome = nome;
 }
 
 void Arvore::ui_adicionar_pessoa(){
@@ -33,27 +33,27 @@ void Arvore::ui_adicionar_pessoa(){
 void Arvore::ui_definir_pais(Pessoa*pessoa){
     //clear();
     print("Definindo os pais de '" + pessoa->nome + "'");
-    vector<Pessoa*> possiveis_pais = query("", pessoa->nascimento.valor(), 'M');
+    vector<Pessoa*> possiveis_pais = pesquisar_pessoas("", pessoa->nascimento.valor(), 'M');
     exibir_pessoas(possiveis_pais);
     int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) -1;
-    pessoa->set_pai(possiveis_pais[resposta]);
+    pessoa->definir_pai(possiveis_pais[resposta]);
 
-    clear();
+    limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
-    vector<Pessoa*> possiveis_maes = query("", pessoa->nascimento.valor(), 'F');
+    vector<Pessoa*> possiveis_maes = pesquisar_pessoas("", pessoa->nascimento.valor(), 'F');
     exibir_pessoas(possiveis_maes);
     resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) -1;
-    pessoa->set_mae(possiveis_maes[resposta]);
+    pessoa->definir_mae(possiveis_maes[resposta]);
 }
 
 void Arvore::ui_buscar_pessoa(){
     string nome = ler_string("Digite o nome da pessoa que deseja achar, deixe em branco para mostrar todas as pessoas: ");
-    clear();
+    limpar_tela();
     print("Pesquisando por '" + nome + "'");
     print("________________________________________________");
 
     // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
-    vector<Pessoa*> encontradas = query(nome);
+    vector<Pessoa*> encontradas = pesquisar_pessoas(nome);
 
     // Se pessoas foram encontradas, mostrar elas
     if ( encontradas.empty() ) {
@@ -72,7 +72,7 @@ void Arvore::ui_buscar_pessoa(){
 
 void Arvore::ui_exibir_por_geracao() {
     int geracao = ler_int("Digite a geracao que está procurando: ");
-    vector<Pessoa*> encontradas = query("", INT_MAX, '\0', geracao);
+    vector<Pessoa*> encontradas = pesquisar_pessoas("", INT_MAX, '\0', geracao);
 
     if (encontradas.empty()) {
         print_com_cor("Nenhuma pessoa encontrada nessa geraçao.\n", "vermelho");
@@ -153,7 +153,7 @@ void Arvore::salvar(){
     ofstream arquivo(nome + ".csv");
 
     for (auto pessoa : familia) {
-        arquivo << pessoa->serialize() << "\n";
+        arquivo << pessoa->serializar() << "\n";
     }
 
     arquivo.close();
@@ -167,7 +167,7 @@ void Arvore::carregar(){
 
     // Primeiro loop para criar todas as pessoas a partir do csv
     while ( getline(arquivo, linha) ) {
-        auto pessoa_tuple = Pessoa::deserialize(linha);
+        auto pessoa_tuple = Pessoa::deserializar(linha);
         Pessoa *p = get<0>(pessoa_tuple);
         familia.push_back(p);
         pessoas.insert({p->chave(), p});
@@ -177,8 +177,8 @@ void Arvore::carregar(){
     // Segundo loop para definir os pais das pessoas 
     for (auto pessoa : pessoas_pais){
         auto [p, pai, mae] = pessoa;
-        if (pai.size() >= 1) p->set_pai(pessoas[pai]);
-        if (mae.size() >= 1) p->set_mae(pessoas[mae]);
+        if (pai.size() >= 1) p->definir_pai(pessoas[pai]);
+        if (mae.size() >= 1) p->definir_mae(pessoas[mae]);
     }
 
     arquivo.close();
@@ -190,12 +190,12 @@ Pessoa* Arvore::criar_pessoa(string nome, char genero, Data nascimento){
     return pessoa;
 }
 
-vector<Pessoa*> Arvore::query(string nome, int dt_valor, char genero, int geracao){
+vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char genero, int geracao){
     vector<Pessoa*> encontradas;
     for (auto pessoa : familia) {
         // Se qualquer um desses testes for true, nao adicionar a pessoa ao vetor
         if ( !contem(pessoa->nome, nome) ) continue;
-        if ( pessoa->nascimento.valor() >= dt_valor ) continue;
+        if ( pessoa->nascimento.valor() >= valor_data ) continue;
         if ( genero != '\0' && pessoa->genero != genero ) continue;
         if ( geracao != -1 && pessoa->geracao != geracao ) continue;
         encontradas.push_back(pessoa);
@@ -224,7 +224,7 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
     queue<Pessoa*> fila;
     fila.push(a);
     unordered_set<Pessoa*> visitadas;
-    unordered_map<Pessoa*, int> distancia = {{a, 0}};
+    unordered_map<Pessoa*, int> distancia_map = {{a, 0}};
     unordered_map<Pessoa*, Pessoa*> anterior;
 
     while(!fila.empty()) {
@@ -238,13 +238,13 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
             if (visitadas.count(p) == 1) continue;
             visitadas.insert(atual);
             fila.push(p);
-            distancia[p] = distancia[atual]+1;
+            distancia_map[p] = distancia_map[atual]+1;
             anterior[p] = atual;
         }
     }
 
     if (anterior.count(b) == 0) return {-1, {}};    // Se a pessoa b nao estiver no map, ela nao foi encontrada (nao tem relacao com a)
-    //if (distancia[b] == 0) return {0, {b}};       // Se a distancia entre a e b for 0, sao a mesma pessoa
+    //if (distancia_map[b] == 0) return {0, {b}};       // Se a distancia entre a e b for 0, sao a mesma pessoa
 
     stack<Pessoa*> caminho;
     Pessoa *atual = b;
@@ -252,7 +252,7 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
         caminho.push(atual);
         atual = anterior[atual];
     }
-    if (distancia[b] > 0) caminho.push(a);
+    if (distancia_map[b] > 0) caminho.push(a);
 
-    return {distancia[b], caminho};
+    return {distancia_map[b], caminho};
 }

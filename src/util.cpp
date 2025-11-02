@@ -72,13 +72,13 @@ void pausar() {
     cin.get();
 }
 
-string to_lower_str(string str){
+string minusculas(string str){
     string result;
     for (char c: str) result += tolower(c);
     return result;
 }
 
-bool contem(string str1, string str2, bool ignore_case){
+bool contem(string str1, string str2){
     string menor = str1;
     string maior = str2;
 
@@ -90,16 +90,14 @@ bool contem(string str1, string str2, bool ignore_case){
         maior = str1;
     }
 
-    if (ignore_case) {
-        maior = to_lower_str(maior);
-        menor = to_lower_str(menor);
-    }
+    maior = minusculas(maior);
+    menor = minusculas(menor);
 
     int index = maior.find(menor);
     return (index >=0 and index < maior.size());
 }
 
-void clear(){
+void limpar_tela(){
     cout << "\ec";
 }
 
@@ -117,7 +115,7 @@ bool confirmar(string msg) {
     string resposta;
     print(msg);
     getline(cin, resposta);
-    resposta = to_lower_str(resposta);
+    resposta = minusculas(resposta);
     if (resposta ==  "sim" || resposta == "s") return true;
     return false;
 }
