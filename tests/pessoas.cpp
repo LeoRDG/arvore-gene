@@ -3,5 +3,5 @@
 
 int main(){
     Arvore arvore = Arvore("teste");
-    arvore.info_simples();
+    arvore.exibir_info();
 }

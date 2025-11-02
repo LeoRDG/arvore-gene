@@ -5,6 +5,7 @@
 #pragma once // Garante que esse header seja incluso uma só vez
 #include <string>
 #include <vector>
+#include <utility>
 #include "util.h"
 #include "Menu.h"
 
@@ -18,18 +19,23 @@ struct Pessoa
 
     int geracao = -1;
 
-    string chave_pai, chave_mae; // Variaveis temporarias para carregar os pais da pessoa
-
     Pessoa *pai = nullptr;
     Pessoa *mae = nullptr;
     vector<Pessoa*> filhos;
+    
     Menu menu;
 
+    // Larguras dos "campos" para exibição das informações
     static const int L_NOME = 30;
     static const int L_NASC = 15;
     static const int L_PAIS = 15;
     static const int L_GEN  = 10;
     static const int L_GER = 10;
+
+    /**
+     * @brief Mostra o nome, nascimento e genero dessa pessoa
+     */
+    void exibir();
     
     /**
      * @returns Retorna o primeiro dessa pessoa
@@ -82,17 +88,11 @@ struct Pessoa
     int contar_descendentes();
 
 
-    /// @brief Mostra o nome, nascimento e genero dessa pessoa
-    void mostrar();
-
     /**
      * Funcionalidade opcional
      *
      * Define um valor para a geração para posteriormente apresentar a geração por nível
-     *
-     *
      */
-
     void definir_geracao();
 
 
@@ -117,20 +117,20 @@ struct Pessoa
     * @param str Os dados carregados em formato de string
     * @returns O ponteiro de uma struct dessa pessoa
     */
-    static Pessoa * deserialize(string dados);
+    static tuple<Pessoa*, string, string> deserialize(string dados);
 
-    static void imprimir_cabecario();
+    static void exibir_cabecario();
 
     /**
     * @brief Exibe informacoes dessa pessoa
     */
-    void mostrar_info();
+    void exibir_info();
 
 
     /**
      * @brief Mostra o menu com as opcoes para o usuario selecionar
      */
-    void mostrar_menu();
+    void exibir_menu();
 
 
     /**
@@ -145,14 +145,6 @@ struct Pessoa
      */
     void exibir_arvore(int s=0);
 
-    /**
-     * @brief Encontra outra pessoa relacionada
-     * @param p A pessoa à encontrar
-     * @returns Um numero que representa o grau de parentesco entre essas duas pessoas
-     */
-    int find(Pessoa *p);
-
-    
     /**
      * @brief Funcao para pegar as pessoas diretamente conectadas a essa pessoa
      * @returns Um vetor com os pais e os filhos dessa pessoa

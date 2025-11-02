@@ -12,8 +12,8 @@ int main() {
 
     while (true) {
         clear();
-        arvore.info_simples();
-        arvore.imprimir_menu();
+        arvore.exibir_info();
+        arvore.exibir_menu();
         arvore.menu.esperar_resposta();
         arvore.salvar();
         pausar();

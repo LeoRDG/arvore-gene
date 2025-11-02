@@ -6,20 +6,30 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
+#include <tuple>
 #include "../include/Pessoa.h"
 
 using namespace std;
 
-void Pessoa::mostrar(){
-    cout << left << setw(L_NOME) << nome;
+void Pessoa::exibir_cabecario(){
+    cout << left << setw(L_NOME) << "Nome";
+    cout << setw(L_NASC) << "Nascimento";
+    cout << setw(L_GEN) << "Genero";
+    cout << setw(L_PAIS) << "Pai";
+    cout << setw(L_PAIS) << "Mae";
+    cout << setw(L_GEN) << "Geracao";
+    cout << "\n";
+}
+
+void Pessoa::exibir(){
+    cout << left << setw(L_NOME) << limite_str(nome, L_NOME-1);
     cout << setw(L_NASC) << nascimento.str();
     cout << setw(L_GEN) << genero;
 
-    cout << setw(L_PAIS);
-    (pai==nullptr) ? cout << "" : cout << pai->primeiro_nome();
-
-    cout << setw(L_PAIS);
-    (mae==nullptr) ? cout << "" : cout << mae->primeiro_nome();
+    for (auto p : {pai, mae}) {
+        cout << setw(L_PAIS);
+        (p==nullptr) ? cout << "" : cout << limite_str(p->primeiro_nome(), L_PAIS-1);
+    }
 
     cout << setw(L_GER);
     (geracao == -1) ? cout << "???" : cout << geracao;
@@ -43,16 +53,6 @@ void Pessoa::set_mae(Pessoa*mmae){
     mae = mmae;
     mae->filhos.push_back(this);
     definir_geracao();
-}
-
-void Pessoa::imprimir_cabecario(){
-    cout << left << setw(L_NOME) << "Nome";
-    cout << setw(L_NASC) << "Nascimento";
-    cout << setw(L_GEN) << "Genero";
-    cout << setw(L_PAIS) << "Pai";
-    cout << setw(L_PAIS) << "Mae";
-    cout << setw(L_GEN) << "Geracao";
-    cout << "\n";
 }
 
 string Pessoa::chave(){
@@ -85,7 +85,7 @@ string Pessoa::serialize(){
     return result;
 }
 
-Pessoa * Pessoa::deserialize(string dados){
+tuple<Pessoa*, string, string> Pessoa::deserialize(string dados){
     // Funcao Estatica
     // Usa uma stream de string para separar os dados por virgula
     // e coloca-los em um vetor de strings
@@ -108,10 +108,7 @@ Pessoa * Pessoa::deserialize(string dados){
 
     Pessoa*pessoa = new Pessoa{nome, nascimento, genero};
 
-    pessoa->chave_pai = vetor_dados[5];
-    pessoa->chave_mae = vetor_dados[6];
-
-    return pessoa;
+    return {pessoa, vetor_dados[5], vetor_dados[6]};
 }
 
 void Pessoa::definir_geracao() {
@@ -165,8 +162,7 @@ void Pessoa::exibir_asc_desc(){
     exibir_descendentes();
 }
 
-void Pessoa::mostrar_info(){
-    clear();
+void Pessoa::exibir_info(){
     cout << "Nome: " << nome << "\n";
     cout << "Nascimento: " << nascimento.str() << "\n";
     cout << "Genero: " << genero << "\n";
@@ -174,39 +170,36 @@ void Pessoa::mostrar_info(){
     cout << "____________________________________________\n";
 }
 
-
-void Pessoa::mostrar_menu(){
+void Pessoa::exibir_menu(){
     if (menu.opcoes.empty()) criar_opcoes();
     menu.imprimir();
 }
 
-
 void Pessoa::criar_opcoes(){
     menu = {{
-        {"Mostrar",             [this]() {mostrar();}},
-        {"Exibir Ascendentes",  [this]() {exibir_ascendentes();}},
-        {"Exibir Descendentes", [this]() {exibir_descendentes();}},
+        {"Mostrar",                           [this]() {exibir();}},
+        {"Exibir Ascendentes",                [this]() {exibir_ascendentes();}},
+        {"Exibir Descendentes",               [this]() {exibir_descendentes();}},
         {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
-        {"Remover da Árvore",   [this]() {print("Removendo " + nome);}},
-        {"Exibir Árvore",       [this]() {exibir_arvore(0);}},
+        {"Remover da Árvore",                 [this]() {print_com_cor("Funcionalidade nao implementada", "vermelho");}},
+        {"Exibir Árvore",                     [this]() {exibir_arvore(0);}},
     }};
 }
 
-void Pessoa::exibir_arvore(int s){
-    for (int i = 0; i < s*2; i++) cout << "-";
-    cout << nome << endl;
-    for (Pessoa* filho : filhos) filho->exibir_arvore(s+1);
+void Pessoa::exibir_arvore(int nivel){
+    for (int i = 0; i < nivel; i++) print_com_cor("-", "cinza");
+    print(nome);
+    for (Pessoa* filho : filhos) filho->exibir_arvore(nivel+1);
 }
 
 int Pessoa::contar_descendentes(){
     if (filhos.empty()) return 0;
-    int c = filhos.size();
+    int contagem = filhos.size();
     for (Pessoa* f : filhos) {
-        c += f->contar_descendentes();
+        contagem += f->contar_descendentes();
     }
-    return c;
+    return contagem;
 }
-
 
 vector<Pessoa*> Pessoa::conexoes(){
     vector <Pessoa*> resultado = filhos;
