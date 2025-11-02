@@ -13,7 +13,8 @@ const unordered_map<string, string> cores = {
     {"azul",     "\e[38;5;12m"},
     {"amarelo",  "\e[38;5;3m"},
     {"cinza",    "\e[38;5;8m"},
-    {"padrao",   "\e[38;5;250m"},
+    {"padrao",   "\e[0m"},
+    {"rosa",     "\e[38;5;206m"},
 };
 
 
@@ -108,3 +109,9 @@ void print_com_cor(string str, string cor="padrao");
  * @returns Verdadeiro se o usario digitar sim ou s se nao falso
  */
 bool confirmar(string msg);
+
+/**
+ * @brief Limita uma string para ter uma quantidade maxima de characteres
+ * @returns A string cortada para ter o tamanho maximo informado 
+ */
+string limite_str(string str, int max);

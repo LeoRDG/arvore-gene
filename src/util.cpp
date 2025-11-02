@@ -20,8 +20,10 @@ int ler_int(string msg, int max, int min) {
     // loop infinito que só acaba com um return quando o inteiro informado pelo usuario for valido
     while (true) {
         cout << msg;
+        cout << cores.at("verde");
         valido = (cin >> resposta) && (min <= resposta && resposta <= max);
         ignore_tudo();
+        cout << cores.at("padrao");
         if (valido) return resposta;
         print("INPUT INVALIDO");
     }
@@ -30,7 +32,9 @@ int ler_int(string msg, int max, int min) {
 string ler_string(string msg) {
     string resposta;
     cout << msg;
+    cout << cores.at("amarelo");
     getline(cin, resposta);
+    cout << cores.at("padrao");
     return resposta;
 }
 
@@ -39,7 +43,9 @@ char ler_char(string msg) {
 
     while(true) {
         cout << msg;
+        cout << cores.at("rosa");
         getline(cin, resposta);
+        cout << cores.at("padrao");
         if (resposta.size() == 1) return resposta[0];
         cout << "INPUT INVALIDO\n";
     }
@@ -114,4 +120,9 @@ bool confirmar(string msg) {
     resposta = to_lower_str(resposta);
     if (resposta ==  "sim" || resposta == "s") return true;
     return false;
+}
+
+string limite_str(string str, int max){
+    if (str.size() <= max) return str;
+    return str.substr(0, max-2) + "..";
 }
