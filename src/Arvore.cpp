@@ -126,7 +126,7 @@ void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){
     for (int i=0; i<pessoas.size(); i++) {
         //printf("% 3d ", i+1);
         cout << cores.at("verde") << setw(4) << i+1 << cores.at("padrao"); 
-        pessoas[i]->exibir();
+        pessoas[i]->exibir_linha();
     }
 }
 

@@ -21,7 +21,7 @@ void Pessoa::exibir_cabecario(){
     cout << "\n";
 }
 
-void Pessoa::exibir(){
+void Pessoa::exibir_linha(){
     cout << left << setw(L_NOME) << limite_str(nome, L_NOME-1);
     cout << setw(L_NASC) << nascimento.str();
     cout << setw(L_GEN) << genero;
@@ -175,13 +175,12 @@ void Pessoa::exibir_info(){
 }
 
 void Pessoa::exibir_menu(){
-    if (menu.opcoes.empty()) criar_opcoes();
+    if (menu.opcoes.empty()) criar_menu();
     menu.imprimir();
 }
 
-void Pessoa::criar_opcoes(){
+void Pessoa::criar_menu(){
     menu = {{
-        {"Mostrar",                           [this]() {exibir();}},
         {"Exibir Ascendentes",                [this]() {exibir_ascendentes();}},
         {"Exibir Descendentes",               [this]() {exibir_descendentes();}},
         {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
