@@ -1,7 +1,3 @@
-/**
- * Aqui será declarada a struct Arvore e suas funcionalidades
- */
-
 #include "Pessoa.h"
 #include "util.h"
 #include <vector>
@@ -10,57 +6,60 @@
 #include "Menu.h"
 
 
+/**
+ * @struct Arvore
+ * @brief Representa uma árvore genealógica
+ */
 struct Arvore
 {   
-    string nome;
-    Menu menu;
-    vector<Pessoa*> familia;
+    string nome;                    ///< Nome da árvore
+    Menu menu;                      ///< Menu de opcoes para interacao com o usuario
+    vector<Pessoa*> familia;        ///< Vetor contendo todas as pessoas da árvore
     
-    const string EXTENSAO = ".csv";
+    const string EXTENSAO = ".csv"; ///< Extensão dos arquivos de salvamento/carregamento
 
     /**
-     * @brief Inicializa a arvore
-     * @param nm O nome dessa árvore
+     * @brief Inicializa a árvore com um nome
+     * @param nome Nome dessa árvore
      */
     Arvore(string nome);
 
 
     /**
-     * Funcionalidade obrigatória 1,2
+     * @brief Funcao paraa adicionar uma nova pessoa à árvore
      * 
-     * Adiciona uma pessoa nessa árvore e define seus pais
+     * Pede dados do usuário (nome, gênero, nascimento)
+     * e permite definir os pais da pessoa criada.
      */
     void ui_adicionar_pessoa();
 
     /**
-     * @brief funcao para definir os pais de uma pessoa
-     * @param pessoa A pessoa para quais os pais serao definidos
+     * @brief Funcao para definir os pais de uma pessoa
+     * @param pessoa Pessoa para a qual os pais serão definidos
+     * 
+     * Pede ao usuário que selecione o pai e mãe a partir
+     * de pessoas já cadastradas na árvore.
      */
     void ui_definir_pais(Pessoa* pessoa);
 
     /**
-    * @brief Funcionalidade obrigatória 5 
-    * Busca pessoas por nome e exibe no console
-    */
+     * @brief Funcao para buscar pessoas na arvore por nome
+     */
     void ui_buscar_pessoa(); 
 
     /**
-     * Funcionalidade Opcional
+     * @brief Funcao para exibir todas as pessoas de uma geração específica
      * 
-     * Exibe no console todas as pessoas de uma determinada geraão
-     * 
-     * @param geracao Um numero inteiro (x >= 0) represando a geracao que quer achar 
+     * Pede um número ao usuário e exibe todas as pessoas
+     * que pertencem a essa geração
      */
     void ui_exibir_por_geracao();
 
     /**
-     * Funcionalidade opcional
+     * @brief Funcao para calcular e exibir o grau de parentesco entre duas pessoas
      * 
-     * Calcula o grau de parentesco entre duas pessoas
-     * 
-     * @param a Pessoa A
-     * @param b Pessoa B
-     * @returns Um numero inteiro representando o grau
+     * Pede para o usuário selecionar duas pessoas e calcula o grau de parentesco
+     * entre elas usando o algoritmo BFS, exibindo o caminho e a distancia.
      */
     void ui_exibir_parentesco();
 
@@ -86,16 +85,12 @@ struct Arvore
     void criar_menu();
     
     /**
-     * @brief Funcionalidade opcional
-     * 
-     * Salva essa arvore em um arquivo
+     * @brief Salva essa arvore em um arquivo
      */
     void salvar();
     
     /**
-     * Funcionalidade opcional
-     * 
-     * Carrega a arvore de um arquivo
+     * @brief Carrega a arvore de um arquivo
      */
     void carregar();
     
@@ -106,16 +101,26 @@ struct Arvore
     Pessoa* criar_pessoa(string nome, char genero, Data nascimento);
 
     /**
-     * @brief Pesquisa por pessoas usando alguns parametros
-     * @param 
+     * @brief Pesquisa por pessoas usando filtros opcionais
+     * @param nome Nome para buscar (string vazia = retorna todas)
+     * @param valor_data Data máxima permitida (INT_MAX = basicamente sem limite)
+     * @param genero Filtro por gênero ('\0' = todos os gêneros)
+     * @param geracao Geração específica (-1 = todas as gerações)
+     * @returns Vetor com todas as pessoas que atendem aos critérios da busca
      */
     vector<Pessoa*> pesquisar_pessoas(string nome="", int valor_data = INT_MAX, char genero='\0', int geracao=-1);
 
     /**
-     * @brief Calcula a distancia entre duas pessoas
-     * @param a, b As duas pessoas para achar a distancia entre elas
-     * @returns Um par com um inteiro representando a distancia entre as duas pessoas
-     * E um vetor de pessoas que representa o caminho para chegar de uma a outra
+     * @brief Calcula a distancia e o caminho entre duas pessoas
+     * 
+     * Usa algoritmo BFS para encontrar o menor caminho/
+     * parentesco entre duas pessoas na arvore.
+     * 
+     * @param a Primeira pessoa (origem)
+     * @param b Segunda pessoa (destino)
+     * @returns Pair contendo:
+     *   - int: Distancia (-1 se não há relacao, 0 se for a mesma pessoa, >0 para grau de parentesco)
+     *   - stack<Pessoa*>: Caminho de 'a' até 'b' (vazio se nao há relação)
      */
     static pair<int, stack<Pessoa*>> calcular_distancia(Pessoa* a, Pessoa* b);
 
