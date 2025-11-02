@@ -1,12 +1,20 @@
+/**
+ * Aqui tem funcoes auxiliares para input/output, 
+ * formatação, validação e manipulação de strings
+ */
+
+#pragma once
 #include <string>
 #include <functional>
 #include "Data.h"
 #include <climits>
 #include <unordered_map>
-#pragma once
 
 using namespace std;
 
+/**
+ * @brief Mapa de cores ANSI para imprimir com cor
+ */
 const unordered_map<string, string> cores = {
     {"vermelho", "\033[38;5;9m"},
     {"verde",    "\033[38;5;47m"},
@@ -19,98 +27,114 @@ const unordered_map<string, string> cores = {
 
 
 /**
- * @brief Essa funcao le um numero inteiro do usuario
- * @param msg A mensagem que voce quer mostrar ao usuario
- * @param max O valor maximo que o inteiro deve ter
- * @param min O valor minimo que o inteiro eve ter
- * @returns Um numero inteiro (input do usuario) 
+ * @brief Le um numero inteiro do usuario até que o numero seja válido.
+ * @param msg Mensagem exibida ao usuário
+ * @param max Valor maximo (padrão: INT_MAX)
+ * @param min Valor minimo (padrão: 0)
+ * @returns Numero inteiro válido dentro do intervalo informado
  */
 int ler_int(string msg, int max=INT_MAX, int min=0);
 
 
 /**
- * @brief Essa funcao le apenas um char do usuario
- * @param msg A mensagem que voce quer mostrar ao usuario
- * @returns O char que o usuario informou
+ * @brief Lê um único caractere do usuário
+ * @param msg Mensagem exibida ao usuário
+ * @returns Caractere digitado pelo usuário
  */
 char ler_char(string msg);
 
 
 /**
- * @brief Essa funcao le uma string do usuario
- * @param msg A mensagem que voce quer mostrar ao usuario
- * @returns Uma string com tudo que o usuario escreveu até o enter  
+ * @brief Lê uma linha de texto do usuário
+ * @param msg Mensagem exibida ao usuário
+ * @returns String com tudo que o usuário escreveu até o Enter
  */
 string ler_string(string msg);
 
 
 /**
- * @brief Limpa o buffer do cin
+ * @brief Limpa o buffer do cin para evitar problemas de leitura
  */
 void ignore_tudo();
 
 
 /**
- * @brief Converte uma string para letras minusculas.
- * @param str A string que deseja converter.
- * @returns A tring convertida em letras minusculas.
+ * @brief Converte uma string inteira para minuscula.
+ * @param str String a ser convertida
+ * @returns String convertida para minúsculas
  */
 string minusculas(string str);
 
 
 /**
- * @brief Checa se uma string contem a outra substring menor
- * @param str1 
- * @param str2
- * @returns True se qualquer uma das duas strings contem a outra
+ * @brief Verifica se uma string contem a outra, ignorando maiusculas e minusuclas
+ * @param str1 Primeira string
+ * @param str2 Segunda string
+ * @returns true se qualquer uma das duas strings contem a outra
  */
 bool contem(string str1, string str2);
 
 
 /**
- * @brief Pede uma data ao usuario, a funcao só termina se a data for valida.
- * @returns A struct Data com a data que o usu'ario informou.
+ * @brief Pede uma data em format de string ao usuario até que seja válida
+ * @returns Objeto Data válido
  */
 Data pedir_data();
 
 
 /**
- * @brief pausa a execucao até que o usuario aperte enter
+ * @brief Pausa a execução até que o usuário pressione Enter
+ * 
+ * Para permitir que o usuário leia as informacoes antes de continuar.
  */
 void pausar();
 
 
 /**
- * @brief Pede um genero ao usuario (f,m), a funcao só termina se o genero for valido.
- * @returns O genero o usu'ario informou.
+ * @brief Pede um genero ao usuario ('M' ou 'F')
+ * @returns 'M' para masculino ou 'F' para feminino
  */
 char pedir_genero();
 
 
-/// @brief Limpa o console
+/**
+ * @brief Limpa o console usando sequência ANSI
+ */
 void limpar_tela();
 
 
 /**
- * @brief Funcao para facilitar na hora de imprimir coisas no console
- * @param str A mensage para imprimir na tela, por padrao é uma string vazia
- * @param end O que escrever na tela por ultimo, por padrao cria uma nova linha
+ * @brief Imprime uma string no console
+ * @param str Mensagem a ser impressa (padrao: string vazia)
+ * @param end Caracter final a ser impresso (padrão: '\n')
  */
 void print(string str="", char end='\n');
 
 
+/**
+ * @brief Imprime uma string colorida no console usando ANSI
+ * 
+ * "vermelho", "verde", "azul", "amarelo", "cinza", "rosa"
+ * @param str Texto a ser impresso
+ * @param cor Nome da cor (padrão: "padrao")
+ */
 void print_com_cor(string str, string cor="padrao");
 
 
 /**
- * @brief Pede para o usuario confirmar se ele quer realizar uma acao
- * @param msg Mensagem para mostrar ao usuario
- * @returns Verdadeiro se o usario digitar sim ou s se nao falso
+ * @brief Pede para o usuario confirmar (sim/não)
+ * @param msg Mensagem de confirmação para ser exibida
+ * @returns true se usuário digitou "sim" ou "s", false caso contrário
  */
 bool confirmar(string msg);
 
 /**
- * @brief Limita uma string para ter uma quantidade maxima de characteres
- * @returns A string cortada para ter o tamanho maximo informado 
+ * @brief Limita uma string a um tamanho máximo, 
+ * 
+ * Se a string for maior que max, retorna os primeiros (max-2) caracteres + ".." 
+ * para indicar que a string nao esta completa
+ * @param str String a ser limitada
+ * @param max Tamanho máximo permitido
+ * @returns String truncada se exceder max, ou string original caso contrário
  */
 string limite_str(string str, int max);
