@@ -132,7 +132,7 @@ void Pessoa::definir_geracao() {
 
 void Pessoa::exibir_ascendentes() {
     if (pai == nullptr && mae == nullptr) {
-        cout << " " << "Não há ascendentes cadastrados para: " << this->nome << "\n";
+        cout << "Não há ascendentes cadastrados para: " << this->nome << "\n";
         return;
     }
     else{
