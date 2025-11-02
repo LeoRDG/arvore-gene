@@ -34,7 +34,7 @@ struct Arvore
      * @brief funcao para definir os pais de uma pessoa
      * @param pessoa A pessoa para quais os pais serao definidos
      */
-    void ui_definir_pais(Pessoa*pessoa);
+    void ui_definir_pais(Pessoa* pessoa);
 
     /**
     * @brief Funcionalidade obrigatória 5 
@@ -115,6 +115,6 @@ struct Arvore
      * @returns Um par com um inteiro representando a distancia entre as duas pessoas
      * E um vetor de pessoas que representa o caminho para chegar de uma a outra
      */
-    static pair<int, stack<Pessoa*>> calcular_distancia(Pessoa*a, Pessoa*b);
+    static pair<int, stack<Pessoa*>> calcular_distancia(Pessoa* a, Pessoa* b);
 
 };

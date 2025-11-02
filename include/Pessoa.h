@@ -46,13 +46,13 @@ struct Pessoa
      * @brief Define o pai dessa pessoa
      * @param ppai A pessoa que 'e pai dessa pessoa
      */
-    void definir_pai(Pessoa*ppai);
+    void definir_pai(Pessoa* pai);
 
     /**
      * @brief Define o pai dessa pessoa
      * @param mmae A pessoa que é mae dessa pessoa
      */
-    void definir_mae(Pessoa*mmae);
+    void definir_mae(Pessoa* mae);
 
     /**
      * Funcionalidade obrigatória 3

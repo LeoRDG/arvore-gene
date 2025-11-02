@@ -24,25 +24,25 @@ void Arvore::ui_adicionar_pessoa(){
     char genero =  pedir_genero();
     Data nascimento = pedir_data();
 
-    Pessoa*pessoa = criar_pessoa(nome, genero, nascimento);
+    Pessoa* pessoa = criar_pessoa(nome, genero, nascimento);
 
     if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
     ui_definir_pais(pessoa);
 }
 
-void Arvore::ui_definir_pais(Pessoa*pessoa){
+void Arvore::ui_definir_pais(Pessoa* pessoa){
     //clear();
     print("Definindo os pais de '" + pessoa->nome + "'");
     vector<Pessoa*> possiveis_pais = pesquisar_pessoas("", pessoa->nascimento.valor(), 'M');
     exibir_pessoas(possiveis_pais);
-    int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) -1;
+    int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) - 1;
     pessoa->definir_pai(possiveis_pais[resposta]);
 
     limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
     vector<Pessoa*> possiveis_maes = pesquisar_pessoas("", pessoa->nascimento.valor(), 'F');
     exibir_pessoas(possiveis_maes);
-    resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) -1;
+    resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) - 1;
     pessoa->definir_mae(possiveis_maes[resposta]);
 }
 
@@ -64,7 +64,7 @@ void Arvore::ui_buscar_pessoa(){
     exibir_pessoas(encontradas);
     int num = ler_int("Qual pessoa voce estava procurando? ", encontradas.size(), 1);
     
-    Pessoa*p = encontradas[num-1];
+    Pessoa* p = encontradas[num-1];
     p->exibir_info();
     p->exibir_menu();
     p->menu.esperar_resposta();
@@ -84,8 +84,8 @@ void Arvore::ui_exibir_por_geracao() {
 
 void Arvore::ui_exibir_parentesco() {
     exibir_pessoas(familia);
-    Pessoa*pessoaA = familia[ler_int("Qual a primeira pessoa? ")-1];
-    Pessoa*pessoaB = familia[ler_int("Qual a segunda pessoa? ")-1];
+    Pessoa* pessoaA = familia[ler_int("Qual a primeira pessoa? ")-1];
+    Pessoa* pessoaB = familia[ler_int("Qual a segunda pessoa? ")-1];
 
     pair<int, stack<Pessoa*>> dist = calcular_distancia(pessoaA, pessoaB);
     
@@ -203,7 +203,7 @@ vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char gene
     return encontradas;
 }
 
-pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
+pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
     /*
         Algoritmo BFS
         https://www.youtube.com/watch?v=xlVX7dXLS64
@@ -228,7 +228,7 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa*a, Pessoa*b) {
     unordered_map<Pessoa*, Pessoa*> anterior;
 
     while(!fila.empty()) {
-        Pessoa*atual = fila.front();
+        Pessoa* atual = fila.front();
         fila.pop();
         
         if (atual == b) break;

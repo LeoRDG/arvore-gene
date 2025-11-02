@@ -28,7 +28,7 @@ void Pessoa::exibir(){
 
     for (auto p : {pai, mae}) {
         cout << setw(L_PAIS);
-        (p==nullptr) ? cout << "" : cout << limite_str(p->primeiro_nome(), L_PAIS-1);
+        (p == nullptr) ? cout << "" : cout << limite_str(p->primeiro_nome(), L_PAIS-1);
     }
 
     cout << setw(L_GER);
@@ -43,14 +43,14 @@ string Pessoa::primeiro_nome(){
     return nome.substr(0, espaco);
 }
 
-void Pessoa::definir_pai(Pessoa*ppai){
-    pai = ppai;
+void Pessoa::definir_pai(Pessoa* pai){
+    this->pai = pai;
     pai->filhos.push_back(this);
     definir_geracao();
 }
 
-void Pessoa::definir_mae(Pessoa*mmae){
-    mae = mmae;
+void Pessoa::definir_mae(Pessoa* mae){
+    this->mae = mae;
     mae->filhos.push_back(this);
     definir_geracao();
 }
@@ -70,7 +70,7 @@ string Pessoa::serializar(){
     << nome << ","
     << genero << ',';
 
-    for (Pessoa*p : {pai, mae}) {
+    for (Pessoa* p : {pai, mae}) {
         if (p == nullptr) stream << ",";
         else {
             stream << setw(4) << p->nascimento.ano 
@@ -106,7 +106,7 @@ tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
     int ano = stoi(vetor_dados[0]);
     Data nascimento = Data(dia, mes, ano);
 
-    Pessoa*pessoa = new Pessoa{nome, nascimento, genero};
+    Pessoa* pessoa = new Pessoa{nome, nascimento, genero};
 
     return {pessoa, vetor_dados[5], vetor_dados[6]};
 }
@@ -151,7 +151,7 @@ void Pessoa::exibir_descendentes() {
         return;
     }
 
-    for (Pessoa* filho: filhos) {
+    for (Pessoa* filho : filhos) {
         cout << "Filho de " << this->nome<< " :" << " "<< filho->nome << "\n";
         filho->exibir_descendentes();
     }
@@ -202,7 +202,7 @@ int Pessoa::contar_descendentes(){
 }
 
 vector<Pessoa*> Pessoa::conexoes(){
-    vector <Pessoa*> resultado = filhos;
+    vector<Pessoa*> resultado = filhos;
     if (pai != nullptr) resultado.push_back(pai);
     if (mae != nullptr) resultado.push_back(mae);
     return resultado;

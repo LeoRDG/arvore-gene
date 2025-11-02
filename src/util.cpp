@@ -41,7 +41,7 @@ string ler_string(string msg) {
 char ler_char(string msg) {
     string resposta;
 
-    while(true) {
+    while (true) {
         cout << msg;
         cout << cores.at("rosa");
         getline(cin, resposta);
@@ -52,7 +52,7 @@ char ler_char(string msg) {
 }
 
 Data pedir_data(){
-    while(true) {
+    while (true) {
         Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
         if (data.valido()) return data;
         print("DATA INVALIDA");
@@ -74,7 +74,7 @@ void pausar() {
 
 string minusculas(string str){
     string result;
-    for (char c: str) result += tolower(c);
+    for (char c : str) result += tolower(c);
     return result;
 }
 
