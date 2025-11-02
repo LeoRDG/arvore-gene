@@ -137,12 +137,12 @@ void Pessoa::exibir_ascendentes() {
     }
     else{
         if (pai != nullptr) {
-            cout << "Pai :" << pai->nome << "\n";
+            cout << "Pai de "<< this->nome << ": " << pai->nome << "\n";
             pai->exibir_ascendentes();
         }
 
         if (mae != nullptr) {
-            cout << "Mae :" << mae->nome << "\n";
+            cout << "Mae de " <<this->nome << ": " << mae->nome << "\n";
             mae->exibir_ascendentes();
         }
     }
@@ -150,7 +150,7 @@ void Pessoa::exibir_ascendentes() {
 
 void Pessoa::exibir_descendentes() {
     if (filhos.empty()) {
-        cout << " "<< "Não há descendentes cadastrados para: " << this->nome << "\n";
+        cout << "Não há descendentes cadastrados para: " << this->nome << "\n";
         return;
     }
 
