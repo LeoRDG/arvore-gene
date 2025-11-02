@@ -132,7 +132,7 @@ void Pessoa::definir_geracao() {
 
 void Pessoa::exibir_ascendentes() {
     if (pai == nullptr && mae == nullptr) {
-        cout << " " << "Não há ascendentes cadastrados" << "\n";
+        cout << " " << "Não há ascendentes cadastrados para: " << this->nome << "\n";
         return;
     }
     else{
@@ -150,18 +150,19 @@ void Pessoa::exibir_ascendentes() {
 
 void Pessoa::exibir_descendentes() {
     if (filhos.empty()) {
-        cout << " "<< "Não há descendentes cadastrados" << "\n";
+        cout << " "<< "Não há descendentes cadastrados para: " << this->nome << "\n";
         return;
     }
 
     for (Pessoa* filho: filhos) {
-        cout << "Filho :" << filho->nome << "\n";
+        cout << "Filho de " << this->nome<< " :" << " "<< filho->nome << "\n";
         filho->exibir_descendentes();
     }
 }
 
 void Pessoa::exibir_asc_desc(){
-    
+    exibir_ascendentes();
+    exibir_descendentes();
 }
 
 void Pessoa::mostrar_info(){
@@ -185,6 +186,7 @@ void Pessoa::criar_opcoes(){
         {"Mostrar",             [this]() {mostrar();}},
         {"Exibir Ascendentes",  [this]() {exibir_ascendentes();}},
         {"Exibir Descendentes", [this]() {exibir_descendentes();}},
+        {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
         {"Remover da Árvore",   [this]() {print("Removendo " + nome);}},
         {"Exibir Árvore",       [this]() {exibir_arvore(0);}},
     }};
