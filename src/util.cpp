@@ -64,7 +64,7 @@ string pedir_nome() {
             return nome;
         }
         
-        print("Nome inválido. Digite um nome válido.", '\n', "vermelho");
+        print("Nome invalido. Digite um nome valido.", '\n', "vermelho");
     }
 }
 

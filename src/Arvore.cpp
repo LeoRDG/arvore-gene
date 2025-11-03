@@ -220,29 +220,32 @@ vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char gene
 
 pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
     // Algoritmo BFS (https://www.youtube.com/watch?v=xlVX7dXLS64)
+    // Encontra o menor caminho entre duas pessoas
     // Explora nivel por nivel ate encontrar a pessoa destino
 
     queue<Pessoa*> fila;
-    fila.push(a);
-    unordered_set<Pessoa*> visitadas;
-    unordered_map<Pessoa*, int> distancia_map = {{a, 0}};
-    // Guarda de onde veio cada pessoa para reconstruir o caminho
-    unordered_map<Pessoa*, Pessoa*> anterior;
+    fila.push(a);                                          // Inicia com a pessoa origem
+    unordered_set<Pessoa*> visitadas;                      // Evita visitar a mesma pessoa duas vezes
+    unordered_map<Pessoa*, int> distancia_map = {{a, 0}};  // Distancia de cada pessoa ate a origem
+    unordered_map<Pessoa*, Pessoa*> anterior;              // Guarda de onde veio cada pessoa (para reconstruir o caminho)
 
     while(!fila.empty()) {
         Pessoa* atual = fila.front();
         fila.pop();
         
+        // Se encontrou o destino, para a busca
         if (atual == b) break;
+        
+        // Se ja foi visitada, pula para a proxima
         if (visitadas.count(atual) == 1) continue;
         visitadas.insert(atual);
         
-        // Explora todas as "conexoes" (pais e filhos) da pessoa atual
+        // Explora todas as conexoes (pais e filhos) da pessoa atual
         for (Pessoa *p : atual->conexoes()) {
-            if (visitadas.count(p) == 1) continue;
-            fila.push(p);
-            distancia_map[p] = distancia_map[atual]+1;
-            anterior[p] = atual;
+            if (visitadas.count(p) == 1) continue;      // Se ja foi visitada, ignora
+            fila.push(p);                               // Adiciona na fila para explorar depois
+            distancia_map[p] = distancia_map[atual]+1;  // A distancia eh a distancia do atual + 1
+            anterior[p] = atual;                        // Guarda que veio do atual (para reconstruir caminho depois)
         }
     }
 
@@ -252,10 +255,13 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
     // Reconstroi o caminho de b até a usando o map anterior
     stack<Pessoa*> caminho;
     Pessoa *atual = b;
+    
+    // Volta pelo mapa anterior ate chegar na origem (a)
     while (atual != a) {
         caminho.push(atual);
         atual = anterior[atual];
     }
+    // Se a e b nao for a mesma pessoa, adiciona a origem no caminho
     if (distancia_map[b] > 0) caminho.push(a);
 
     return {distancia_map[b], caminho};
