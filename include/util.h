@@ -53,6 +53,16 @@ string ler_string(string msg);
 
 
 /**
+ * @brief Le um nome do usuario até que seja valido
+ * 
+ * Remove espacos em branco no início e fim da string.
+ * @param msg Mensagem exibida ao usuário
+ * @returns String com o nome valido
+ */
+string pedir_nome();
+
+
+/**
  * @brief Limpa o buffer do cin para evitar problemas de leitura
  */
 void ignore_tudo();

@@ -38,6 +38,36 @@ string ler_string(string msg) {
     return resposta;
 }
 
+string pedir_nome() {
+    string nome;
+    
+    while (true) {
+        nome = ler_string("Digite o nome da pessoa: ");
+        
+        // Remove espaços em branco no início e fim
+        while (nome.front() == ' ') nome = nome.substr(1);
+        while (nome.back() == ' ') nome = nome.substr(0, nome.size()-1);
+
+        nome = minusculas(nome);
+
+        // Verifica se os char sao apenas letras ou espaco
+        bool valido = true;
+        for (char c : nome) {
+            valido = (isalpha(c) || c == ' ');
+            if (!valido) break;
+        }
+        
+        // Retorna o nome se for maior que 7 caracteres
+        // contem pelo menos um espaco
+        // contem apenas letras
+        if (nome.size() > 7 && nome.find(' ') != string::npos && valido) {
+            return nome;
+        }
+        
+        print("Nome inválido. Digite um nome válido.", '\n', "vermelho");
+    }
+}
+
 char ler_char(string msg) {
     string resposta;
 

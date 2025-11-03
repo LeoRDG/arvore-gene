@@ -20,7 +20,7 @@ Arvore::Arvore(string nome){
 }
 
 void Arvore::ui_adicionar_pessoa(){
-    string nome = ler_string("Digite o nome da pessoa que voce quer adicionar:\n");
+    string nome = pedir_nome();
     char genero =  pedir_genero();
     Data nascimento = pedir_data();
 
