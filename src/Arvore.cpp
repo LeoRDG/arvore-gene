@@ -97,11 +97,11 @@ void Arvore::ui_definir_pais_pessoa(){
 }
 
 void Arvore::ui_exibir_por_geracao() {
-    int geracao = ler_int("Digite a geracao que está procurando: ");
+    int geracao = ler_int("Digite a geracao que esta procurando: ");
     vector<Pessoa*> encontradas = pesquisar_pessoas("", INT_MAX, '\0', geracao);
 
     if (encontradas.empty()) {
-        print("Nenhuma pessoa encontrada nessa geraçao.", '\n', "vermelho");
+        print("Nenhuma pessoa encontrada nessa geracao.", '\n', "vermelho");
         return;
     }
 
@@ -171,7 +171,7 @@ void Arvore::criar_menu() {
         { "Adicionar pessoa",                     [this]() {ui_adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {ui_buscar_pessoa();} },
         { "Definir pais de uma pessoa",           [this]() {ui_definir_pais_pessoa();} },
-        { "Mostrar gerações",                     [this]() {ui_exibir_por_geracao();}},  
+        { "Mostrar geracoes",                     [this]() {ui_exibir_por_geracao();}},  
         { "Exibir parentesco entre 2 pessoas",    [this]() {ui_exibir_parentesco();}},
         { "Sair",                                 [this]() {exit(0);} },
         //{ "Salvar" ,                              [this]() {salvar();} },

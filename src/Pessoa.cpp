@@ -142,7 +142,7 @@ void Pessoa::exibir_ascendentes(int nivel) {
 
     if (pai == nullptr && mae == nullptr) {
         for (int i=0; i <nivel; i++) cout << "  ";
-        print("Não há ascendentes cadastrados para: " + this->nome, '\n', "vermelho");
+        print("Nao ha ascendentes cadastrados para: " + this->nome, '\n', "vermelho");
         return;
     }
     else{
@@ -167,7 +167,7 @@ void Pessoa::exibir_ascendentes(int nivel) {
 void Pessoa::exibir_descendentes(int nivel) {
     if (filhos.empty()) {
         for (int i=0; i <nivel; i++) cout << "  ";
-        print("Não há descendentes cadastrados para: " + this->nome, '\n', "vermelho");
+        print("Nao ha descendentes cadastrados para: " + this->nome, '\n', "vermelho");
         return;
     }
 
@@ -210,8 +210,8 @@ void Pessoa::criar_menu(){
             exibir_descendentes(1);
         }},
         {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
-        {"Remover da Árvore",                 [this]() {print("Funcionalidade nao implementada", '\n', "vermelho");}},
-        {"Exibir Árvore",                     [this]() {exibir_arvore(0);}},
+        {"Remover da Arvore",                 [this]() {print("Funcionalidade nao implementada", '\n', "vermelho");}},
+        {"Exibir Arvore",                     [this]() {exibir_arvore(0);}},
     }};
 }
 
