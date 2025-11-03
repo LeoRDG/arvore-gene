@@ -75,13 +75,13 @@ struct Pessoa
     /**
      * @brief Exibe recursivamente todos os descendentes dessa pessoa
      */
-    void exibir_descendentes();
+    void exibir_descendentes(int nivel);
 
 
     /**
      * @brief Exibe recursivamente todos os ascendentes dessa pessoa
      */
-    void exibir_ascendentes();
+    void exibir_ascendentes(int nivel);
     
 
     /**
