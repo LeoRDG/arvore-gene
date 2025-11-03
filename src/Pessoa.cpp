@@ -24,7 +24,8 @@ void Pessoa::exibir_cabecario(){
     cout << "\n";
 }
 
-void Pessoa::exibir_linha(){
+void Pessoa::exibir_linha(string cor){
+    cout << cores.at(cor);
     cout << left << setw(L_NOME) << limite_str(nome, L_NOME-1);
     cout << setw(L_NASC) << nascimento.str();
     cout << setw(L_GEN) << genero;
@@ -37,6 +38,7 @@ void Pessoa::exibir_linha(){
     cout << setw(L_GER);
     (geracao == GERACAO_INICIAL) ? cout << "???" : cout << geracao;
     
+    cout << cores.at("padrao");
     cout << "\n";
 }
 

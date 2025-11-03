@@ -36,8 +36,9 @@ struct Pessoa
 
     /**
      * @brief Exibe o nome, nascimento, genero, pais e geracao dessa pessoa
+     * @param cor A cor (padrao = padrao)
      */
-    void exibir_linha();
+    void exibir_linha(string cor="padrao");
     
     /**
      * @brief Retorna apenas o primeiro nome

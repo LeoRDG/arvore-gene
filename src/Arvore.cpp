@@ -123,9 +123,10 @@ void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){
     Pessoa::exibir_cabecario();
 
     for (int i=0; i<pessoas.size(); i++) {
-        //printf("% 3d ", i+1);
-        cout << cores.at("verde") << setw(4) << i+1 << cores.at("padrao"); 
-        pessoas[i]->exibir_linha();
+        string cor_fundo = (i%2 == 0) ? "bg_cinza" : "padrao";
+        cout << cores.at(cor_fundo);                                            /// Muda o background do numero
+        cout << cores.at("verde") << setw(4) << i+1 << cores.at("padrao");      /// Muda a cor do numero para verde
+        pessoas[i]->exibir_linha(cor_fundo);
     }
 }
 

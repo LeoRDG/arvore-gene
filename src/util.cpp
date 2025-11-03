@@ -25,7 +25,7 @@ int ler_int(string msg, int max, int min) {
         ignore_tudo();
         cout << cores.at("padrao");
         if (valido) return resposta;
-        print("INPUT INVALIDO");
+        print("INPUT INVALIDO", '\n', "vermelho");
     }
 }
 
@@ -77,7 +77,7 @@ char ler_char(string msg) {
         getline(cin, resposta);
         cout << cores.at("padrao");
         if (resposta.size() == 1) return resposta[0];
-        cout << "INPUT INVALIDO\n";
+        print("INPUT INVALIDO" , '\n', "vermelho");
     }
 }
 
@@ -85,7 +85,7 @@ Data pedir_data(){
     while (true) {
         Data data = Data( ler_string("Digite a data de nascimento (dd/mm/aaaa): ") );
         if (data.valido()) return data;
-        print("DATA INVALIDA");
+        print("DATA INVALIDA", '\n', "vermelho");
     };
 }
 
@@ -93,7 +93,7 @@ char pedir_genero(){
     while (true) {
         char gen = toupper( ler_char("Digite o genero (m,f): ") );
         if (gen == 'M' || gen == 'F') return gen;
-        cout << "GENERO INVALIDO\n";
+        print("GENERO INVALIDO", '\n', "vermelho");
     }
 }
 

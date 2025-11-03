@@ -18,11 +18,13 @@ using namespace std;
 const unordered_map<string, string> cores = {
     {"vermelho", "\033[38;5;9m"},
     {"verde",    "\033[38;5;47m"},
-    {"azul",     "\033[38;5;12m"},
-    {"amarelo",  "\033[38;5;3m"},
+    {"azul",     "\033[38;5;159m"},
+    {"amarelo",  "\033[38;5;221m"},
     {"cinza",    "\033[38;5;8m"},
+    {"cinza2",   "\033[38;5;245m"},
     {"padrao",   "\033[0m"},
     {"rosa",     "\033[38;5;206m"},
+    {"bg_cinza", "\033[48;5;236m"},
 };
 
 
