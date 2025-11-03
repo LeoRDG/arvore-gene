@@ -227,8 +227,7 @@ void Pessoa::exibir_arvore(int nivel){
     // Agrupa filhos por casal
     map<pair<Pessoa*, Pessoa*>, vector<Pessoa*>> casais;
     for (Pessoa* filho : filhos) {
-        pair<Pessoa*, Pessoa*> casal = {filho->pai, filho->mae};
-        casais[casal].push_back(filho); 
+        casais[{filho->pai, filho->mae}].push_back(filho); 
     }
 
     // Exibe cada casal e seus filhos

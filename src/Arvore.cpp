@@ -93,14 +93,14 @@ void Arvore::ui_exibir_parentesco() {
     Pessoa* pessoaA = familia[indiceA];
     Pessoa* pessoaB = familia[indiceB];
 
-    pair<int, stack<Pessoa*>> dist = calcular_distancia(pessoaA, pessoaB);
+    auto [distancia, caminho] = calcular_distancia(pessoaA, pessoaB);
     
-    if (dist.first < 0) print("As duas pessoas nao tem nenhum grau de parentesco", '\n', "vermelho");
-    else if (dist.first == 0) print("As duas pessoas sao as mesmas, parentesco: 0", '\n', "amarelo");
+    if (distancia < 0) print("As duas pessoas nao tem nenhum grau de parentesco", '\n', "vermelho");
+    else if (distancia == 0) print("As duas pessoas sao as mesmas, parentesco: 0", '\n', "amarelo");
     else {
-        while (!dist.second.empty()) {
-            Pessoa* atual = dist.second.top();
-            dist.second.pop();
+        while (!caminho.empty()) {
+            Pessoa* atual = caminho.top();
+            caminho.pop();
 
             if (atual == pessoaA || atual == pessoaB) print(atual->nome, '\0', "amarelo");
             else print(atual->nome, '\0', "cinza");
@@ -109,7 +109,7 @@ void Arvore::ui_exibir_parentesco() {
             else print();
         }
         print("O grau de parentesco entre essas duas pessoas e: ", '\0');
-        print(to_string(dist.first), '\n', "verde");
+        print(to_string(distancia), '\n', "verde");
     }
 }
 
@@ -178,12 +178,11 @@ void Arvore::carregar(){
 
     // Primeiro loop para criar todas as pessoas a partir do csv
     while ( getline(arquivo, linha) ) {
-        auto pessoa_tuple = Pessoa::deserializar(linha);
-        Pessoa *p = get<0>(pessoa_tuple);
+        auto [p, chave_pai, chave_mae] = Pessoa::deserializar(linha);
         if (p == nullptr) continue;
         familia.push_back(p);
         pessoas.insert({p->chave(), p});
-        pessoas_pais.push_back(pessoa_tuple);
+        pessoas_pais.push_back({p, chave_pai, chave_mae});
     }
 
     // Segundo loop para definir os pais das pessoas usando as chaves guardadas
