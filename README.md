@@ -1,6 +1,14 @@
 # Árvore Genealógica
 Arvore Genealógica para trabalho de Linguagens de Programação.
 
+Por: 
+- João Guilherme
+- Leonardo Rodrigues
+
+O programa foi feito em sistemas UNIX, o comportamento em Windows pode não ser o esperado. Por exemplo: acentos nao funcionam, foram removidos.
+
+É recomendado rodar o programa com uma janela grande
+
 ## Objetivo Geral
 Implementar um sistema/software em C++para representar e manipular uma árvore genealógica, aplicando estruturas de dados hierárquicas, como árvores, ou filas e listas. 
 
@@ -18,10 +26,10 @@ Implementar um sistema/software em C++para representar e manipular uma árvore g
 - [x] Mostrar gerações por nivel 
 - [x] Gravar e carregar de um arquivo de texto
 
-Para compilar corretamente, todos os arquivos cpp devem ser incluidos
+Para compilar corretamente, todos os arquivos cpp devem ser incluidos, para facilitar estão disponiveis alguns scripts.
 
 ##### Linux/Macos
 Rodar compilarerodar.sh
 
 ##### Windows
-rodar compilarerodar.bat
+Rodar compilarerodar.bat ou compilarerodar.sh se o 

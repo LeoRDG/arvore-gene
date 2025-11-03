@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 #include "../include/Pessoa.h"
+#include "../include/util.h"
 
 using namespace std;
 
@@ -187,11 +188,11 @@ void Pessoa::exibir_asc_desc(){
 }
 
 void Pessoa::exibir_info(){
-    cout << "Nome: " << nome << "\n";
-    cout << "Nascimento: " << nascimento.str() << "\n";
-    cout << "Genero: " << genero << "\n";
-    cout << "Descendentes: " << contar_descendentes() << "\n"; 
-    cout << "____________________________________________\n";
+    limpar_tela();
+    cout << "Nome: " << nome << "\n"
+    << "Nascimento: " << nascimento.str() << "\n"
+    << "Genero: " << genero << "\n"
+    << "Descendentes: " << contar_descendentes() << "\n"; 
 }
 
 void Pessoa::exibir_menu(){
