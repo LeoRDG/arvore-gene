@@ -149,7 +149,7 @@ void Pessoa::exibir_ascendentes(int nivel) {
         
         if (mae != nullptr) {
             mae->exibir_ascendentes(nivel+1);
-                for (int i=0; i <nivel; i++) cout << "  ";
+            for (int i=0; i <nivel; i++) cout << "  ";
             print_com_cor("Mae de " + this->nome + ": ", "cinza");
             print(mae->nome);
             // cout << "Mae de " <<this->nome << ": " << mae->nome << "\n";
@@ -158,13 +158,14 @@ void Pessoa::exibir_ascendentes(int nivel) {
 }
 
 void Pessoa::exibir_descendentes(int nivel) {
-    for (int i=0; i <nivel; i++) cout << "  ";
     if (filhos.empty()) {
+        for (int i=0; i <nivel; i++) cout << "  ";
         print_com_cor("Não há descendentes cadastrados para: " + this->nome + "\n", "vermelho");
         return;
     }
 
     for (Pessoa* filho : filhos) {
+        for (int i=0; i <nivel; i++) cout << "  ";
         print_com_cor("Filho de " + nome + ": ", "cinza");
         print(filho->nome);
         // cout << "Filho de " << this->nome<< " :" << " "<< filho->nome << "\n";
@@ -194,8 +195,8 @@ void Pessoa::exibir_menu(){
 void Pessoa::criar_menu(){
     menu = {{
         {"Exibir Ascendentes",                [this]() {
-            print_com_cor(nome + "\n", "amarelo");
             exibir_ascendentes(1);
+            print_com_cor(nome + "\n", "amarelo");
         }},
         {"Exibir Descendentes",               [this]() {
             print_com_cor(nome + "\n", "amarelo");
