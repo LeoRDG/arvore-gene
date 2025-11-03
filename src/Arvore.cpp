@@ -74,6 +74,27 @@ void Arvore::ui_buscar_pessoa(){
     p->menu.esperar_resposta();
 }
 
+void Arvore::ui_definir_pais_pessoa(){
+    // Busca pessoa para definir os pais
+    string nome = ler_string("Digite o nome da pessoa que deseja definir os pais, deixe em branco para mostrar todas: ");
+    limpar_tela();
+    print("Pesquisando por '" + nome + "'");
+    print("________________________________________________");
+
+    vector<Pessoa*> encontradas = pesquisar_pessoas(nome);
+
+    if (encontradas.empty()) {
+        print("Nenhuma pessoa encontrada", '\n', "vermelho");
+        return;
+    }
+    
+    exibir_pessoas(encontradas);
+    int num = ler_int("Qual pessoa voce quer definir os pais? ", encontradas.size(), 1);
+    
+    Pessoa* p = encontradas[num-1];
+    ui_definir_pais(p);
+}
+
 void Arvore::ui_exibir_por_geracao() {
     int geracao = ler_int("Digite a geracao que está procurando: ");
     vector<Pessoa*> encontradas = pesquisar_pessoas("", INT_MAX, '\0', geracao);
@@ -148,6 +169,7 @@ void Arvore::criar_menu() {
     menu = { {
         { "Adicionar pessoa",                     [this]() {ui_adicionar_pessoa();} },
         { "Buscar pessoa",                        [this]() {ui_buscar_pessoa();} },
+        { "Definir pais de uma pessoa",           [this]() {ui_definir_pais_pessoa();} },
         { "Mostrar gerações",                     [this]() {ui_exibir_por_geracao();}},  
         { "Exibir parentesco entre 2 pessoas",    [this]() {ui_exibir_parentesco();}},
         { "Sair",                                 [this]() {exit(0);} },
