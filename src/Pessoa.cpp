@@ -70,8 +70,8 @@ string Pessoa::serializar(){
     << nome << ","
     << genero << ',';
 
-    (pai == nullptr) ? stream << "," : stream << pai->chave() << ",";
-    (mae == nullptr) ? stream << ""  : stream << mae->chave();
+    (pai == nullptr) ? stream << " ," : stream << pai->chave() << ",";
+    (mae == nullptr) ? stream << " "  : stream << mae->chave();
 
     getline(stream, resultado);
 
