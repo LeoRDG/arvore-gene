@@ -25,13 +25,8 @@ Data::Data(string data){
 }
 
 int Data::valor() {
-    // int qtd_bisextos = ano/4 - ano/100 + ano/400;
-    // int dias = 365*ano + qtd_bisextos + dia;
-    // for (int i=1; i<mes; i++) {
-    //     dias+=dias_no_mes[i];
-    // }
-    // return dias;
-
+    // Converte data para inteiro no formato AAAAMMDD
+    // Exemplo: 15/03/1990 -> 19900315
     return ano*10000 + mes*100 + dia;
 }
 
@@ -42,6 +37,8 @@ Data::Data(int dia, int mes, int ano){
 }
 
 Data Data::hoje(){
+    // tm_mon vai de 0-11, precisa somar 1
+    // tm_year conta anos desde 1900, precisa somar 1900
     time_t agora = time(nullptr);
     tm *dtm = localtime(&agora);
     return Data(dtm->tm_mday, dtm->tm_mon+1, dtm->tm_year+1900);

@@ -44,7 +44,8 @@ void Pessoa::exibir_linha(string cor){
 
 string Pessoa::primeiro_nome(){
     int espaco = nome.find(' ');
-    if (espaco >= nome.size() || espaco < 0) return nome; // Se nao encontrar espaco retorna o nome completo
+    // find() retorna string::npos se nao encontrar, se acontecer, retornar nome completo
+    if (espaco == string::npos) return nome;
     return nome.substr(0, espaco);
 }
 
@@ -69,12 +70,14 @@ string Pessoa::serializar(){
     stringstream stream;
     string resultado;
 
+    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
     stream << setfill('0') << setw(4) << nascimento.ano << ","
     << setw(2) << nascimento.mes << ","
     << setw(2) << nascimento.dia << ","
     << nome << ","
     << genero << ',';
 
+    // Se nao tiver pai/mae, deixa vazio (espaco em branco)
     (pai == nullptr) ? stream << " ," : stream << pai->chave() << ",";
     (mae == nullptr) ? stream << " "  : stream << mae->chave();
 
@@ -84,20 +87,17 @@ string Pessoa::serializar(){
 }
 
 tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
-    // Funcao Estatica
-    // Usa uma stream de string para separar os dados por virgula
-    // e coloca-los em um vetor de strings
-
-    // [ano,mes,dia,nome,genero,pai,mae]
+    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
     vector<string> vetor_dados;
     istringstream str(dados);
     string dado;
 
+    // Separa os dados por virgula
     while ( getline(str, dado, ',') ){
         vetor_dados.push_back(dado);
     }
 
-    // Se o vetor nao tiver o matanho certo, retornar nullptr
+    // Valida formato a quantidade de dados
     if (vetor_dados.size() != 7) return {nullptr, "", ""};
 
     // Se ocorrer um erro ao converter a string para int, retornar nullptr
@@ -117,20 +117,22 @@ tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
 
     Pessoa* pessoa = new Pessoa{nome, nascimento, genero};
 
+    // Retorna pessoa criada e chaves dos pais (para definir depois)
     return {pessoa, vetor_dados[5], vetor_dados[6]};
 }
 
 void Pessoa::definir_geracao() {
-    // Pega o valor maior entre a geracao do pai e da mae
+    // Geraçao eh o maximo entre pai e mae + 1
     int g_pai = (pai == nullptr) ? GERACAO_INICIAL : pai->geracao;
     int g_mae = (mae == nullptr) ? GERACAO_INICIAL : mae->geracao;
     int nivel = max(g_pai, g_mae);
 
-    if (geracao >= nivel+1) return; // Só define a geracao se o nivel do pai ou da mae for maior que a geracao atual
+    // Evita recalcular se ja esta correto
+    if (geracao >= nivel+1) return;
 
-    geracao = nivel+1; // Define a geracao dessa pessoa
+    geracao = nivel+1;
 
-    // Define a geracao dos filhos
+    // Define a geracao dos os descendentes
     for (auto* f : filhos) {
         f->definir_geracao();
     }
@@ -222,14 +224,14 @@ void Pessoa::exibir_arvore(int nivel){
         return;
     }
 
-    map<pair<Pessoa*, Pessoa*>, vector<Pessoa*>> casais;     ///< Map com um pair de pessoas (casal) e um vetor de pessoas (filhos) 
     // Agrupa filhos por casal
+    map<pair<Pessoa*, Pessoa*>, vector<Pessoa*>> casais;
     for (Pessoa* filho : filhos) {
         pair<Pessoa*, Pessoa*> casal = {filho->pai, filho->mae};
         casais[casal].push_back(filho); 
     }
 
-    // Para cada par de casais exibir pai + mae e depois filhos
+    // Exibe cada casal e seus filhos
     for (auto par : casais){
         auto casal_pai = par.first.first;
         auto casal_mae = par.first.second;
@@ -238,7 +240,7 @@ void Pessoa::exibir_arvore(int nivel){
         print(to_string(nivel), ' ', "cinza");
         for (int i = 0; i < nivel; i++) print("--", '\0', "cinza");
 
-        // Exibe o casal
+        // Formata casal (pai + mae ou ??? se nao existir)
         if (casal_pai && casal_mae) {
             print(casal_pai->nome, ' ');
             print("+", ' ', "amarelo");
@@ -267,6 +269,7 @@ void Pessoa::exibir_arvore(int nivel){
 
 int Pessoa::contar_descendentes(){
     if (filhos.empty()) return 0;
+    // Conta filhos diretos + descendentes recursivos de cada filho
     int contagem = filhos.size();
     for (Pessoa* f : filhos) {
         contagem += f->contar_descendentes();

@@ -109,6 +109,7 @@ string minusculas(string str){
 }
 
 bool contem(string str1, string str2){
+    // Busca a string menor dentro da maior (ignorando maiusculas/minusculas)
     string menor = str1;
     string maior = str2;
 

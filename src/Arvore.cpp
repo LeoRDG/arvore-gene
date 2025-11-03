@@ -31,8 +31,10 @@ void Arvore::ui_adicionar_pessoa(){
 }
 
 void Arvore::ui_definir_pais(Pessoa* pessoa){
-    //clear();
+    //limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
+    
+    // Filtra apenas homens que nasceram antes da pessoa
     vector<Pessoa*> possiveis_pais = pesquisar_pessoas("", pessoa->nascimento.valor(), 'M');
     exibir_pessoas(possiveis_pais);
     int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) - 1;
@@ -40,6 +42,8 @@ void Arvore::ui_definir_pais(Pessoa* pessoa){
 
     limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
+    
+    // Filtra apenas mulheres que nasceram antes da pessoa
     vector<Pessoa*> possiveis_maes = pesquisar_pessoas("", pessoa->nascimento.valor(), 'F');
     exibir_pessoas(possiveis_maes);
     resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) - 1;
@@ -123,6 +127,7 @@ void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){
     Pessoa::exibir_cabecario();
 
     for (int i=0; i<pessoas.size(); i++) {
+        // Alterna cor de fundo para facilitar leitura
         string cor_fundo = (i%2 == 0) ? "bg_cinza" : "padrao";
         cout << cores.at(cor_fundo);                                            /// Muda o background do numero
         cout << cores.at("verde") << setw(4) << i+1 << cores.at("padrao");      /// Muda a cor do numero para verde
@@ -166,8 +171,10 @@ void Arvore::carregar(){
     if (!arquivo.is_open()) return;
 
     string linha;
-    unordered_map<string, Pessoa*> pessoas;              // map para guardar a pessoa usando sua chave
-    vector<tuple<Pessoa*, string, string>> pessoas_pais; // vetor de tuplas para guardar a pessoa e as chaves dos pais
+    // Map para buscar pessoa pela chave na hora de definir pais
+    unordered_map<string, Pessoa*> pessoas;
+    // Guarda pessoas e chaves dos pais para vincular depois
+    vector<tuple<Pessoa*, string, string>> pessoas_pais;
 
     // Primeiro loop para criar todas as pessoas a partir do csv
     while ( getline(arquivo, linha) ) {
@@ -179,7 +186,7 @@ void Arvore::carregar(){
         pessoas_pais.push_back(pessoa_tuple);
     }
 
-    // Segundo loop para definir os pais das pessoas 
+    // Segundo loop para definir os pais das pessoas usando as chaves guardadas
     for (auto pessoa : pessoas_pais){
         auto [p, pai, mae] = pessoa;
         if (!pai.empty() && pessoas.count(pai)) p->definir_pai(pessoas[pai]);
@@ -212,27 +219,14 @@ vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char gene
 }
 
 pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
-    /*
-        Algoritmo BFS
-        https://www.youtube.com/watch?v=xlVX7dXLS64
-
-        Cria uma fila com a pessoaA dentro
-        Enquanto a fila nao estiver vazia
-
-        Verifica se a primeira pessoa da fila é a pessoaB
-        Se for, sai do loop pois o parentesco foi encontrado
-
-        Se nao for..
-        Repete o processo para cada Pessoa diretamente ligada à que saiu da fila
-
-        Se o loop encerrar porque a fila esvaziou as duas pessoas não tem parentesco definido
-
-    */
+    // Algoritmo BFS (https://www.youtube.com/watch?v=xlVX7dXLS64)
+    // Explora nivel por nivel ate encontrar a pessoa destino
 
     queue<Pessoa*> fila;
     fila.push(a);
     unordered_set<Pessoa*> visitadas;
     unordered_map<Pessoa*, int> distancia_map = {{a, 0}};
+    // Guarda de onde veio cada pessoa para reconstruir o caminho
     unordered_map<Pessoa*, Pessoa*> anterior;
 
     while(!fila.empty()) {
@@ -243,6 +237,7 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
         if (visitadas.count(atual) == 1) continue;
         visitadas.insert(atual);
         
+        // Explora todas as "conexoes" (pais e filhos) da pessoa atual
         for (Pessoa *p : atual->conexoes()) {
             if (visitadas.count(p) == 1) continue;
             fila.push(p);
@@ -251,10 +246,10 @@ pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
         }
     }
 
-    // Se a pessoa b nao estiver no map, nao tem relacao com a pessoa a
+    // Se b nao foi encontrado, nao tem parentesco
     if (anterior.count(b) == 0) return {-1, {}};
-    //if (distancia_map[b] == 0) return {0, {b}};       // Se a distancia entre a e b for 0, sao a mesma pessoa
 
+    // Reconstroi o caminho de b até a usando o map anterior
     stack<Pessoa*> caminho;
     Pessoa *atual = b;
     while (atual != a) {
