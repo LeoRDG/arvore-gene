@@ -5,6 +5,7 @@
 #include "../include/Arvore.h"
 #include "../include/Pessoa.h"
 #include "../include/util.h"
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <queue>
