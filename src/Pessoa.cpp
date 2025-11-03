@@ -7,6 +7,9 @@
 #include <string>
 #include <iomanip>
 #include <tuple>
+#include <map>
+#include <utility>
+#include <vector>
 #include "../include/Pessoa.h"
 
 using namespace std;
@@ -209,9 +212,55 @@ void Pessoa::criar_menu(){
 }
 
 void Pessoa::exibir_arvore(int nivel){
-    for (int i = 0; i < nivel; i++) print_com_cor("-", "cinza");
-    print(nome);
-    for (Pessoa* filho : filhos) filho->exibir_arvore(nivel+1);
+    // Se essa pessoa nao tem filhos, exibir somente o nome e retorna
+    if (filhos.empty()) {
+        print(to_string(nivel), ' ', "cinza");
+        for (int i = 0; i < nivel; i++) print("--", '\0', "cinza");
+        print(nome, '\n', "vermelho");
+        return;
+    }
+
+    map<pair<Pessoa*, Pessoa*>, vector<Pessoa*>> casais;     ///< Map com um pair de pessoas (casal) e um vetor de pessoas (filhos) 
+    // Agrupa filhos por casal
+    for (Pessoa* filho : filhos) {
+        pair<Pessoa*, Pessoa*> casal = {filho->pai, filho->mae};
+        casais[casal].push_back(filho); 
+    }
+
+    // Para cada par de casais exibir pai + mae e depois filhos
+    for (auto par : casais){
+        auto casal_pai = par.first.first;
+        auto casal_mae = par.first.second;
+        auto filhos_casal = par.second;
+
+        print(to_string(nivel), ' ', "cinza");
+        for (int i = 0; i < nivel; i++) print("--", '\0', "cinza");
+
+        // Exibe o casal
+        if (casal_pai && casal_mae) {
+            print(casal_pai->nome, ' ');
+            print("+", ' ', "amarelo");
+            print(casal_mae->nome);
+        }
+        else if (casal_pai) {
+            print(casal_pai->nome, ' ');
+            print("+", ' ', "amarelo");
+            print("???", '\n', "cinza");
+        }
+        else if (casal_mae){
+            print("???", ' ', "cinza");
+            print("+", ' ', "amarelo");
+            print(casal_mae->nome);
+        } 
+        else {
+            print("??? + ???", '\n', "cinza");
+        }
+
+        // Exibe os filhos desse casal (recursivamente)
+        for (auto f: filhos_casal) {
+            f->exibir_arvore(nivel + 1);
+        }
+    }
 }
 
 int Pessoa::contar_descendentes(){
