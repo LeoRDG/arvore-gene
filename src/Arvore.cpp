@@ -57,7 +57,7 @@ void Arvore::ui_buscar_pessoa(){
 
     // Se pessoas foram encontradas, mostrar elas
     if ( encontradas.empty() ) {
-        print_com_cor("Nenhuma pessoa encontrada", "vermelho");
+        print("Nenhuma pessoa encontrada", '\n', "vermelho");
         return;
     }
     
@@ -75,7 +75,7 @@ void Arvore::ui_exibir_por_geracao() {
     vector<Pessoa*> encontradas = pesquisar_pessoas("", INT_MAX, '\0', geracao);
 
     if (encontradas.empty()) {
-        print_com_cor("Nenhuma pessoa encontrada nessa geraçao.\n", "vermelho");
+        print("Nenhuma pessoa encontrada nessa geraçao.", '\n', "vermelho");
         return;
     }
 
@@ -91,21 +91,21 @@ void Arvore::ui_exibir_parentesco() {
 
     pair<int, stack<Pessoa*>> dist = calcular_distancia(pessoaA, pessoaB);
     
-    if (dist.first < 0) print_com_cor("As duas pessoas nao tem nenhum grau de parentesco\n", "vermelho");
-    else if (dist.first == 0) print_com_cor("As duas pessoas sao as mesmas, parentesco: 0\n", "amarelo");
+    if (dist.first < 0) print("As duas pessoas nao tem nenhum grau de parentesco", '\n', "vermelho");
+    else if (dist.first == 0) print("As duas pessoas sao as mesmas, parentesco: 0", '\n', "amarelo");
     else {
         while (!dist.second.empty()) {
             Pessoa* atual = dist.second.top();
             dist.second.pop();
 
-            if (atual == pessoaA || atual == pessoaB) print_com_cor(atual->nome, "amarelo");
-            else print_com_cor(atual->nome, "cinza");
+            if (atual == pessoaA || atual == pessoaB) print(atual->nome, '\0', "amarelo");
+            else print(atual->nome, '\0', "cinza");
             
-            if (atual != pessoaB) print_com_cor(" -> ", "verde");
+            if (atual != pessoaB) print(" -> ", '\0', "verde");
             else print();
         }
         print("O grau de parentesco entre essas duas pessoas e: ", '\0');
-        print_com_cor(to_string(dist.first)+"\n", "verde");
+        print(to_string(dist.first), '\n', "verde");
     }
 }
 
@@ -113,8 +113,7 @@ void Arvore::exibir_info(){
     print("Data: " + Data::hoje().str());
     print("Nome da Arvore: " + nome);
     print("Quantidade de pessoas:", ' ');
-    print_com_cor(to_string(familia.size()), "verde");
-    print();
+    print(to_string(familia.size()), '\n', "verde");
 }
 
 void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){

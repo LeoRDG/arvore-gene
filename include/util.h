@@ -104,21 +104,14 @@ void limpar_tela();
 
 
 /**
- * @brief Imprime uma string no console
+ * @brief Imprime uma string no console, com opcso de cor
  * @param str Mensagem a ser impressa (padrao: string vazia)
  * @param end Caracter final a ser impresso (padrão: '\n')
- */
-void print(string str="", char end='\n');
-
-
-/**
- * @brief Imprime uma string colorida no console usando ANSI
+ * @param cor Nome da cor ANSI (padrão: string vazia = sem cor)
  * 
  * "vermelho", "verde", "azul", "amarelo", "cinza", "rosa"
- * @param str Texto a ser impresso
- * @param cor Nome da cor (padrão: "padrao")
  */
-void print_com_cor(string str, string cor="padrao");
+void print(string str="", char end='\n', string cor="");
 
 
 /**

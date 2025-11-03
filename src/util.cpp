@@ -101,14 +101,16 @@ void limpar_tela(){
     cout << "\033c";
 }
 
-void print(string str, char end){
-    cout << str << end;
-}
-
-void print_com_cor(string str, string cor) {
-    // Verifica se a cor existe, .count() retorna 0 se nao existe
-    cor = (bool) cores.count(cor) ? cores.at(cor) : cores.at("padrao");
-    cout << cor << str << "\e[0m";
+void print(string str, char end, string cor){
+    // Se uma cor foi informada e não for vazia ou "padrao"
+    if (!cor.empty() && cor != "padrao") {
+        // Verifica se a cor existe no mapa, caso contrario usa padrão
+        cor = cores.count(cor) ? cores.at(cor) : cores.at("padrao");
+        cout << cor << str << cores.at("padrao") << end;
+    } else {
+        // Imprime sem cor
+        cout << str << end;
+    }
 }
 
 bool confirmar(string msg) {
