@@ -32,14 +32,17 @@ void Arvore::ui_adicionar_pessoa(){
 }
 
 void Arvore::ui_definir_pais(Pessoa* pessoa){
-    //limpar_tela();
+    int resposta;
     print("Definindo os pais de '" + pessoa->nome + "'");
     
     // Filtra apenas homens que nasceram antes da pessoa
     vector<Pessoa*> possiveis_pais = pesquisar_pessoas("", pessoa->nascimento.valor(), 'M');
     exibir_pessoas(possiveis_pais);
-    int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size(), 1) - 1;
-    pessoa->definir_pai(possiveis_pais[resposta]);
+    if (possiveis_pais.size() > 0){
+        int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size()) - 1;
+        pessoa->definir_pai(possiveis_pais[resposta]);
+    }
+    
 
     limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
@@ -47,8 +50,10 @@ void Arvore::ui_definir_pais(Pessoa* pessoa){
     // Filtra apenas mulheres que nasceram antes da pessoa
     vector<Pessoa*> possiveis_maes = pesquisar_pessoas("", pessoa->nascimento.valor(), 'F');
     exibir_pessoas(possiveis_maes);
-    resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size(), 1) - 1;
-    pessoa->definir_mae(possiveis_maes[resposta]);
+    if (possiveis_maes.size() > 0){
+        resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size()) - 1;
+        pessoa->definir_mae(possiveis_maes[resposta]);
+    }
 }
 
 void Arvore::ui_buscar_pessoa(){

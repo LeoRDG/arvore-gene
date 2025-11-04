@@ -15,7 +15,8 @@ void Menu::imprimir(){
         // nao imprimir a opcao
         if (opt.func == nullptr) continue;
         
-        cout << i+1 << ". ";
+        print(to_string(i+1), '\0', "verde");
+        cout << ". ";
         print(opt.descricao);
     }
     print();
