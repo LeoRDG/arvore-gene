@@ -1,0 +1,28 @@
+1850,12,03,joao silva,M, , 
+1852,07,25,maria oliveira,F, , 
+1875,05,06,carlos silva,M,18501203joao silva,18520725maria oliveira
+1878,11,20,ana silva,F,18501203joao silva,18520725maria oliveira
+1900,02,14,pedro silva,M,18750506carlos silva, 
+1903,08,30,rosa silva,F,18750506carlos silva, 
+1905,09,22,jose oliveira,M, ,18781120ana silva
+1901,06,11,luiza silva,F,18750506carlos silva,18781120ana silva
+1902,03,04,miguel silva,M,18750506carlos silva,18781120ana silva
+1930,10,12,alberto silva,M,19000214pedro silva,19030830rosa silva
+1932,01,18,helena silva,F,19000214pedro silva,19030830rosa silva
+1935,07,22,marcos oliveira,M,19050922jose oliveira, 
+1936,09,15,clara silva,F,19010611luiza silva,19020304miguel silva
+1955,02,09,ricardo silva,M,19301012alberto silva,19320118helena silva
+1957,11,25,sofia silva,F,19301012alberto silva,19320118helena silva
+1958,04,14,nicolas oliveira,M,19350722marcos oliveira,19360915clara silva
+1960,12,03,vera oliveira,F,19350722marcos oliveira,19360915clara silva
+1962,06,27,paula silva,F,19301012alberto silva,19320118helena silva
+1980,03,18,tiago silva,M,19550209ricardo silva,19571125sofia silva
+1982,09,14,julia silva,F,19550209ricardo silva,19571125sofia silva
+1983,05,02,rafael oliveira,M,19580414nicolas oliveira,19601203vera oliveira
+1985,10,17,fernanda oliveira,F,19580414nicolas oliveira,19601203vera oliveira
+1987,01,29,bruna silva,F, ,19620627paula silva
+2005,04,06,gabriel silva,M,19800318tiago silva,19820914julia silva
+2008,12,11,laura silva,F,19800318tiago silva,19820914julia silva
+2010,07,03,enzo oliveira,M,19830502rafael oliveira,19851017fernanda oliveira
+2012,09,22,alice oliveira,F,19830502rafael oliveira,19851017fernanda oliveira
+2013,11,05,helena costa,F, ,19870129bruna silva
