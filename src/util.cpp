@@ -8,6 +8,20 @@
 
 using namespace std;
 
+
+void print(string str, char end, string cor){
+    // Se uma cor foi informada e não for vazia ou "padrao"
+    if (!cor.empty() && cor != "padrao") {
+        // Verifica se a cor existe no mapa, caso contrario usa padrão
+        cor = cores.count(cor) ? cores.at(cor) : cores.at("padrao");
+        cout << cor << str << cores.at("padrao") << end;
+    } else {
+        // Imprime sem cor
+        cout << str << end;
+    }
+}
+
+
 int ler_int(string msg, int max, int min) {
     // Le a string inteira e se for um numero retorna ele
 
@@ -43,6 +57,21 @@ int ler_int(string msg, int max, int min) {
     }
 }
 
+
+char ler_char(string msg) {
+    string resposta;
+
+    while (true) {
+        cout << msg;
+        cout << cores.at("rosa");
+        getline(cin, resposta);
+        cout << cores.at("padrao");
+        if (resposta.size() == 1) return resposta[0];
+        print("INPUT INVALIDO" , '\n', "vermelho");
+    }
+}
+
+
 string ler_string(string msg) {
     string resposta;
     cout << msg;
@@ -51,6 +80,16 @@ string ler_string(string msg) {
     cout << cores.at("padrao");
     return resposta;
 }
+
+
+char pedir_genero(){
+    while (true) {
+        char gen = toupper( ler_char("Digite o genero (m,f): ") );
+        if (gen == 'M' || gen == 'F') return gen;
+        print("GENERO INVALIDO", '\n', "vermelho");
+    }
+}
+
 
 string pedir_nome() {
     string nome;
@@ -82,18 +121,6 @@ string pedir_nome() {
     }
 }
 
-char ler_char(string msg) {
-    string resposta;
-
-    while (true) {
-        cout << msg;
-        cout << cores.at("rosa");
-        getline(cin, resposta);
-        cout << cores.at("padrao");
-        if (resposta.size() == 1) return resposta[0];
-        print("INPUT INVALIDO" , '\n', "vermelho");
-    }
-}
 
 Data pedir_data(){
     while (true) {
@@ -103,24 +130,34 @@ Data pedir_data(){
     };
 }
 
-char pedir_genero(){
-    while (true) {
-        char gen = toupper( ler_char("Digite o genero (m,f): ") );
-        if (gen == 'M' || gen == 'F') return gen;
-        print("GENERO INVALIDO", '\n', "vermelho");
-    }
+
+void limpar_tela(){
+    cout << "\033c";
 }
+
 
 void pausar() {
     print("Pressione <Enter> para continuar...");
     cin.get();
 }
 
+
+bool confirmar(string msg) {
+    string resposta;
+    print(msg);
+    getline(cin, resposta);
+    resposta = minusculas(resposta);
+    if (resposta ==  "sim" || resposta == "s") return true;
+    return false;
+}
+
+
 string minusculas(string str){
     string result;
     for (char c : str) result += tolower(c);
     return result;
 }
+
 
 bool contem(string str1, string str2){
     // Busca a string menor dentro da maior (ignorando maiusculas/minusculas)
@@ -142,30 +179,6 @@ bool contem(string str1, string str2){
     return (index >=0 and index < maior.size());
 }
 
-void limpar_tela(){
-    cout << "\033c";
-}
-
-void print(string str, char end, string cor){
-    // Se uma cor foi informada e não for vazia ou "padrao"
-    if (!cor.empty() && cor != "padrao") {
-        // Verifica se a cor existe no mapa, caso contrario usa padrão
-        cor = cores.count(cor) ? cores.at(cor) : cores.at("padrao");
-        cout << cor << str << cores.at("padrao") << end;
-    } else {
-        // Imprime sem cor
-        cout << str << end;
-    }
-}
-
-bool confirmar(string msg) {
-    string resposta;
-    print(msg);
-    getline(cin, resposta);
-    resposta = minusculas(resposta);
-    if (resposta ==  "sim" || resposta == "s") return true;
-    return false;
-}
 
 string limite_str(string str, int max){
     if (str.size() <= max) return str;

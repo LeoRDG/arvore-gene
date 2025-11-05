@@ -5,7 +5,6 @@
 
 #pragma once
 #include <string>
-#include <functional>
 #include "Data.h"
 #include <climits>
 #include <unordered_map>
@@ -26,6 +25,17 @@ const unordered_map<string, string> cores = {
     {"rosa",     "\033[38;5;206m"},
     {"bg_cinza", "\033[48;5;236m"},
 };
+
+
+/**
+ * @brief Imprime uma string no console, com opcso de cor
+ * @param str Mensagem a ser impressa (padrao: string vazia)
+ * @param end Caracter final a ser impresso (padrão: '\n')
+ * @param cor Nome da cor ANSI (padrão: string vazia = sem cor)
+ * 
+ * "vermelho", "verde", "azul", "amarelo", "cinza", "rosa"
+ */
+void print(string str="", char end='\n', string cor="");
 
 
 /**
@@ -55,6 +65,13 @@ string ler_string(string msg);
 
 
 /**
+ * @brief Pede um genero ao usuario ('M' ou 'F')
+ * @returns 'M' para masculino ou 'F' para feminino
+ */
+char pedir_genero();
+
+
+/**
  * @brief Le um nome do usuario até que seja valido
  * 
  * Remove espacos em branco no início e fim da string.
@@ -65,9 +82,32 @@ string pedir_nome();
 
 
 /**
- * @brief Limpa o buffer do cin para evitar problemas de leitura
+ * @brief Pede uma data em format de string ao usuario até que seja válida
+ * @returns Objeto Data válido
  */
-void ignore_tudo();
+Data pedir_data();
+
+
+/**
+ * @brief Limpa o console usando sequência ANSI
+ */
+void limpar_tela();
+
+
+/**
+ * @brief Pausa a execução até que o usuário pressione Enter
+ * 
+ * Para permitir que o usuário leia as informacoes antes de continuar.
+ */
+void pausar();
+
+
+/**
+ * @brief Pede para o usuario confirmar (sim/não)
+ * @param msg Mensagem de confirmação para ser exibida
+ * @returns true se usuário digitou "sim" ou "s", false caso contrário
+ */
+bool confirmar(string msg);
 
 
 /**
@@ -86,52 +126,6 @@ string minusculas(string str);
  */
 bool contem(string str1, string str2);
 
-
-/**
- * @brief Pede uma data em format de string ao usuario até que seja válida
- * @returns Objeto Data válido
- */
-Data pedir_data();
-
-
-/**
- * @brief Pausa a execução até que o usuário pressione Enter
- * 
- * Para permitir que o usuário leia as informacoes antes de continuar.
- */
-void pausar();
-
-
-/**
- * @brief Pede um genero ao usuario ('M' ou 'F')
- * @returns 'M' para masculino ou 'F' para feminino
- */
-char pedir_genero();
-
-
-/**
- * @brief Limpa o console usando sequência ANSI
- */
-void limpar_tela();
-
-
-/**
- * @brief Imprime uma string no console, com opcso de cor
- * @param str Mensagem a ser impressa (padrao: string vazia)
- * @param end Caracter final a ser impresso (padrão: '\n')
- * @param cor Nome da cor ANSI (padrão: string vazia = sem cor)
- * 
- * "vermelho", "verde", "azul", "amarelo", "cinza", "rosa"
- */
-void print(string str="", char end='\n', string cor="");
-
-
-/**
- * @brief Pede para o usuario confirmar (sim/não)
- * @param msg Mensagem de confirmação para ser exibida
- * @returns true se usuário digitou "sim" ou "s", false caso contrário
- */
-bool confirmar(string msg);
 
 /**
  * @brief Limita uma string a um tamanho máximo, 
