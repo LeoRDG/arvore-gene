@@ -43,102 +43,6 @@ void Pessoa::exibir_linha(string cor){
     cout << "\n";
 }
 
-string Pessoa::primeiro_nome(){
-    int espaco = nome.find(' ');
-    // find() retorna string::npos se nao encontrar, se acontecer, retornar nome completo
-    if (espaco == string::npos) return nome;
-    return nome.substr(0, espaco);
-}
-
-void Pessoa::definir_pai(Pessoa* pai){
-    this->pai = pai;
-    pai->filhos.push_back(this);
-    definir_geracao();
-}
-
-void Pessoa::definir_mae(Pessoa* mae){
-    this->mae = mae;
-    mae->filhos.push_back(this);
-    definir_geracao();
-}
-
-string Pessoa::chave(){
-    // Junta o nome e o valor do nascimento e deixando tudo minusculo
-    return to_string(nascimento.valor()) + minusculas(nome);
-}
-
-string Pessoa::serializar(){
-    stringstream stream;
-    string resultado;
-
-    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
-    stream << setfill('0') << setw(4) << nascimento.ano << ","
-    << setw(2) << nascimento.mes << ","
-    << setw(2) << nascimento.dia << ","
-    << nome << ","
-    << genero << ',';
-
-    // Se nao tiver pai/mae, deixa vazio (espaco em branco)
-    (pai == nullptr) ? stream << " ," : stream << pai->chave() << ",";
-    (mae == nullptr) ? stream << " "  : stream << mae->chave();
-
-    getline(stream, resultado);
-
-    return resultado;
-}
-
-tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
-    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
-    vector<string> vetor_dados;
-    istringstream str(dados);
-    string dado;
-
-    // Separa os dados por virgula
-    while ( getline(str, dado, ',') ){
-        vetor_dados.push_back(dado);
-    }
-
-    // Valida formato a quantidade de dados
-    if (vetor_dados.size() != 7) return {nullptr, "", ""};
-
-    // Se ocorrer um erro ao converter a string para int, retornar nullptr
-    int dia, mes, ano;
-    try {
-        dia = stoi(vetor_dados[2]);
-        mes = stoi(vetor_dados[1]);
-        ano = stoi(vetor_dados[0]);
-    } catch (invalid_argument) {
-         return {nullptr, "", ""};
-    }
-
-    string nome = vetor_dados[3];
-    char genero = vetor_dados[4][0];
-
-    Data nascimento = Data(dia, mes, ano);
-
-    Pessoa* pessoa = new Pessoa{nome, nascimento, genero};
-
-    // Retorna pessoa criada e chaves dos pais (para definir depois)
-    return {pessoa, vetor_dados[5], vetor_dados[6]};
-}
-
-void Pessoa::definir_geracao() {
-    // Geraçao eh o maximo entre pai e mae + 1
-    int g_pai = (pai == nullptr) ? GERACAO_INICIAL : pai->geracao;
-    int g_mae = (mae == nullptr) ? GERACAO_INICIAL : mae->geracao;
-    int nivel = max(g_pai, g_mae);
-
-    // Evita recalcular se ja esta correto
-    if (geracao >= nivel+1) return;
-
-    geracao = nivel+1;
-
-    // Define a geracao dos os descendentes
-    for (auto* f : filhos) {
-        f->definir_geracao();
-    }
-}
-
 void Pessoa::exibir_ascendentes(int nivel) {
 
     if (pai == nullptr && mae == nullptr) {
@@ -198,23 +102,6 @@ void Pessoa::exibir_info(){
 void Pessoa::exibir_menu(){
     if (menu.opcoes.empty()) criar_menu();
     menu.imprimir();
-}
-
-void Pessoa::criar_menu(){
-    menu = {{
-        {"Exibir Ascendentes",                [this]() {
-            exibir_ascendentes(1);
-            print(nome, '\n', "amarelo");
-        }},
-        {"Exibir Descendentes",               [this]() {
-            print(nome, '\n', "amarelo");
-            exibir_descendentes(1);
-        }},
-        {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
-        {"Remover da Arvore",                 [this]() {print("Funcionalidade nao implementada", '\n', "vermelho");}},
-        {"Exibir Arvore",                     [this]() {exibir_arvore(0);}},
-        {"Voltar",                            [this]() {menu.continua=false;}},
-    }};
 }
 
 void Pessoa::exibir_arvore(int nivel){
@@ -278,9 +165,122 @@ int Pessoa::contar_descendentes(){
     return contagem;
 }
 
+void Pessoa::definir_pai(Pessoa* pai){
+    this->pai = pai;
+    pai->filhos.push_back(this);
+    definir_geracao();
+}
+
+void Pessoa::definir_mae(Pessoa* mae){
+    this->mae = mae;
+    mae->filhos.push_back(this);
+    definir_geracao();
+}
+
+void Pessoa::definir_geracao() {
+    // Geraçao eh o maximo entre pai e mae + 1
+    int g_pai = (pai == nullptr) ? GERACAO_INICIAL : pai->geracao;
+    int g_mae = (mae == nullptr) ? GERACAO_INICIAL : mae->geracao;
+    int nivel = max(g_pai, g_mae);
+
+    // Evita recalcular se ja esta correto
+    if (geracao >= nivel+1) return;
+
+    geracao = nivel+1;
+
+    // Define a geracao dos os descendentes
+    for (auto* f : filhos) {
+        f->definir_geracao();
+    }
+}
+
+void Pessoa::criar_menu(){
+    menu = {{
+        {"Exibir Ascendentes",                [this]() {
+            exibir_ascendentes(1);
+            print(nome, '\n', "amarelo");
+        }},
+        {"Exibir Descendentes",               [this]() {
+            print(nome, '\n', "amarelo");
+            exibir_descendentes(1);
+        }},
+        {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
+        {"Remover da Arvore",                 [this]() {print("Funcionalidade nao implementada", '\n', "vermelho");}},
+        {"Exibir Arvore",                     [this]() {exibir_arvore(0);}},
+        {"Voltar",                            [this]() {menu.continua=false;}},
+    }};
+}
+
+string Pessoa::primeiro_nome(){
+    int espaco = nome.find(' ');
+    // find() retorna string::npos se nao encontrar, se acontecer, retornar nome completo
+    if (espaco == string::npos) return nome;
+    return nome.substr(0, espaco);
+}
+
+string Pessoa::chave(){
+    // Junta o nome e o valor do nascimento e deixando tudo minusculo
+    return to_string(nascimento.valor()) + minusculas(nome);
+}
+
 vector<Pessoa*> Pessoa::conexoes(){
     vector<Pessoa*> resultado = filhos;
     if (pai != nullptr) resultado.push_back(pai);
     if (mae != nullptr) resultado.push_back(mae);
     return resultado;
+}
+
+string Pessoa::serializar(){
+    stringstream stream;
+    string resultado;
+
+    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
+    stream << setfill('0') << setw(4) << nascimento.ano << ","
+    << setw(2) << nascimento.mes << ","
+    << setw(2) << nascimento.dia << ","
+    << nome << ","
+    << genero << ',';
+
+    // Se nao tiver pai/mae, deixa vazio (espaco em branco)
+    (pai == nullptr) ? stream << " ," : stream << pai->chave() << ",";
+    (mae == nullptr) ? stream << " "  : stream << mae->chave();
+
+    getline(stream, resultado);
+
+    return resultado;
+}
+
+tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
+    // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
+    vector<string> vetor_dados;
+    istringstream str(dados);
+    string dado;
+
+    // Separa os dados por virgula
+    while ( getline(str, dado, ',') ){
+        vetor_dados.push_back(dado);
+    }
+
+    // Valida formato a quantidade de dados
+    if (vetor_dados.size() != 7) return {nullptr, "", ""};
+
+    // Se ocorrer um erro ao converter a string para int, retornar nullptr
+    int dia, mes, ano;
+    try {
+        dia = stoi(vetor_dados[2]);
+        mes = stoi(vetor_dados[1]);
+        ano = stoi(vetor_dados[0]);
+    } catch (invalid_argument) {
+         return {nullptr, "", ""};
+    }
+
+    string nome = vetor_dados[3];
+    char genero = vetor_dados[4][0];
+
+    Data nascimento = Data(dia, mes, ano);
+
+    Pessoa* pessoa = new Pessoa{nome, nascimento, genero};
+
+    // Retorna pessoa criada e chaves dos pais (para definir depois)
+    return {pessoa, vetor_dados[5], vetor_dados[6]};
 }

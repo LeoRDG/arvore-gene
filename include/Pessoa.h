@@ -13,25 +13,33 @@ using namespace std;
 
 struct Pessoa
 {
-    string nome;        ///< Nome completo da pessoa
-    Data nascimento;    ///< Data de nascimento
-    char genero;        ///< Gênero ('M' para masculino, 'F' para feminino)
+    string nome;                             ///< Nome completo da pessoa
+    Data nascimento;                         ///< Data de nascimento
+    char genero;                             ///< Gênero ('M' para masculino, 'F' para feminino)
 
     static const int GERACAO_INICIAL = -1;   ///< Valor inicial da geracai
     int geracao = GERACAO_INICIAL;           ///< Geracao da pessoa (-1 = não definida)
 
-    Pessoa *pai = nullptr;           ///< Ponteiro para o pai (nullptr se nao definido)
-    Pessoa *mae = nullptr;           ///< Ponteiro para a mae (nullptr se nao definido)
-    vector<Pessoa*> filhos;          ///< Vetor com os filhos
+    Pessoa *pai = nullptr;                   ///< Ponteiro para o pai (nullptr se nao definido)
+    Pessoa *mae = nullptr;                   ///< Ponteiro para a mae (nullptr se nao definido)
+    vector<Pessoa*> filhos;                  ///< Vetor com os filhos
     
-    Menu menu;                        ///< Menu de opcoes para interacao com o usuario
+    Menu menu;                               ///< Menu de opcoes para interacao com o usuario
 
-    /// Constantes para largura dos campos na exibição de informacoes
-    static const int L_NOME = 30;    ///< Largura da coluna Nome
-    static const int L_NASC = 15;    ///< Largura da coluna Nascimento
-    static const int L_PAIS = 15;    ///< Largura da coluna Pai/Mae
-    static const int L_GEN  = 10;    ///< Largura da coluna Genero
-    static const int L_GER  = 10;    ///< Largura da coluna Geracao
+    static const int L_NOME = 30;            ///< Largura da coluna Nome
+    static const int L_NASC = 15;            ///< Largura da coluna Nascimento
+    static const int L_PAIS = 15;            ///< Largura da coluna Pai/Mae
+    static const int L_GEN  = 10;            ///< Largura da coluna Genero
+    static const int L_GER  = 10;            ///< Largura da coluna Geracao
+
+
+    /**
+     * @brief Exibe o cabeçalho da tabela de pessoas
+     * 
+     * Imprime os nomes das colunas formatados com as larguras definidas
+     * pelas constantes L_NOME, L_NASC, etc.
+     */
+    static void exibir_cabecario();
 
 
     /**
@@ -40,11 +48,60 @@ struct Pessoa
      */
     void exibir_linha(string cor="padrao");
     
+    
     /**
-     * @brief Retorna apenas o primeiro nome
-     * @returns Primeiro nome da pessoa ou nome completo se nao houver espacos
+     * @brief Exibe recursivamente todos os ascendentes dessa pessoa
      */
-    string primeiro_nome();
+    void exibir_ascendentes(int nivel);
+
+
+    /**
+     * @brief Exibe recursivamente todos os descendentes dessa pessoa
+     */
+    void exibir_descendentes(int nivel);
+    
+
+    /**
+     * @brief Exibe recursivamente todos os ascendentes e descendentes
+     * 
+     * Primeiro exibe todos os ascendentes e depois
+     * todos os descendentes.
+     */
+    void exibir_asc_desc();
+
+
+    /**
+     * @brief Exibe informacoes dessa pessoa
+     * 
+     * Mostra nome, nascimento, genero e quantidade de descendentes, pais e filhos.
+     */
+    void exibir_info();
+
+
+    /**
+     * @brief Exibe o menu de opcoes para esta pessoa
+     * 
+     * Se o menu ainda não foi criado, chama criar_menu() automaticamente.
+     */
+    void exibir_menu();
+
+
+    /**
+     * @brief Exibe uma sub-arvore começando dessa pessoa
+     * 
+     * Exibe recursivamente a pessoa e seus descendentes, usando indentaçao
+     * para mostrar a hierarquia.
+     * @param nivel Nível atual na árvore (0 = esta pessoa, 1 = filhos, 2 = netos, etc.)
+     */
+    void exibir_arvore(int nivel=0);
+
+
+    /**
+     * @brief Conta recursivamente o total de descendentes (diretos e indiretos)
+     * @returns Número total de descendentes desta pessoa
+     */
+    int contar_descendentes();
+
 
     /**
      * @brief Define o pai dessa pessoa
@@ -55,6 +112,7 @@ struct Pessoa
      */
     void definir_pai(Pessoa* pai);
 
+
     /**
      * @brief Define a mae dessa pessoa
      * 
@@ -63,33 +121,6 @@ struct Pessoa
      * @param mae Ponteiro para a pessoa que será a mae
      */
     void definir_mae(Pessoa* mae);
-
-    /**
-     * @brief Exibe recursivamente todos os ascendentes e descendentes
-     * 
-     * Primeiro exibe todos os ascendentes e depois
-     * todos os descendentes.
-     */
-    void exibir_asc_desc();
-    
-
-    /**
-     * @brief Exibe recursivamente todos os descendentes dessa pessoa
-     */
-    void exibir_descendentes(int nivel);
-
-
-    /**
-     * @brief Exibe recursivamente todos os ascendentes dessa pessoa
-     */
-    void exibir_ascendentes(int nivel);
-    
-
-    /**
-     * @brief Conta recursivamente o total de descendentes (diretos e indiretos)
-     * @returns Número total de descendentes desta pessoa
-     */
-    int contar_descendentes();
 
 
     /**
@@ -104,12 +135,36 @@ struct Pessoa
 
 
     /**
+     * @brief Cria o menu para esta pessoa
+     * 
+     * Cria as opcoes definidas dentro da funcao
+     */
+    void criar_menu();
+
+
+    /**
+     * @brief Retorna apenas o primeiro nome
+     * @returns Primeiro nome da pessoa ou nome completo se nao houver espacos
+     */
+    string primeiro_nome();
+
+
+    /**
      * @brief Gera uma chave única para identificar essa pessoa
      * 
      * Formato: "AAAAMMDDnome"
      * @returns String contendo valor numérico da data + nome em minusculas
      */
     string chave();
+
+
+    /**
+     * @brief Retorna todas as pessoas diretamente conectadas (pais e filhos)
+     * 
+     * Usado para achar o grau de parentesco.
+     * @returns Vetor contendo pai, mae e filhos
+     */
+    vector<Pessoa*> conexoes();
 
 
     /**
@@ -136,53 +191,4 @@ struct Pessoa
      *   - string: Chave da mae (pode estar vazia)
      */
     static tuple<Pessoa*, string, string> deserializar(string dados);
-
-    /**
-     * @brief Exibe o cabeçalho da tabela de pessoas
-     * 
-     * Imprime os nomes das colunas formatados com as larguras definidas
-     * pelas constantes L_NOME, L_NASC, etc.
-     */
-    static void exibir_cabecario();
-
-    /**
-     * @brief Exibe informacoes dessa pessoa
-     * 
-     * Mostra nome, nascimento, genero e quantidade de descendentes, pais e filhos.
-     */
-    void exibir_info();
-
-
-    /**
-     * @brief Exibe o menu de opcoes para esta pessoa
-     * 
-     * Se o menu ainda não foi criado, chama criar_menu() automaticamente.
-     */
-    void exibir_menu();
-
-
-    /**
-     * @brief Cria o menu para esta pessoa
-     * 
-     * Cria as opcoes definidas dentro da funcao
-     */
-    void criar_menu();
-
-
-    /**
-     * @brief Exibe uma sub-arvore começando dessa pessoa
-     * 
-     * Exibe recursivamente a pessoa e seus descendentes, usando indentaçao
-     * para mostrar a hierarquia.
-     * @param nivel Nível atual na árvore (0 = esta pessoa, 1 = filhos, 2 = netos, etc.)
-     */
-    void exibir_arvore(int nivel=0);
-
-    /**
-     * @brief Retorna todas as pessoas diretamente conectadas (pais e filhos)
-     * 
-     * Usado para achar o grau de parentesco.
-     * @returns Vetor contendo pai, mae e filhos
-     */
-    vector<Pessoa*> conexoes();
 };
