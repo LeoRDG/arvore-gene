@@ -17,9 +17,11 @@
 
 using namespace std;
 
+
 Arvore::Arvore(string nome){
     this->nome = nome;
 }
+
 
 void Arvore::ui_adicionar_pessoa(){
     string nome = pedir_nome();
@@ -31,6 +33,7 @@ void Arvore::ui_adicionar_pessoa(){
     if (!confirmar("Gostaria de definir os pais dessa pessoa?")) return;
     ui_definir_pais(pessoa);
 }
+
 
 void Arvore::ui_definir_pais(Pessoa* pessoa){
     if (pessoa == nullptr) return;
@@ -59,6 +62,7 @@ void Arvore::ui_definir_pais(Pessoa* pessoa){
     }
 }
 
+
 Pessoa* Arvore::ui_buscar_pessoa(){
     // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
     string nome = ler_string("Digite o nome da pessoa que deseja achar, deixe em branco para mostrar todas as pessoas: ");
@@ -82,6 +86,7 @@ Pessoa* Arvore::ui_buscar_pessoa(){
     return (indice < 0) ? nullptr : encontradas.at(indice);
 }
 
+
 void Arvore::ui_pessoa_menu(){
     // Busca pessoa para definir os pais
     Pessoa* p = ui_buscar_pessoa();
@@ -95,6 +100,7 @@ void Arvore::ui_pessoa_menu(){
     }
 }
 
+
 void Arvore::ui_exibir_por_geracao() {
     int geracao = ler_int("Digite a geracao que esta procurando: ");
     vector<Pessoa*> encontradas = pesquisar_pessoas("", INT_MAX, '\0', geracao);
@@ -106,6 +112,7 @@ void Arvore::ui_exibir_por_geracao() {
 
     exibir_pessoas(encontradas);
 }
+
 
 void Arvore::ui_exibir_parentesco() {
     exibir_pessoas(familia);
@@ -134,12 +141,14 @@ void Arvore::ui_exibir_parentesco() {
     }
 }
 
+
 void Arvore::exibir_info(){
     print("Data: " + Data::hoje().str());
     print("Nome da Arvore: " + nome);
     print("Quantidade de pessoas:", ' ');
     print(to_string(familia.size()), '\n', "verde");
 }
+
 
 void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){
     printf("%zu/%zu Pessoas encontradas\n", pessoas.size(), familia.size());
@@ -156,10 +165,12 @@ void Arvore::exibir_pessoas(vector<Pessoa*> pessoas){
     }
 }
 
+
 void Arvore::exibir_menu() {
     if (menu.opcoes.empty()) criar_menu();
     menu.imprimir();
 }
+
 
 void Arvore::criar_menu() {
     // As opcoes do menu sao criadas aqui usando a struct Opcao
@@ -178,6 +189,7 @@ void Arvore::criar_menu() {
     } };
 }
 
+
 void Arvore::salvar(){
     ofstream arquivo(nome + EXTENSAO);
 
@@ -187,6 +199,7 @@ void Arvore::salvar(){
 
     arquivo.close();
 }
+
 
 void Arvore::carregar(){
     ifstream arquivo(nome + EXTENSAO);
@@ -217,11 +230,13 @@ void Arvore::carregar(){
     arquivo.close();
 }
 
+
 Pessoa* Arvore::criar_pessoa(string nome, char genero, Data nascimento){
     Pessoa *pessoa = new Pessoa{nome, nascimento, genero};
     familia.push_back(pessoa);
     return pessoa;
 }
+
 
 vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char genero, int geracao){
     vector<Pessoa*> encontradas;
@@ -238,6 +253,7 @@ vector<Pessoa*> Arvore::pesquisar_pessoas(string nome, int valor_data, char gene
     }
     return encontradas;
 }
+
 
 pair<int, stack<Pessoa*>> Arvore::calcular_distancia(Pessoa* a, Pessoa* b) {
     // Algoritmo BFS (https://www.youtube.com/watch?v=xlVX7dXLS64)

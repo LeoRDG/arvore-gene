@@ -25,6 +25,7 @@ struct Menu{
      */
     void imprimir();
 
+
     /**
      * @brief Processa a resposta do usuario e executa a funcao correspondente
      * @param resposta Numero da opcão selecionada
@@ -32,6 +33,7 @@ struct Menu{
      */
     bool processar_resposta(int resposta);
 
+    
     /**
      * @brief Aguarda o usuario informar uma opcao e processa a resposta
      * 

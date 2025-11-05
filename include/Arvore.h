@@ -33,6 +33,7 @@ struct Arvore
      */
     void ui_adicionar_pessoa();
 
+
     /**
      * @brief Funcao para definir os pais de uma pessoa
      * @param pessoa Pessoa para a qual os pais serão definidos
@@ -42,10 +43,12 @@ struct Arvore
      */
     void ui_definir_pais(Pessoa* pessoa);
 
+
     /**
      * @brief Funcao para buscar pessoas na arvore por nome
      */
     Pessoa* ui_buscar_pessoa();
+
 
     /**
      * @brief Funcao para definir os pais de uma pessoa existente
@@ -53,6 +56,7 @@ struct Arvore
      * Permite buscar uma pessoa e definir seus pais
      */
     void ui_pessoa_menu(); 
+
 
     /**
      * @brief Funcao para exibir todas as pessoas de uma geração específica
@@ -62,6 +66,7 @@ struct Arvore
      */
     void ui_exibir_por_geracao();
 
+
     /**
      * @brief Funcao para calcular e exibir o grau de parentesco entre duas pessoas
      * 
@@ -70,10 +75,12 @@ struct Arvore
      */
     void ui_exibir_parentesco();
 
+
     /**
      * @brief Exibe informacoes simples dessa arvore
      */
     void exibir_info();
+
 
     /**
      * @brief Dada um vetor de pessoas, exibe cada uma delas
@@ -81,31 +88,37 @@ struct Arvore
      */
     void exibir_pessoas(vector<Pessoa*> pessoas);
 
+
     /**
      * @brief Imprime no console as opcoes para manipular a arvore
      */  
     void exibir_menu();
+
 
     /**
      * @brief Cria o menu dessa arvore
      */
     void criar_menu();
     
+
     /**
      * @brief Salva essa arvore em um arquivo
      */
     void salvar();
     
+
     /**
      * @brief Carrega a arvore de um arquivo
      */
     void carregar();
     
+
     /**
      * @brief cria uma pessoa e adiciona à familia
      * @returns Um ponteiro da pessoa que foi criada
      */
     Pessoa* criar_pessoa(string nome, char genero, Data nascimento);
+
 
     /**
      * @brief Pesquisa por pessoas usando filtros opcionais
@@ -116,6 +129,7 @@ struct Arvore
      * @returns Vetor com todas as pessoas que atendem aos critérios da busca
      */
     vector<Pessoa*> pesquisar_pessoas(string nome="", int valor_data = INT_MAX, char genero='\0', int geracao=-1);
+
 
     /**
      * @brief Calcula a distancia e o caminho entre duas pessoas
@@ -130,5 +144,4 @@ struct Arvore
      *   - stack<Pessoa*>: Caminho de 'a' até 'b' (vazio se nao há relação)
      */
     static pair<int, stack<Pessoa*>> calcular_distancia(Pessoa* a, Pessoa* b);
-
 };
