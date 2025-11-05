@@ -8,24 +8,38 @@
 
 using namespace std;
 
-void ignore_tudo() {
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
 int ler_int(string msg, int max, int min) {
-    int resposta;
+    // Le a string inteira e se for um numero retorna ele
+
+    string resposta;
+    int num;
     bool valido;
 
     // loop infinito que só acaba com um return quando o inteiro informado pelo usuario for valido
     while (true) {
         cout << msg;
+
         cout << cores.at("verde");
-        valido = (cin >> resposta) && (min <= resposta && resposta <= max);
-        ignore_tudo();
+        getline(cin, resposta, '\n');
         cout << cores.at("padrao");
-        if (valido) return resposta;
-        print("INPUT INVALIDO", '\n', "vermelho");
+
+        // Usando try catch se nao foir possivel converter a respota para um numero
+        try {num = stoi(resposta);}
+        catch (invalid_argument) {
+            print("INPUT INVALIDO, Digite um NUMERO valido", '\n', "vermelho");
+            continue;
+        }
+        catch (out_of_range) {
+            print("Numero nao cabe em int. Digite um NUMERO valido", '\n', "vermelho");
+            continue;
+        }
+
+        valido = (num >= min && num <= max);
+
+        if (valido) return num;
+        print("INPUT INVALIDO, numero fora do intervalo ", '\n', "vermelho");
+        print("Informe um numero entre", ' ', "vermelho");
+        print(to_string(min) + " e " + to_string(max));
     }
 }
 

@@ -1,5 +1,6 @@
 /**
  * Aqui serão implementadas as funcionalidades da Pessoa
+ * Funcoes iniciadas com ui, sao funcoes que exigem interacao do usuario
  */
 
 #include "../include/Arvore.h"
@@ -32,6 +33,9 @@ void Arvore::ui_adicionar_pessoa(){
 }
 
 void Arvore::ui_definir_pais(Pessoa* pessoa){
+    if (pessoa == nullptr) return;
+
+    limpar_tela();
     int resposta;
     print("Definindo os pais de '" + pessoa->nome + "'");
     
@@ -39,10 +43,9 @@ void Arvore::ui_definir_pais(Pessoa* pessoa){
     vector<Pessoa*> possiveis_pais = pesquisar_pessoas("", pessoa->nascimento.valor(), 'M');
     exibir_pessoas(possiveis_pais);
     if (possiveis_pais.size() > 0){
-        int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: ", possiveis_pais.size()) - 1;
-        pessoa->definir_pai(possiveis_pais[resposta]);
+        int resposta = ler_int("Escolha uma dessas pessoas para ser o pai: (0) para cancelar ", possiveis_pais.size()) - 1;
+        if (resposta >= 0) pessoa->definir_pai(possiveis_pais[resposta]);
     }
-    
 
     limpar_tela();
     print("Definindo os pais de '" + pessoa->nome + "'");
@@ -51,54 +54,45 @@ void Arvore::ui_definir_pais(Pessoa* pessoa){
     vector<Pessoa*> possiveis_maes = pesquisar_pessoas("", pessoa->nascimento.valor(), 'F');
     exibir_pessoas(possiveis_maes);
     if (possiveis_maes.size() > 0){
-        resposta = ler_int("Escolha uma dessas pessoas para ser a mae: ", possiveis_maes.size()) - 1;
-        pessoa->definir_mae(possiveis_maes[resposta]);
+        resposta = ler_int("Escolha uma dessas pessoas para ser a mae: (0) para cancelar ", possiveis_maes.size()) - 1;
+        if (resposta >= 0) pessoa->definir_mae(possiveis_maes[resposta]);
     }
 }
 
-void Arvore::ui_buscar_pessoa(){
+Pessoa* Arvore::ui_buscar_pessoa(){
+    // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
     string nome = ler_string("Digite o nome da pessoa que deseja achar, deixe em branco para mostrar todas as pessoas: ");
     limpar_tela();
-    print("Pesquisando por '" + nome + "'");
-    print("________________________________________________");
-
-    // Procura por pessoas com nomes parecidos e se achar, coloca elas em um vetor
+    print("Pesquisando por '" + nome + "'", '\n', "bg_cinza");
     vector<Pessoa*> encontradas = pesquisar_pessoas(nome);
 
-    // Se pessoas foram encontradas, mostrar elas
+    // Se nenhuma pessoa for encontradas, retornar nullptr
     if ( encontradas.empty() ) {
         print("Nenhuma pessoa encontrada", '\n', "vermelho");
-        return;
+        return nullptr;
     }
+
+    // Se só achar uma pessoa, retornar ela
+    if (encontradas.size() == 1) return encontradas.at(0);
     
+    // Se achar muitas pessoas, exibir e pedir clarificaçao
+    // Pessoas sao exibidas a partir de 1, se o usuario digitar 0, retornar nullptr
     exibir_pessoas(encontradas);
-    int num = ler_int("Qual pessoa voce estava procurando? ", encontradas.size(), 1);
-    
-    Pessoa* p = encontradas[num-1];
-    p->exibir_info();
-    p->exibir_menu();
-    p->menu.esperar_resposta();
+    int indice = ler_int("Qual pessoa voce estava procurando? (0 para cancelar) ", encontradas.size(), 0) - 1;
+    return (indice < 0) ? nullptr : encontradas.at(indice);
 }
 
-void Arvore::ui_definir_pais_pessoa(){
+void Arvore::ui_pessoa_menu(){
     // Busca pessoa para definir os pais
-    string nome = ler_string("Digite o nome da pessoa que deseja definir os pais, deixe em branco para mostrar todas: ");
-    limpar_tela();
-    print("Pesquisando por '" + nome + "'");
-    print("________________________________________________");
-
-    vector<Pessoa*> encontradas = pesquisar_pessoas(nome);
-
-    if (encontradas.empty()) {
-        print("Nenhuma pessoa encontrada", '\n', "vermelho");
-        return;
+    Pessoa* p = ui_buscar_pessoa();
+    if (p == nullptr) return;
+    
+    while (p->menu.continua){
+        p->exibir_info();
+        p->exibir_menu();
+        p->menu.esperar_resposta();
+        if (p->menu.continua) pausar();    // o if evita pausar duas vezes (pause desse menu e do anterior) quando sair
     }
-    
-    exibir_pessoas(encontradas);
-    int num = ler_int("Qual pessoa voce quer definir os pais? ", encontradas.size(), 1);
-    
-    Pessoa* p = encontradas[num-1];
-    ui_definir_pais(p);
 }
 
 void Arvore::ui_exibir_por_geracao() {
@@ -174,11 +168,11 @@ void Arvore::criar_menu() {
     
     menu = { {
         { "Adicionar pessoa",                     [this]() {ui_adicionar_pessoa();} },
-        { "Buscar pessoa",                        [this]() {ui_buscar_pessoa();} },
-        { "Definir pais de uma pessoa",           [this]() {ui_definir_pais_pessoa();} },
+        { "Buscar pessoa",                        [this]() {ui_pessoa_menu();} },
+        { "Definir pais de uma pessoa",           [this]() {ui_definir_pais(ui_buscar_pessoa());} },
         { "Mostrar geracoes",                     [this]() {ui_exibir_por_geracao();}},  
         { "Exibir parentesco entre 2 pessoas",    [this]() {ui_exibir_parentesco();}},
-        { "Sair",                                 [this]() {exit(0);} },
+        { "Sair",                                 [this]() {exit(0);}},
         //{ "Salvar" ,                              [this]() {salvar();} },
         //{ "Carregar" ,                            [this]() {carregar();} },
     } };

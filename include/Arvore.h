@@ -45,14 +45,14 @@ struct Arvore
     /**
      * @brief Funcao para buscar pessoas na arvore por nome
      */
-    void ui_buscar_pessoa();
+    Pessoa* ui_buscar_pessoa();
 
     /**
      * @brief Funcao para definir os pais de uma pessoa existente
      * 
      * Permite buscar uma pessoa e definir seus pais
      */
-    void ui_definir_pais_pessoa(); 
+    void ui_pessoa_menu(); 
 
     /**
      * @brief Funcao para exibir todas as pessoas de uma geração específica

@@ -10,7 +10,7 @@ int main() {
     Arvore arvore = Arvore("arvore");
     arvore.carregar();
 
-    while (true) {
+    while (arvore.menu.continua) {
         limpar_tela();
         arvore.exibir_info();
         arvore.exibir_menu();

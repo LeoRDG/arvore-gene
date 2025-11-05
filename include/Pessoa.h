@@ -97,6 +97,8 @@ struct Pessoa
      * 
      * A geracao será a maior geracao entre a do pai e da mae + 1.
      * Atualiza recursivamente a geracao de todos os filhos.
+     * 
+     * Pequeno problema, se mudar os pais, a nova geracao só será atualizada quando reiniciar o programa
      */
     void definir_geracao();
 

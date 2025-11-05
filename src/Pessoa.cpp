@@ -213,6 +213,7 @@ void Pessoa::criar_menu(){
         {"Exibir Ascendentes e descendentes", [this]() {exibir_asc_desc();}},
         {"Remover da Arvore",                 [this]() {print("Funcionalidade nao implementada", '\n', "vermelho");}},
         {"Exibir Arvore",                     [this]() {exibir_arvore(0);}},
+        {"Voltar",                            [this]() {menu.continua=false;}},
     }};
 }
 

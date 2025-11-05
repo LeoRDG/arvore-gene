@@ -6,21 +6,19 @@
 using namespace std;
 
 /**
- * @struct Opcao
  * @brief Representa uma opcao do menu
  */
 struct Opcao{
-    string descricao;                 ///< Texto descritivo da opçao exibido ao usuario
-    function<void()> func = nullptr;  ///< Funcão a ser executada quando opcão for selecionada
+    string descricao;                 ///< Texto exibido ao usuario
+    function<void()> func = nullptr;  ///< Funcão a ser executada quando opcao for selecionada
 };
 
 /**
  * @brief É um menu com multiplas opcoes
- * 
- * Permite exibir o menu e processar a escolha do usuário.
  */
 struct Menu{
     vector<Opcao> opcoes;  ///< Lista de opçoes disponíveis no menu
+    bool continua = true;         ///< boolean para vereificar se continua no loop desse menu
 
     /**
      * @brief Imprime as opçoes do menu
