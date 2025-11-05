@@ -25,6 +25,7 @@ void Pessoa::exibir_cabecario(){
     cout << "\n";
 }
 
+
 void Pessoa::exibir_linha(string cor){
     cout << cores.at(cor);
     cout << left << setw(L_NOME) << limite_str(nome, L_NOME-1);
@@ -42,6 +43,7 @@ void Pessoa::exibir_linha(string cor){
     cout << cores.at("padrao");
     cout << "\n";
 }
+
 
 void Pessoa::exibir_ascendentes(int nivel) {
 
@@ -69,6 +71,7 @@ void Pessoa::exibir_ascendentes(int nivel) {
     }
 }
 
+
 void Pessoa::exibir_descendentes(int nivel) {
     if (filhos.empty()) {
         for (int i=0; i <nivel; i++) cout << "  ";
@@ -85,11 +88,13 @@ void Pessoa::exibir_descendentes(int nivel) {
     }
 }
 
+
 void Pessoa::exibir_asc_desc(){
     exibir_ascendentes(1);
     print(nome, '\n', "amarelo");
     exibir_descendentes(1);
 }
+
 
 void Pessoa::exibir_info(){
     limpar_tela();
@@ -99,10 +104,12 @@ void Pessoa::exibir_info(){
     << "Descendentes: " << contar_descendentes() << "\n"; 
 }
 
+
 void Pessoa::exibir_menu(){
     if (menu.opcoes.empty()) criar_menu();
     menu.imprimir();
 }
+
 
 void Pessoa::exibir_arvore(int nivel){
     // Se essa pessoa nao tem filhos, exibir somente o nome e retorna
@@ -155,6 +162,7 @@ void Pessoa::exibir_arvore(int nivel){
     }
 }
 
+
 int Pessoa::contar_descendentes(){
     if (filhos.empty()) return 0;
     // Conta filhos diretos + descendentes recursivos de cada filho
@@ -165,17 +173,20 @@ int Pessoa::contar_descendentes(){
     return contagem;
 }
 
+
 void Pessoa::definir_pai(Pessoa* pai){
     this->pai = pai;
     pai->filhos.push_back(this);
     definir_geracao();
 }
 
+
 void Pessoa::definir_mae(Pessoa* mae){
     this->mae = mae;
     mae->filhos.push_back(this);
     definir_geracao();
 }
+
 
 void Pessoa::definir_geracao() {
     // Geraçao eh o maximo entre pai e mae + 1
@@ -194,6 +205,7 @@ void Pessoa::definir_geracao() {
     }
 }
 
+
 void Pessoa::criar_menu(){
     menu = {{
         {"Exibir Ascendentes",                [this]() {
@@ -211,6 +223,7 @@ void Pessoa::criar_menu(){
     }};
 }
 
+
 string Pessoa::primeiro_nome(){
     int espaco = nome.find(' ');
     // find() retorna string::npos se nao encontrar, se acontecer, retornar nome completo
@@ -218,10 +231,12 @@ string Pessoa::primeiro_nome(){
     return nome.substr(0, espaco);
 }
 
+
 string Pessoa::chave(){
     // Junta o nome e o valor do nascimento e deixando tudo minusculo
     return to_string(nascimento.valor()) + minusculas(nome);
 }
+
 
 vector<Pessoa*> Pessoa::conexoes(){
     vector<Pessoa*> resultado = filhos;
@@ -229,6 +244,7 @@ vector<Pessoa*> Pessoa::conexoes(){
     if (mae != nullptr) resultado.push_back(mae);
     return resultado;
 }
+
 
 string Pessoa::serializar(){
     stringstream stream;
@@ -249,6 +265,7 @@ string Pessoa::serializar(){
 
     return resultado;
 }
+
 
 tuple<Pessoa*, string, string> Pessoa::deserializar(string dados){
     // Formato: ano,mes,dia,nome,genero,chave_pai,chave_mae
