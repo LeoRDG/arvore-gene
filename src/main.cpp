@@ -7,7 +7,7 @@
 #include "../include/Arvore.h"
 
 int main() {
-    Arvore arvore = Arvore("arvore");
+    Arvore arvore = Arvore("arvore_teste");
     arvore.carregar();
 
     while (arvore.menu.continua) {

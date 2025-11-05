@@ -10,7 +10,7 @@ arquivos=(./src/*.cpp)
 # Compila 1 por 1
 for f in "${arquivos[@]}"; do
     echo "Compilando $f ..."
-    g++ -c "$f" -I ./include -o "${f%.cpp}.o"
+    g++ -std=c++17 -c "$f" -I ./include -o "${f%.cpp}.o"
 done
 
 # Linka todos os objetos em um único executável

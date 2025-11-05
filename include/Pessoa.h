@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <unordered_set>
 #include "util.h"
 #include "Menu.h"
 
@@ -98,16 +99,18 @@ struct Pessoa
 
     /**
      * @brief Conta recursivamente o total de ascendentes (diretos e indiretos)
+     * @param visitadas Set de pessoas já visitadas (nullptr para criar novo set)
      * @returns Número total de ascendentes desta pessoa
      */
-    int contar_ascendentes();
+    int contar_ascendentes(unordered_set<Pessoa*>* visitadas = nullptr);
 
 
     /**
      * @brief Conta recursivamente o total de descendentes (diretos e indiretos)
+     * @param visitadas Set de pessoas já visitadas (nullptr para criar novo set)
      * @returns Número total de descendentes desta pessoa
      */
-    int contar_descendentes();
+    int contar_descendentes(unordered_set<Pessoa*>* visitadas = nullptr);
 
 
     /**

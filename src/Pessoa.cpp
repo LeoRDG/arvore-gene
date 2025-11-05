@@ -10,6 +10,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <unordered_set>
 #include "../include/Pessoa.h"
 #include "../include/util.h"
 
@@ -165,29 +166,63 @@ void Pessoa::exibir_arvore(int nivel){
 }
 
 
-int Pessoa::contar_ascendentes(){
-    // if (pai == nullptr && mae == nullptr) return 0;
-    // Conta pais + ascendentes recursivos de cada pai/mae
+int Pessoa::contar_ascendentes(unordered_set<Pessoa*>* visitadas){
+    // Se o set nao foi passado, cria um novo
+    bool criar_set = (visitadas == nullptr);
+    if (criar_set) {
+        visitadas = new unordered_set<Pessoa*>();
+        visitadas->insert(this);  // Marca a pessoa atual como visitada para nao contar ela mesma
+    }
+    
     int contagem = 0;
-    if (pai != nullptr) {
+    
+    // Conta o pai e seus ancestrais (se nao foi visitado ainda)
+    if (pai != nullptr && !visitadas->count(pai)) {
         contagem++;
-        contagem += pai->contar_ascendentes();
+        visitadas->insert(pai);
+        contagem += pai->contar_ascendentes(visitadas);
     }
-    if (mae != nullptr) {
+    
+    // Conta a mae e seus ancestrais (se nao foi visitado ainda)
+    if (mae != nullptr && !visitadas->count(mae)) {
         contagem++;
-        contagem += mae->contar_ascendentes();
+        visitadas->insert(mae);
+        contagem += mae->contar_ascendentes(visitadas);
     }
+    
+    // Se criou o set, deleta ele
+    if (criar_set) {
+        delete visitadas;
+    }
+    
     return contagem;
 }
 
 
-int Pessoa::contar_descendentes(){
-    if (filhos.empty()) return 0;
-    // Conta filhos diretos + descendentes recursivos de cada filho
-    int contagem = filhos.size();
-    for (Pessoa* f : filhos) {
-        contagem += f->contar_descendentes();
+int Pessoa::contar_descendentes(unordered_set<Pessoa*>* visitadas){
+    // Se o set nao foi passado, cria um novo
+    bool criar_set = (visitadas == nullptr);
+    if (criar_set) {
+        visitadas = new unordered_set<Pessoa*>();
+        visitadas->insert(this);  // Marca a pessoa atual como visitada para nao contar ela mesma
     }
+    
+    int contagem = 0;
+    
+    for (Pessoa* f : filhos) {
+        // Se o filho ainda nao foi visitado, conta ele e seus descendentes
+        if (!visitadas->count(f)) {
+            contagem++;
+            visitadas->insert(f);
+            contagem += f->contar_descendentes(visitadas);
+        }
+    }
+    
+    // Se criou o set, deleta ele
+    if (criar_set) {
+        delete visitadas;
+    }
+    
     return contagem;
 }
 
