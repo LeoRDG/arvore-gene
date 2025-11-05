@@ -97,6 +97,13 @@ struct Pessoa
 
 
     /**
+     * @brief Conta recursivamente o total de ascendentes (diretos e indiretos)
+     * @returns Número total de ascendentes desta pessoa
+     */
+    int contar_ascendentes();
+
+
+    /**
      * @brief Conta recursivamente o total de descendentes (diretos e indiretos)
      * @returns Número total de descendentes desta pessoa
      */

@@ -99,9 +99,11 @@ void Pessoa::exibir_asc_desc(){
 void Pessoa::exibir_info(){
     limpar_tela();
     cout << "Nome: " << nome << "\n"
-    << "Nascimento: " << nascimento.str() << "\n"
-    << "Genero: " << genero << "\n"
-    << "Descendentes: " << contar_descendentes() << "\n"; 
+         << "Nascimento: " << nascimento.str() << "\n"
+         << "Genero: " << genero << "\n"
+         << "Descendentes: " << contar_descendentes() << "\n"
+         << "Ascendentes: " << contar_ascendentes() << "\n"
+    ; 
 }
 
 
@@ -160,6 +162,22 @@ void Pessoa::exibir_arvore(int nivel){
             f->exibir_arvore(nivel + 1);
         }
     }
+}
+
+
+int Pessoa::contar_ascendentes(){
+    // if (pai == nullptr && mae == nullptr) return 0;
+    // Conta pais + ascendentes recursivos de cada pai/mae
+    int contagem = 0;
+    if (pai != nullptr) {
+        contagem++;
+        contagem += pai->contar_ascendentes();
+    }
+    if (mae != nullptr) {
+        contagem++;
+        contagem += mae->contar_ascendentes();
+    }
+    return contagem;
 }
 
 
