@@ -3,11 +3,9 @@
 using namespace std;
 
 /**
- * @struct Data
  * @brief Representa uma data (dia, mês, ano)
  * 
- * Armazena e valida datas, com suporte para anos
- * bisextos e validacao de datas.
+ * Armazena e valida datas
  */
 struct Data{
     int dia=0, mes=0, ano=0;
@@ -16,16 +14,18 @@ struct Data{
     /**
      * @brief Array com quantidade de dias em cada mes
      * 
-     * Indice 0 não é usado. Indices 1-12 correspondem aos meses.
-     * Fevereiro (Indice 2) deve ser ajustado para anos bissextos.
+     * Indice 0 não é usado. Indices 1-12 = meses.
+     * Fevereiro (2) deve ser ajustado para anos bissextos.
      */
     static int dias_no_mes[13];
+
 
     /**
      * @brief Construtor a partir de string no formato "dd/mm/aaaa"
      * @param data String com data no formato brasileiro
      */
     Data(string data);
+
 
     /**
      * @brief Construtor a partir de valores individuais
@@ -34,6 +34,22 @@ struct Data{
      * @param ano Ano
      */
     Data(int dia, int mes, int ano);
+
+
+    /**
+     * @brief Retorna a data de hoje
+     * @returns Objeto Data com a data atual do sistema
+     */
+    static Data hoje();
+
+
+    /**
+     * @brief Verifica se um ano é bisexto
+     * @param ano Ano a ser verificado
+     * @returns true se o ano for bisexto, se nao false
+     */
+    static bool bisexto(int ano);
+
 
     /**
      * @brief Verifica se a data é valida
@@ -49,11 +65,6 @@ struct Data{
      */
     bool valido();
 
-    /**
-     * @brief Formata a data para o formato brasileiro (dd/mm/aaaa)
-     * @returns String com data formatada (ex: "15/03/2024")
-     */
-    string str();
 
     /**
      * @brief Converte a data para valor numérico
@@ -61,16 +72,10 @@ struct Data{
      */
     int valor();
 
-    /**
-     * @brief Retorna a data de hoje
-     * @returns Objeto Data com a data atual do sistema
-     */
-    static Data hoje();
 
     /**
-     * @brief Verifica se um ano é bisexto
-     * @param ano Ano a ser verificado
-     * @returns true se o ano for bisexto, se nao false
+     * @brief Formata a data para o formato brasileiro (dd/mm/aaaa)
+     * @returns String com data formatada (ex: "15/03/2024")
      */
-    static bool bisexto(int ano);
+    string str();
 };
