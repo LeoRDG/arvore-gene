@@ -98,6 +98,7 @@ string pedir_nome() {
         nome = ler_string("Digite o nome da pessoa: ");
         
         // Remove espaços em branco no início e fim
+        if(nome.empty()) continue;
         while (nome.front() == ' ') nome = nome.substr(1);
         while (nome.back() == ' ') nome = nome.substr(0, nome.size()-1);
 
