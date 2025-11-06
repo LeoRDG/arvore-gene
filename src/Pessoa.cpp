@@ -99,12 +99,18 @@ void Pessoa::exibir_asc_desc(){
 
 void Pessoa::exibir_info(){
     limpar_tela();
+    auto asc_set = new unordered_set<Pessoa*>;
+    auto desc_set = new unordered_set<Pessoa*>;
+
     cout << "Nome: " << nome << "\n"
          << "Nascimento: " << nascimento.str() << "\n"
          << "Genero: " << genero << "\n"
-         << "Descendentes: " << contar_descendentes() << "\n"
-         << "Ascendentes: " << contar_ascendentes() << "\n"
+         << "Descendentes: " << contar_descendentes(asc_set) << "\n"
+         << "Ascendentes: " << contar_ascendentes(desc_set) << "\n"
     ; 
+
+    delete asc_set;
+    delete desc_set;
 }
 
 
@@ -166,63 +172,39 @@ void Pessoa::exibir_arvore(int nivel){
 }
 
 
-int Pessoa::contar_ascendentes(unordered_set<Pessoa*>* visitadas){
-    // Se o set nao foi passado, cria um novo
-    bool criar_set = (visitadas == nullptr);
-    if (criar_set) {
-        visitadas = new unordered_set<Pessoa*>();
-        visitadas->insert(this);  // Marca a pessoa atual como visitada para nao contar ela mesma
-    }
-    
+int Pessoa::contar_ascendentes(unordered_set<Pessoa*>* visitadas){  
     int contagem = 0;
     
-    // Conta o pai e seus ancestrais (se nao foi visitado ainda)
+    // Conta o pai e seus pais, se ja nao foi contado
     if (pai != nullptr && !visitadas->count(pai)) {
         contagem++;
         visitadas->insert(pai);
         contagem += pai->contar_ascendentes(visitadas);
     }
     
-    // Conta a mae e seus ancestrais (se nao foi visitado ainda)
+    // Conta a mae e seus pais, se ja nao foi contado
     if (mae != nullptr && !visitadas->count(mae)) {
         contagem++;
         visitadas->insert(mae);
         contagem += mae->contar_ascendentes(visitadas);
     }
     
-    // Se criou o set, deleta ele
-    if (criar_set) {
-        delete visitadas;
-    }
-    
     return contagem;
 }
 
 
-int Pessoa::contar_descendentes(unordered_set<Pessoa*>* visitadas){
-    // Se o set nao foi passado, cria um novo
-    bool criar_set = (visitadas == nullptr);
-    if (criar_set) {
-        visitadas = new unordered_set<Pessoa*>();
-        visitadas->insert(this);  // Marca a pessoa atual como visitada para nao contar ela mesma
-    }
-    
+int Pessoa::contar_descendentes(unordered_set<Pessoa*>* visitadas){  
     int contagem = 0;
     
     for (Pessoa* f : filhos) {
-        // Se o filho ainda nao foi visitado, conta ele e seus descendentes
+        // Se o filho ja esta no set, conta ele e seus filhos
         if (!visitadas->count(f)) {
             contagem++;
             visitadas->insert(f);
             contagem += f->contar_descendentes(visitadas);
         }
     }
-    
-    // Se criou o set, deleta ele
-    if (criar_set) {
-        delete visitadas;
-    }
-    
+        
     return contagem;
 }
 

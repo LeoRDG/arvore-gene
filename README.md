@@ -5,7 +5,11 @@ Por:
 - João Guilherme
 - Leonardo Rodrigues
 
-O programa foi feito em sistemas UNIX, o comportamento em Windows pode não ser o esperado. Por exemplo: acentos nao funcionam, foram removidos.
+O programa foi feito em sistemas UNIX, o comportamento em Windows pode não ser o esperado. 
+Por exemplo: 
+- Acentos nao funcionam, foram removidos.
+- Alguns includes precisam ser inseridos enquanto no linux nao era necessario
+- Cores podem nao funcionar e imprimir os codigos ANSI
 
 É recomendado rodar o programa com uma janela grande
 
@@ -29,7 +33,7 @@ Implementar um sistema/software em C++para representar e manipular uma árvore g
 Para compilar corretamente, todos os arquivos cpp devem ser incluidos, para facilitar estão disponiveis alguns scripts.
 
 ##### Linux/Macos
-Rodar compilarerodar.sh
+Rodar **compilarerodar.sh**
 
 ##### Windows
-Rodar compilarerodar.bat ou compilarerodar.sh se o 
+Rodar **compilarerodar.bat** ou **compilarerodar.sh** se o o git console estiver instalado.

@@ -99,18 +99,18 @@ struct Pessoa
 
     /**
      * @brief Conta recursivamente o total de ascendentes (diretos e indiretos)
-     * @param visitadas Set de pessoas já visitadas (nullptr para criar novo set)
-     * @returns Número total de ascendentes desta pessoa
+     * @param visitadas Set de pessoas já visitadas
+     * @returns Numero total de ascendentes desta pessoa
      */
-    int contar_ascendentes(unordered_set<Pessoa*>* visitadas = nullptr);
+    int contar_ascendentes(unordered_set<Pessoa*>* visitadas);
 
 
     /**
      * @brief Conta recursivamente o total de descendentes (diretos e indiretos)
-     * @param visitadas Set de pessoas já visitadas (nullptr para criar novo set)
-     * @returns Número total de descendentes desta pessoa
+     * @param visitadas Set de pessoas já visitadas
+     * @returns Número total de descendentes dessa pessoa
      */
-    int contar_descendentes(unordered_set<Pessoa*>* visitadas = nullptr);
+    int contar_descendentes(unordered_set<Pessoa*>* visitadas);
 
 
     /**

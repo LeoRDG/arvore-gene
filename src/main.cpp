@@ -7,7 +7,7 @@
 #include "../include/Arvore.h"
 
 int main() {
-    Arvore arvore = Arvore("arvore_teste");
+    Arvore arvore = Arvore("arvore");
     arvore.carregar();
 
     while (arvore.menu.continua) {
@@ -16,7 +16,8 @@ int main() {
         arvore.exibir_menu();
         arvore.menu.esperar_resposta();
         arvore.salvar();
-        pausar();
+        if (arvore.menu.continua) pausar();
     }
+    for (auto p: arvore.familia) delete p;
     return 0;
 }

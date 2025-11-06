@@ -183,7 +183,7 @@ void Arvore::criar_menu() {
         { "Definir pais de uma pessoa",           [this]() {ui_definir_pais(ui_buscar_pessoa());} },
         { "Mostrar geracoes",                     [this]() {ui_exibir_por_geracao();}},  
         { "Exibir parentesco entre 2 pessoas",    [this]() {ui_exibir_parentesco();}},
-        { "Sair",                                 [this]() {exit(0);}},
+        { "Sair",                                 [this]() {menu.continua = false;}},
         //{ "Salvar" ,                              [this]() {salvar();} },
         //{ "Carregar" ,                            [this]() {carregar();} },
     } };
